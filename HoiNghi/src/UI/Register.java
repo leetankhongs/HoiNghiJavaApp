@@ -55,8 +55,11 @@ public class Register extends javax.swing.JFrame {
         jSeparator14 = new javax.swing.JSeparator();
         jConfirmPasswordShowbtn = new javax.swing.JButton();
         jPasswordShowbtn = new javax.swing.JButton();
+        jExitbtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
 
         registerPanel.setBackground(new java.awt.Color(0, 153, 153));
         registerPanel.setPreferredSize(new java.awt.Dimension(500, 0));
@@ -255,7 +258,6 @@ public class Register extends javax.swing.JFrame {
         jConfirmPasswordShowbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/icons8_invisible_20px.png"))); // NOI18N
         jConfirmPasswordShowbtn.setBorderPainted(false);
         jConfirmPasswordShowbtn.setContentAreaFilled(false);
-        jConfirmPasswordShowbtn.setOpaque(false);
         jConfirmPasswordShowbtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jConfirmPasswordShowbtnMouseReleased(evt);
@@ -271,43 +273,64 @@ public class Register extends javax.swing.JFrame {
             }
         });
 
+        jExitbtn.setBackground(new java.awt.Color(51, 102, 255));
+        jExitbtn.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jExitbtn.setForeground(new java.awt.Color(255, 255, 255));
+        jExitbtn.setText("X");
+        jExitbtn.setToolTipText("");
+        jExitbtn.setBorderPainted(false);
+        jExitbtn.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jExitbtn.setMaximumSize(new java.awt.Dimension(15, 21));
+        jExitbtn.setPreferredSize(new java.awt.Dimension(40, 30));
+        jExitbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jExitbtnMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout informationRegisterPanelLayout = new javax.swing.GroupLayout(informationRegisterPanel);
         informationRegisterPanel.setLayout(informationRegisterPanelLayout);
         informationRegisterPanelLayout.setHorizontalGroup(
             informationRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(informationRegisterPanelLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(informationRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRegistation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jNameTF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jKeepLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jRegisterbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jEmailTF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator10, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator14)
-                    .addComponent(jUsernameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(informationRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(informationRegisterPanelLayout.createSequentialGroup()
-                        .addComponent(jConfirmPasswordTF, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jConfirmPasswordShowbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addGroup(informationRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jRegistation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jNameTF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jKeepLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jRegisterbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jEmailTF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator10, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator14)
+                            .addComponent(jUsernameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(informationRegisterPanelLayout.createSequentialGroup()
+                                .addComponent(jConfirmPasswordTF, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jConfirmPasswordShowbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(informationRegisterPanelLayout.createSequentialGroup()
+                                .addComponent(jPasswordTF, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPasswordShowbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(informationRegisterPanelLayout.createSequentialGroup()
-                        .addComponent(jPasswordTF, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPasswordShowbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(51, 51, 51))
+                        .addGap(255, 255, 255)
+                        .addComponent(jExitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         informationRegisterPanelLayout.setVerticalGroup(
             informationRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(informationRegisterPanelLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addComponent(jExitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jRegistation, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -352,7 +375,7 @@ public class Register extends javax.swing.JFrame {
 
         getContentPane().add(informationRegisterPanel, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(814, 637));
+        setSize(new java.awt.Dimension(800, 600));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -451,6 +474,11 @@ public class Register extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jConfirmPasswordShowbtnMouseReleased
 
+    private void jExitbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jExitbtnMouseReleased
+        // TODO add your handling code here:
+        setVisible(false);
+    }//GEN-LAST:event_jExitbtnMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -493,6 +521,7 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JPasswordField jConfirmPasswordTF;
     private javax.swing.JLabel jEmail;
     private javax.swing.JTextField jEmailTF;
+    private javax.swing.JButton jExitbtn;
     private javax.swing.JCheckBox jKeepLogin;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
