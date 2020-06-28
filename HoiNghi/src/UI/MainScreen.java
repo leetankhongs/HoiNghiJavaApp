@@ -5,14 +5,20 @@
  */
 package UI;
 
+import Class.Conference;
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.color.ColorSpace;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
 /**
@@ -30,16 +36,8 @@ public class MainScreen extends javax.swing.JFrame {
 
     public MainScreen() {
         initComponents();
-//        jComboBox1.setUI(new BasicComboBoxUI() {
-//            protected JButton createArrowButton() {
-//                return new JButton() {
-//                public int getWidth() {
-//                return 0;
-//            }
-//        };
-//    }
-//});
-
+        createViewList();
+        createViewCard();
     }
 
     /**
@@ -53,10 +51,28 @@ public class MainScreen extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         jCardLayout = new javax.swing.JPanel();
-        jCard1 = new javax.swing.JPanel();
-        jCard2 = new javax.swing.JPanel();
-        jCard3 = new javax.swing.JPanel();
-        jCard4 = new javax.swing.JPanel();
+        jCardHome = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jCardListConference = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jListView = new javax.swing.JPanel();
+        jPaginationList = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jListConferenceView = new javax.swing.JPanel();
+        jCardView = new javax.swing.JPanel();
+        jPaginationCard = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jCardConferenceView = new javax.swing.JPanel();
+        jCardStatistic = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jCardConference = new javax.swing.JPanel();
+        jUsers = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jMenu = new javax.swing.JPanel();
@@ -65,6 +81,9 @@ public class MainScreen extends javax.swing.JFrame {
         jHomePnl = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jListConferencePnl = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         jStatisticPnl = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -72,8 +91,8 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jUsersPnl = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -84,7 +103,7 @@ public class MainScreen extends javax.swing.JFrame {
         jButtonExitPnl = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
+        jLoginbtn = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -94,59 +113,176 @@ public class MainScreen extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(1200, 700));
         setResizable(false);
 
-        jPanel3.setBackground(new java.awt.Color(255, 0, 255));
+        jPanel3.setBackground(new java.awt.Color(58, 1, 108));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        jCardLayout.setLayout(new java.awt.BorderLayout());
+        jCardLayout.setLayout(new java.awt.CardLayout());
 
-        jCard1.setBackground(new java.awt.Color(255, 204, 204));
+        jCardHome.setBackground(new java.awt.Color(255, 204, 204));
+        jCardHome.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout jCard1Layout = new javax.swing.GroupLayout(jCard1);
-        jCard1.setLayout(jCard1Layout);
-        jCard1Layout.setHorizontalGroup(
-            jCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel9.setPreferredSize(new java.awt.Dimension(1203, 150));
+        jPanel9.setLayout(new java.awt.BorderLayout());
+
+        jLabel14.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(102, 0, 153));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("CONFERENCE APPLICATION");
+        jLabel14.setPreferredSize(new java.awt.Dimension(516, 50));
+        jPanel9.add(jLabel14, java.awt.BorderLayout.NORTH);
+
+        jLabel15.setFont(new java.awt.Font("Times New Roman", 1, 28)); // NOI18N
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("Frovide Conferences For Those Who Need It");
+        jPanel9.add(jLabel15, java.awt.BorderLayout.CENTER);
+
+        jLabel17.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("University Of Science");
+        jLabel17.setPreferredSize(new java.awt.Dimension(38, 50));
+        jPanel9.add(jLabel17, java.awt.BorderLayout.SOUTH);
+
+        jCardHome.add(jPanel9, java.awt.BorderLayout.PAGE_START);
+
+        jPanel11.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel11.setLayout(new java.awt.BorderLayout());
+
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/velocityca2019_og_image.jpg"))); // NOI18N
+        jLabel16.setPreferredSize(new java.awt.Dimension(500, 13));
+        jPanel11.add(jLabel16, java.awt.BorderLayout.CENTER);
+
+        jCardHome.add(jPanel11, java.awt.BorderLayout.CENTER);
+
+        jCardLayout.add(jCardHome, "card2");
+
+        jCardListConference.setBackground(new java.awt.Color(58, 1, 108));
+        jCardListConference.setLayout(new java.awt.BorderLayout());
+
+        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        jTabbedPane1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+
+        jListView.setBackground(new java.awt.Color(255, 255, 255));
+        jListView.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jListView.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jListView.setInheritsPopupMenu(true);
+        jListView.setLayout(new java.awt.BorderLayout(0, 10));
+
+        jPaginationList.setBackground(new java.awt.Color(220, 220, 255));
+        jPaginationList.setPreferredSize(new java.awt.Dimension(1198, 50));
+
+        javax.swing.GroupLayout jPaginationListLayout = new javax.swing.GroupLayout(jPaginationList);
+        jPaginationList.setLayout(jPaginationListLayout);
+        jPaginationListLayout.setHorizontalGroup(
+            jPaginationListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1198, Short.MAX_VALUE)
         );
-        jCard1Layout.setVerticalGroup(
-            jCard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jPaginationListLayout.setVerticalGroup(
+            jPaginationListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
 
-        jCardLayout.add(jCard1, java.awt.BorderLayout.CENTER);
+        jListView.add(jPaginationList, java.awt.BorderLayout.SOUTH);
 
-        jCard2.setBackground(new java.awt.Color(102, 255, 0));
-        jCard2.setLayout(new java.awt.BorderLayout());
-        jCardLayout.add(jCard2, java.awt.BorderLayout.PAGE_START);
+        jListConferenceView.setBackground(new java.awt.Color(255, 255, 255));
+        jListConferenceView.setLayout(new java.awt.GridLayout(0, 1, 0, 10));
+        jScrollPane3.setViewportView(jListConferenceView);
 
-        jCard3.setBackground(new java.awt.Color(102, 102, 0));
+        jListView.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
-        javax.swing.GroupLayout jCard3Layout = new javax.swing.GroupLayout(jCard3);
-        jCard3.setLayout(jCard3Layout);
-        jCard3Layout.setHorizontalGroup(
-            jCard3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jTabbedPane1.addTab("List View", new javax.swing.ImageIcon(getClass().getResource("/Picture/ListView.png")), jListView, ""); // NOI18N
+        jListView.getAccessibleContext().setAccessibleName("");
+
+        jCardView.setBackground(new java.awt.Color(255, 255, 255));
+        jCardView.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        jCardView.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jCardView.setInheritsPopupMenu(true);
+        jCardView.setLayout(new java.awt.BorderLayout());
+
+        jPaginationCard.setBackground(new java.awt.Color(220, 220, 255));
+        jPaginationCard.setPreferredSize(new java.awt.Dimension(1198, 50));
+
+        javax.swing.GroupLayout jPaginationCardLayout = new javax.swing.GroupLayout(jPaginationCard);
+        jPaginationCard.setLayout(jPaginationCardLayout);
+        jPaginationCardLayout.setHorizontalGroup(
+            jPaginationCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1198, Short.MAX_VALUE)
+        );
+        jPaginationCardLayout.setVerticalGroup(
+            jPaginationCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+
+        jCardView.add(jPaginationCard, java.awt.BorderLayout.SOUTH);
+
+        jScrollPane4.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jCardConferenceView.setBackground(new java.awt.Color(255, 255, 255));
+        jCardConferenceView.setLayout(new java.awt.GridLayout(0, 3, 10, 10));
+        jScrollPane4.setViewportView(jCardConferenceView);
+
+        jCardView.add(jScrollPane4, java.awt.BorderLayout.CENTER);
+
+        jTabbedPane1.addTab("List View", new javax.swing.ImageIcon(getClass().getResource("/Picture/ListView.png")), jCardView, ""); // NOI18N
+
+        jCardListConference.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+
+        jCardLayout.add(jCardListConference, "card6");
+
+        jCardStatistic.setBackground(new java.awt.Color(102, 255, 0));
+        jCardStatistic.setLayout(new java.awt.BorderLayout());
+
+        jList1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jList1MouseMoved(evt);
+            }
+        });
+        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jList1MouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jList1MouseReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jList1);
+
+        jCardStatistic.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jCardLayout.add(jCardStatistic, "card3");
+
+        jCardConference.setBackground(new java.awt.Color(102, 102, 0));
+
+        javax.swing.GroupLayout jCardConferenceLayout = new javax.swing.GroupLayout(jCardConference);
+        jCardConference.setLayout(jCardConferenceLayout);
+        jCardConferenceLayout.setHorizontalGroup(
+            jCardConferenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1203, Short.MAX_VALUE)
         );
-        jCard3Layout.setVerticalGroup(
-            jCard3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+        jCardConferenceLayout.setVerticalGroup(
+            jCardConferenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 705, Short.MAX_VALUE)
         );
 
-        jCardLayout.add(jCard3, java.awt.BorderLayout.PAGE_END);
+        jCardLayout.add(jCardConference, "card4");
 
-        jCard4.setBackground(new java.awt.Color(102, 102, 255));
+        jUsers.setBackground(new java.awt.Color(102, 102, 255));
 
-        javax.swing.GroupLayout jCard4Layout = new javax.swing.GroupLayout(jCard4);
-        jCard4.setLayout(jCard4Layout);
-        jCard4Layout.setHorizontalGroup(
-            jCard4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jUsersLayout = new javax.swing.GroupLayout(jUsers);
+        jUsers.setLayout(jUsersLayout);
+        jUsersLayout.setHorizontalGroup(
+            jUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1203, Short.MAX_VALUE)
         );
-        jCard4Layout.setVerticalGroup(
-            jCard4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jUsersLayout.setVerticalGroup(
+            jUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jCardLayout.add(jCard4, java.awt.BorderLayout.LINE_END);
+        jCardLayout.add(jUsers, "card5");
 
         jPanel3.add(jCardLayout, java.awt.BorderLayout.CENTER);
 
@@ -180,11 +316,11 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabel13.setBackground(new java.awt.Color(58, 1, 108));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/menu.png"))); // NOI18N
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/List-icon.png"))); // NOI18N
         jLabel13.setPreferredSize(new java.awt.Dimension(50, 0));
         jButtonMenu.add(jLabel13, java.awt.BorderLayout.WEST);
 
-        jMenu.add(jButtonMenu, java.awt.BorderLayout.WEST);
+        jMenu.add(jButtonMenu, java.awt.BorderLayout.EAST);
 
         jPanel5.add(jMenu);
 
@@ -205,16 +341,44 @@ public class MainScreen extends javax.swing.JFrame {
         jHomePnl.setLayout(new java.awt.BorderLayout());
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/home-run.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Home.png"))); // NOI18N
         jLabel4.setPreferredSize(new java.awt.Dimension(50, 24));
         jHomePnl.add(jLabel4, java.awt.BorderLayout.WEST);
 
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Home");
         jHomePnl.add(jLabel8, java.awt.BorderLayout.CENTER);
 
         jPanel5.add(jHomePnl);
+
+        jListConferencePnl.setBackground(new java.awt.Color(58, 1, 108));
+        jListConferencePnl.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jListConferencePnlMouseMoved(evt);
+            }
+        });
+        jListConferencePnl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jListConferencePnlMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jListConferencePnlMouseReleased(evt);
+            }
+        });
+        jListConferencePnl.setLayout(new java.awt.BorderLayout());
+
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Purchase-Order-icon.png"))); // NOI18N
+        jLabel11.setPreferredSize(new java.awt.Dimension(50, 24));
+        jListConferencePnl.add(jLabel11, java.awt.BorderLayout.WEST);
+
+        jLabel12.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("List Conference");
+        jListConferencePnl.add(jLabel12, java.awt.BorderLayout.CENTER);
+
+        jPanel5.add(jListConferencePnl);
 
         jStatisticPnl.setBackground(new java.awt.Color(58, 1, 108));
         jStatisticPnl.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -233,11 +397,11 @@ public class MainScreen extends javax.swing.JFrame {
         jStatisticPnl.setLayout(new java.awt.BorderLayout());
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/home-run.png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Call-Statistics-icon.png"))); // NOI18N
         jLabel7.setPreferredSize(new java.awt.Dimension(50, 24));
         jStatisticPnl.add(jLabel7, java.awt.BorderLayout.WEST);
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Statistics");
         jStatisticPnl.add(jLabel5, java.awt.BorderLayout.CENTER);
@@ -261,11 +425,11 @@ public class MainScreen extends javax.swing.JFrame {
         jConferencesPnl.setLayout(new java.awt.BorderLayout());
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/home-run.png"))); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Conference-icon.png"))); // NOI18N
         jLabel9.setPreferredSize(new java.awt.Dimension(50, 24));
         jConferencesPnl.add(jLabel9, java.awt.BorderLayout.WEST);
 
-        jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Conferences");
         jConferencesPnl.add(jLabel10, java.awt.BorderLayout.CENTER);
@@ -288,15 +452,15 @@ public class MainScreen extends javax.swing.JFrame {
         });
         jUsersPnl.setLayout(new java.awt.BorderLayout());
 
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/home-run.png"))); // NOI18N
-        jLabel11.setPreferredSize(new java.awt.Dimension(50, 24));
-        jUsersPnl.add(jLabel11, java.awt.BorderLayout.WEST);
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/User-Menu-Female-icon.png"))); // NOI18N
+        jLabel18.setPreferredSize(new java.awt.Dimension(50, 24));
+        jUsersPnl.add(jLabel18, java.awt.BorderLayout.LINE_START);
 
-        jLabel12.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Users");
-        jUsersPnl.add(jLabel12, java.awt.BorderLayout.CENTER);
+        jLabel19.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setText("Users");
+        jUsersPnl.add(jLabel19, java.awt.BorderLayout.CENTER);
 
         jPanel5.add(jUsersPnl);
 
@@ -393,19 +557,31 @@ public class MainScreen extends javax.swing.JFrame {
         jPanel4.setPreferredSize(new java.awt.Dimension(1000, 50));
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jPanel9.setPreferredSize(new java.awt.Dimension(50, 50));
-        jPanel9.setLayout(new java.awt.BorderLayout());
-
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/login.png"))); // NOI18N
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jLabel6MouseReleased(evt);
+        jLoginbtn.setBackground(new java.awt.Color(58, 1, 108));
+        jLoginbtn.setPreferredSize(new java.awt.Dimension(150, 50));
+        jLoginbtn.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jLoginbtnMouseMoved(evt);
             }
         });
-        jPanel9.add(jLabel6, java.awt.BorderLayout.CENTER);
+        jLoginbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLoginbtnMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLoginbtnMouseReleased(evt);
+            }
+        });
+        jLoginbtn.setLayout(new java.awt.BorderLayout());
 
-        jPanel4.add(jPanel9);
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/login_24px.png"))); // NOI18N
+        jLabel6.setText("Đăng nhập");
+        jLoginbtn.add(jLabel6, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(jLoginbtn);
 
         jPanel10.add(jPanel4, java.awt.BorderLayout.CENTER);
 
@@ -433,11 +609,12 @@ public class MainScreen extends javax.swing.JFrame {
     private void jHomePnlMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jHomePnlMousePressed
         // TODO add your handling code here:
         setColorClicked(jHomePnl);
+        resetColorUnClicked(jListConferencePnl);
         resetColorUnClicked(jStatisticPnl);
         resetColorUnClicked(jConferencesPnl);
         resetColorUnClicked(jUsersPnl);
         jCardLayout.removeAll();
-        jCardLayout.add(jCard1);
+        jCardLayout.add(jCardHome);
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }//GEN-LAST:event_jHomePnlMousePressed
@@ -446,24 +623,25 @@ public class MainScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         setColorClicked(jStatisticPnl);
         resetColorUnClicked(jHomePnl);
+        resetColorUnClicked(jListConferencePnl);
         resetColorUnClicked(jConferencesPnl);
         resetColorUnClicked(jUsersPnl);
         setColorClicked(jStatisticPnl);
         jCardLayout.removeAll();
-        jCardLayout.add(jCard2);
+        jCardLayout.add(jCardStatistic);
         jCardLayout.repaint();
         jCardLayout.revalidate();
-
     }//GEN-LAST:event_jStatisticPnlMouseReleased
 
     private void jConferencesPnlMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jConferencesPnlMouseReleased
         // TODO add your handling code here
         setColorClicked(jConferencesPnl);
         resetColorUnClicked(jHomePnl);
+        resetColorUnClicked(jListConferencePnl);
         resetColorUnClicked(jStatisticPnl);
         resetColorUnClicked(jUsersPnl);
         jCardLayout.removeAll();
-        jCardLayout.add(jCard3);
+        jCardLayout.add(jCardConference);
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }//GEN-LAST:event_jConferencesPnlMouseReleased
@@ -472,10 +650,11 @@ public class MainScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
         setColorClicked(jUsersPnl);
         resetColorUnClicked(jHomePnl);
+        resetColorUnClicked(jListConferencePnl);
         resetColorUnClicked(jStatisticPnl);
         resetColorUnClicked(jConferencesPnl);
         jCardLayout.removeAll();
-        jCardLayout.add(jCard4);
+        jCardLayout.add(jUsers);
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }//GEN-LAST:event_jUsersPnlMouseReleased
@@ -528,14 +707,6 @@ public class MainScreen extends javax.swing.JFrame {
             setColorMoved(jUsersPnl);
     }//GEN-LAST:event_jUsersPnlMouseMoved
 
-    private void jLabel6MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseReleased
-        // TODO add your handling code here:
-
-       
-
-        
-    }//GEN-LAST:event_jLabel6MouseReleased
-
     private void jButtonExitPnlMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonExitPnlMouseExited
         // TODO add your handling code here:
         resetColorUnClicked(jButtonExitPnl);
@@ -568,21 +739,21 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void jButtonMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonMenuMouseReleased
         // TODO add your handling code here:
-          // TODO add your handling code here:
-         if (jPanel2.getWidth() == 200) {
+        // TODO add your handling code here:
+        if (jPanel2.getWidth() == 200) {
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        for (int i = 200; i >= 50; i--) {
+                        for (int i = 200; i >= 50; i = i - 1) {
                             Thread.sleep(1);
                             jPanel2.setSize(i, 640);
-                            jPanel2.setPreferredSize(new Dimension(i, 0));
-                            repaint();
-                            revalidate();
-
                         }
+                        
+                        jPanel2.setPreferredSize(new Dimension(50, 0));
+                        revalidate();
                         System.out.println(jPanel2.getWidth());
+                        
                     } catch (Exception e) {
                     }
                 }
@@ -596,13 +767,14 @@ public class MainScreen extends javax.swing.JFrame {
                 @Override
                 public void run() {
                     try {
-                        for (int i = 50; i <= 200; i++) {
+                        for (int i = 50; i <= 200; i = i + 1) {
                             Thread.sleep(1);
                             jPanel2.setSize(i, 640);
-                            jPanel2.setPreferredSize(new Dimension(i, 0));
-                            repaint();
-                            revalidate();
                         }
+                        
+                        jPanel2.setPreferredSize(new Dimension(200, 0));
+                        repaint();
+                        revalidate();
                     } catch (Exception e) {
                     }
                 }
@@ -610,6 +782,62 @@ public class MainScreen extends javax.swing.JFrame {
             thread.start();
         }
     }//GEN-LAST:event_jButtonMenuMouseReleased
+
+    private void jLoginbtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLoginbtnMouseExited
+        // TODO add your handling code here:
+        resetColorUnClicked(jLoginbtn);
+    }//GEN-LAST:event_jLoginbtnMouseExited
+
+    private void jLoginbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLoginbtnMouseMoved
+        // TODO add your handling code here:   
+        setColorMoved(jLoginbtn);
+    }//GEN-LAST:event_jLoginbtnMouseMoved
+
+    private void jLoginbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLoginbtnMouseReleased
+        // TODO add your handling code here:
+        new Login().setVisible(true);
+    }//GEN-LAST:event_jLoginbtnMouseReleased
+
+    private void jListConferencePnlMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListConferencePnlMouseExited
+        // TODO add your handling code here:
+        if (jListConferencePnl.getBackground() != colorCliked)
+            resetColorUnClicked(jListConferencePnl);
+    }//GEN-LAST:event_jListConferencePnlMouseExited
+
+    private void jListConferencePnlMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListConferencePnlMouseMoved
+        // TODO add your handling code here:
+        if (jListConferencePnl.getBackground() != colorCliked)
+            setColorMoved(jListConferencePnl);
+    }//GEN-LAST:event_jListConferencePnlMouseMoved
+
+    private void jListConferencePnlMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListConferencePnlMouseReleased
+        // TODO add your handling code here:
+        setColorClicked(jListConferencePnl);
+        resetColorUnClicked(jHomePnl);
+        resetColorUnClicked(jStatisticPnl);
+        resetColorUnClicked(jConferencesPnl);
+        resetColorUnClicked(jUsersPnl);
+        jCardLayout.removeAll();
+        jCardLayout.add(jCardListConference);
+        jCardLayout.repaint();
+        jCardLayout.revalidate();
+    }//GEN-LAST:event_jListConferencePnlMouseReleased
+
+    private void jList1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseReleased
+        // TODO add your handling code here:
+        System.out.println(jList1.getSelectedIndex());
+
+    }//GEN-LAST:event_jList1MouseReleased
+
+    private void jList1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseMoved
+        // TODO add your handling code here:
+        Component component = evt.getComponent();
+        component.setBackground(Color.GRAY);
+    }//GEN-LAST:event_jList1MouseMoved
+
+    private void jList1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jList1MouseExited
 
     void setColorClicked(JPanel jp) {
         jp.setBackground(colorCliked);
@@ -659,14 +887,68 @@ public class MainScreen extends javax.swing.JFrame {
         });
     }
 
+    private void createViewList() {
+        jListConferenceView.add(new ConferenceRenderList(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jListConferenceView.add(new ConferenceRenderList(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jListConferenceView.add(new ConferenceRenderList(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jListConferenceView.add(new ConferenceRenderList(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jListConferenceView.add(new ConferenceRenderList(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jListConferenceView.add(new ConferenceRenderList(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
+        jListConferenceView.add(new ConferenceRenderList(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
+        jListConferenceView.add(new ConferenceRenderList(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
+        jListConferenceView.add(new ConferenceRenderList(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
+        jListConferenceView.add(new ConferenceRenderList(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jListConferenceView.add(new ConferenceRenderList(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
+        jListConferenceView.add(new ConferenceRenderList(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
+        jListConferenceView.add(new ConferenceRenderList(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
+        jListConferenceView.add(new ConferenceRenderList(new Conference("IOS Programming", "VLưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
+        jListConferenceView.add(new ConferenceRenderList(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+    }
+    
+    private void createViewCard(){
+        jCardConferenceView.add(new ConferenceRenderCard(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jCardConferenceView.add(new ConferenceRenderCard(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jCardConferenceView.add(new ConferenceRenderCard(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jCardConferenceView.add(new ConferenceRenderCard(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jCardConferenceView.add(new ConferenceRenderCard(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jCardConferenceView.add(new ConferenceRenderCard(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
+        jCardConferenceView.add(new ConferenceRenderCard(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
+        jCardConferenceView.add(new ConferenceRenderCard(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
+        jCardConferenceView.add(new ConferenceRenderCard(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
+        jCardConferenceView.add(new ConferenceRenderCard(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jCardConferenceView.add(new ConferenceRenderCard(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
+        jCardConferenceView.add(new ConferenceRenderCard(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
+        jCardConferenceView.add(new ConferenceRenderCard(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
+        jCardConferenceView.add(new ConferenceRenderCard(new Conference("IOS Programming", "VLưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
+        jCardConferenceView.add(new ConferenceRenderCard(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+    }
+
+    private void createListBooks() {
+        // create List model
+        DefaultListModel<Conference> model = new DefaultListModel<>();
+        // add item to model
+        model.addElement(new Conference("C/C++ Programming", "A"));
+        model.addElement(new Conference("Java Programming", "B"));
+        model.addElement(new Conference("C# Programming", "C"));
+        model.addElement(new Conference("IOS Programming", "D"));
+        model.addElement(new Conference("Windows Phone Programming", "E"));
+        model.addElement(new Conference("Android Programming", "F"));
+        // set cell renderer 
+//        .setCellRenderer(new ConferenceRender());
+//                jList1.setModel(model);
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jButtonExitPnl;
     private javax.swing.JPanel jButtonMenu;
-    private javax.swing.JPanel jCard1;
-    private javax.swing.JPanel jCard2;
-    private javax.swing.JPanel jCard3;
-    private javax.swing.JPanel jCard4;
+    private javax.swing.JPanel jCardConference;
+    private javax.swing.JPanel jCardConferenceView;
+    private javax.swing.JPanel jCardHome;
     private javax.swing.JPanel jCardLayout;
+    private javax.swing.JPanel jCardListConference;
+    private javax.swing.JPanel jCardStatistic;
+    private javax.swing.JPanel jCardView;
     private javax.swing.JPanel jConferencesPnl;
     private javax.swing.JPanel jExitPnl;
     private javax.swing.JPanel jHomePnl;
@@ -675,6 +957,12 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -683,9 +971,17 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JList<Conference> jList1;
+    private javax.swing.JPanel jListConferencePnl;
+    private javax.swing.JPanel jListConferenceView;
+    private javax.swing.JPanel jListView;
+    private javax.swing.JPanel jLoginbtn;
     private javax.swing.JPanel jMenu;
+    private javax.swing.JPanel jPaginationCard;
+    private javax.swing.JPanel jPaginationList;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -694,8 +990,13 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel jStatisticPnl;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel jUsers;
     private javax.swing.JPanel jUsersPnl;
     // End of variables declaration//GEN-END:variables
 }
