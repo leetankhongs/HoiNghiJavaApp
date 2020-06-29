@@ -32,7 +32,8 @@ public class MainScreen extends javax.swing.JFrame {
      */
     final static private Color deufault = new Color(58, 1, 108);
     final static private Color colorCliked = new Color(84, 3, 156);
-    final static private Color colorMoved = new Color(67, 4, 123);
+    final static private Color colorMoved = new Color(74,2,137);
+    final static private Color colorMoved_2 = new Color(220,220,255);
 
     public MainScreen() {
         initComponents();
@@ -59,15 +60,34 @@ public class MainScreen extends javax.swing.JFrame {
         jPanel11 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jCardListConference = new javax.swing.JPanel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel13 = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        jListViewbtn = new javax.swing.JLabel();
+        jCardViewbtn = new javax.swing.JLabel();
+        jPanel14 = new javax.swing.JPanel();
+        jPanel15 = new javax.swing.JPanel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jPanel17 = new javax.swing.JPanel();
+        jPanel18 = new javax.swing.JPanel();
+        jResetbtn = new javax.swing.JLabel();
+        jSearchPnl = new javax.swing.JPanel();
+        jSearchbtn = new javax.swing.JLabel();
+        jSearchText = new javax.swing.JTextField();
+        jConferenceView = new javax.swing.JPanel();
         jListView = new javax.swing.JPanel();
-        jPaginationList = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jListConferenceView = new javax.swing.JPanel();
         jCardView = new javax.swing.JPanel();
-        jPaginationCard = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jCardConferenceView = new javax.swing.JPanel();
+        jPaginationConference = new javax.swing.JPanel();
+        jLabel20 = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
+        jFirstbtn = new javax.swing.JLabel();
+        jPrebtn = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jNextbtn = new javax.swing.JLabel();
+        jLastbtn = new javax.swing.JLabel();
         jCardStatistic = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
@@ -160,9 +180,155 @@ public class MainScreen extends javax.swing.JFrame {
         jCardListConference.setBackground(new java.awt.Color(58, 1, 108));
         jCardListConference.setLayout(new java.awt.BorderLayout());
 
-        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-        jTabbedPane1.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jPanel13.setBackground(new java.awt.Color(58, 1, 108));
+        jPanel13.setPreferredSize(new java.awt.Dimension(0, 50));
+        jPanel13.setLayout(new java.awt.BorderLayout());
+
+        jPanel12.setBackground(new java.awt.Color(58, 1, 108));
+        jPanel12.setPreferredSize(new java.awt.Dimension(300, 50));
+        jPanel12.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
+
+        jListViewbtn.setBackground(new java.awt.Color(84, 3, 156));
+        jListViewbtn.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jListViewbtn.setForeground(new java.awt.Color(255, 255, 255));
+        jListViewbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/List_White.png"))); // NOI18N
+        jListViewbtn.setText("List view");
+        jListViewbtn.setOpaque(true);
+        jListViewbtn.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jListViewbtnMouseMoved(evt);
+            }
+        });
+        jListViewbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jListViewbtnMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jListViewbtnMouseReleased(evt);
+            }
+        });
+        jPanel12.add(jListViewbtn);
+
+        jCardViewbtn.setBackground(new java.awt.Color(255, 255, 255));
+        jCardViewbtn.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jCardViewbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Grid-View-black.png"))); // NOI18N
+        jCardViewbtn.setText("Grid view");
+        jCardViewbtn.setOpaque(true);
+        jCardViewbtn.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jCardViewbtnMouseMoved(evt);
+            }
+        });
+        jCardViewbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jCardViewbtnMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jCardViewbtnMouseReleased(evt);
+            }
+        });
+        jPanel12.add(jCardViewbtn);
+
+        jPanel13.add(jPanel12, java.awt.BorderLayout.WEST);
+
+        jPanel14.setBackground(new java.awt.Color(58, 1, 108));
+        jPanel14.setLayout(new java.awt.BorderLayout());
+
+        jPanel15.setBackground(new java.awt.Color(58, 1, 108));
+        jPanel15.setPreferredSize(new java.awt.Dimension(150, 50));
+        jPanel15.setLayout(new java.awt.BorderLayout());
+
+        jDateChooser1.setDateFormatString("dd/MM/yyyy");
+        jDateChooser1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jDateChooser1.setOpaque(false);
+        jDateChooser1.setPreferredSize(new java.awt.Dimension(150, 20));
+        jPanel15.add(jDateChooser1, java.awt.BorderLayout.CENTER);
+
+        jPanel17.setOpaque(false);
+        jPanel17.setPreferredSize(new java.awt.Dimension(50, 50));
+
+        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
+        jPanel17.setLayout(jPanel17Layout);
+        jPanel17Layout.setHorizontalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel17Layout.setVerticalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jPanel15.add(jPanel17, java.awt.BorderLayout.EAST);
+
+        jPanel18.setOpaque(false);
+        jPanel18.setPreferredSize(new java.awt.Dimension(200, 50));
+
+        jResetbtn.setBackground(new java.awt.Color(58, 1, 108));
+        jResetbtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jResetbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Available-Updates-icon.png"))); // NOI18N
+        jResetbtn.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jResetbtn.setOpaque(true);
+        jResetbtn.setPreferredSize(new java.awt.Dimension(50, 50));
+        jResetbtn.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jResetbtnMouseMoved(evt);
+            }
+        });
+        jResetbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jResetbtnMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jResetbtnMouseReleased(evt);
+            }
+        });
+        jPanel18.add(jResetbtn);
+
+        jPanel15.add(jPanel18, java.awt.BorderLayout.WEST);
+
+        jPanel14.add(jPanel15, java.awt.BorderLayout.CENTER);
+
+        jSearchPnl.setBackground(new java.awt.Color(58, 1, 108));
+        jSearchPnl.setPreferredSize(new java.awt.Dimension(300, 50));
+        jSearchPnl.setLayout(new java.awt.BorderLayout());
+
+        jSearchbtn.setBackground(new java.awt.Color(58, 1, 108));
+        jSearchbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Search-icon.png"))); // NOI18N
+        jSearchbtn.setOpaque(true);
+        jSearchbtn.setPreferredSize(new java.awt.Dimension(50, 13));
+        jSearchbtn.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jSearchbtnMouseMoved(evt);
+            }
+        });
+        jSearchbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jSearchbtnMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jSearchbtnMouseReleased(evt);
+            }
+        });
+        jSearchPnl.add(jSearchbtn, java.awt.BorderLayout.WEST);
+
+        jSearchText.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jSearchText.setText("Search name conference");
+        jSearchText.setToolTipText("");
+        jSearchText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jSearchTextFocusLost(evt);
+            }
+        });
+        jSearchPnl.add(jSearchText, java.awt.BorderLayout.CENTER);
+        jSearchText.getAccessibleContext().setAccessibleDescription("Search name conference");
+
+        jPanel14.add(jSearchPnl, java.awt.BorderLayout.EAST);
+
+        jPanel13.add(jPanel14, java.awt.BorderLayout.CENTER);
+
+        jCardListConference.add(jPanel13, java.awt.BorderLayout.NORTH);
+
+        jConferenceView.setLayout(new java.awt.CardLayout());
 
         jListView.setBackground(new java.awt.Color(255, 255, 255));
         jListView.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
@@ -170,29 +336,13 @@ public class MainScreen extends javax.swing.JFrame {
         jListView.setInheritsPopupMenu(true);
         jListView.setLayout(new java.awt.BorderLayout(0, 10));
 
-        jPaginationList.setBackground(new java.awt.Color(220, 220, 255));
-        jPaginationList.setPreferredSize(new java.awt.Dimension(1198, 50));
-
-        javax.swing.GroupLayout jPaginationListLayout = new javax.swing.GroupLayout(jPaginationList);
-        jPaginationList.setLayout(jPaginationListLayout);
-        jPaginationListLayout.setHorizontalGroup(
-            jPaginationListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1198, Short.MAX_VALUE)
-        );
-        jPaginationListLayout.setVerticalGroup(
-            jPaginationListLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
-        );
-
-        jListView.add(jPaginationList, java.awt.BorderLayout.SOUTH);
-
         jListConferenceView.setBackground(new java.awt.Color(255, 255, 255));
         jListConferenceView.setLayout(new java.awt.GridLayout(0, 1, 0, 10));
         jScrollPane3.setViewportView(jListConferenceView);
 
         jListView.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane1.addTab("List View", new javax.swing.ImageIcon(getClass().getResource("/Picture/ListView.png")), jListView, ""); // NOI18N
+        jConferenceView.add(jListView, "card3");
         jListView.getAccessibleContext().setAccessibleName("");
 
         jCardView.setBackground(new java.awt.Color(255, 255, 255));
@@ -200,22 +350,6 @@ public class MainScreen extends javax.swing.JFrame {
         jCardView.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jCardView.setInheritsPopupMenu(true);
         jCardView.setLayout(new java.awt.BorderLayout());
-
-        jPaginationCard.setBackground(new java.awt.Color(220, 220, 255));
-        jPaginationCard.setPreferredSize(new java.awt.Dimension(1198, 50));
-
-        javax.swing.GroupLayout jPaginationCardLayout = new javax.swing.GroupLayout(jPaginationCard);
-        jPaginationCard.setLayout(jPaginationCardLayout);
-        jPaginationCardLayout.setHorizontalGroup(
-            jPaginationCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1198, Short.MAX_VALUE)
-        );
-        jPaginationCardLayout.setVerticalGroup(
-            jPaginationCardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
-        );
-
-        jCardView.add(jPaginationCard, java.awt.BorderLayout.SOUTH);
 
         jScrollPane4.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -226,9 +360,108 @@ public class MainScreen extends javax.swing.JFrame {
 
         jCardView.add(jScrollPane4, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane1.addTab("List View", new javax.swing.ImageIcon(getClass().getResource("/Picture/ListView.png")), jCardView, ""); // NOI18N
+        jConferenceView.add(jCardView, "card2");
 
-        jCardListConference.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+        jCardListConference.add(jConferenceView, java.awt.BorderLayout.CENTER);
+
+        jPaginationConference.setBackground(new java.awt.Color(58, 1, 108));
+        jPaginationConference.setPreferredSize(new java.awt.Dimension(1198, 50));
+        jPaginationConference.setLayout(new java.awt.BorderLayout());
+
+        jLabel20.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setText("Page 1 for 1-6/100");
+        jLabel20.setPreferredSize(new java.awt.Dimension(300, 13));
+        jPaginationConference.add(jLabel20, java.awt.BorderLayout.WEST);
+
+        jPanel16.setOpaque(false);
+        jPanel16.setPreferredSize(new java.awt.Dimension(290, 50));
+        jPanel16.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
+
+        jFirstbtn.setBackground(new java.awt.Color(58, 1, 108));
+        jFirstbtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jFirstbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Rewind-icon-2.png"))); // NOI18N
+        jFirstbtn.setOpaque(true);
+        jFirstbtn.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jFirstbtnMouseMoved(evt);
+            }
+        });
+        jFirstbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jFirstbtnMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jFirstbtnMouseReleased(evt);
+            }
+        });
+        jPanel16.add(jFirstbtn);
+
+        jPrebtn.setBackground(new java.awt.Color(58, 1, 108));
+        jPrebtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPrebtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Chevron-Left-icon.png"))); // NOI18N
+        jPrebtn.setOpaque(true);
+        jPrebtn.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jPrebtnMouseMoved(evt);
+            }
+        });
+        jPrebtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPrebtnMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jPrebtnMouseReleased(evt);
+            }
+        });
+        jPanel16.add(jPrebtn);
+
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel16.add(jTextField1);
+
+        jNextbtn.setBackground(new java.awt.Color(58, 1, 108));
+        jNextbtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jNextbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Chevron-Right-icon.png"))); // NOI18N
+        jNextbtn.setOpaque(true);
+        jNextbtn.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jNextbtnMouseMoved(evt);
+            }
+        });
+        jNextbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jNextbtnMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jNextbtnMouseReleased(evt);
+            }
+        });
+        jPanel16.add(jNextbtn);
+
+        jLastbtn.setBackground(new java.awt.Color(58, 1, 108));
+        jLastbtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLastbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Fast-Forward-icon.png"))); // NOI18N
+        jLastbtn.setOpaque(true);
+        jLastbtn.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jLastbtnMouseMoved(evt);
+            }
+        });
+        jLastbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLastbtnMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLastbtnMouseReleased(evt);
+            }
+        });
+        jPanel16.add(jLastbtn);
+
+        jPaginationConference.add(jPanel16, java.awt.BorderLayout.EAST);
+
+        jCardListConference.add(jPaginationConference, java.awt.BorderLayout.SOUTH);
+        jPaginationConference.getAccessibleContext().setAccessibleName("");
+        jPaginationConference.getAccessibleContext().setAccessibleDescription("");
 
         jCardLayout.add(jCardListConference, "card6");
 
@@ -260,7 +493,7 @@ public class MainScreen extends javax.swing.JFrame {
         jCardConference.setLayout(jCardConferenceLayout);
         jCardConferenceLayout.setHorizontalGroup(
             jCardConferenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1203, Short.MAX_VALUE)
+            .addGap(0, 1175, Short.MAX_VALUE)
         );
         jCardConferenceLayout.setVerticalGroup(
             jCardConferenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,7 +508,7 @@ public class MainScreen extends javax.swing.JFrame {
         jUsers.setLayout(jUsersLayout);
         jUsersLayout.setHorizontalGroup(
             jUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1203, Short.MAX_VALUE)
+            .addGap(0, 1175, Short.MAX_VALUE)
         );
         jUsersLayout.setVerticalGroup(
             jUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -751,6 +984,7 @@ public class MainScreen extends javax.swing.JFrame {
                         }
                         
                         jPanel2.setPreferredSize(new Dimension(50, 0));
+                        jSearchPnl.setPreferredSize(new Dimension(400, 0));
                         revalidate();
                         System.out.println(jPanel2.getWidth());
                         
@@ -773,6 +1007,7 @@ public class MainScreen extends javax.swing.JFrame {
                         }
                         
                         jPanel2.setPreferredSize(new Dimension(200, 0));
+                        jSearchPnl.setPreferredSize(new Dimension(300, 0));
                         repaint();
                         revalidate();
                     } catch (Exception e) {
@@ -838,6 +1073,153 @@ public class MainScreen extends javax.swing.JFrame {
     private void jList1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_jList1MouseExited
+
+    private void jListViewbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListViewbtnMouseMoved
+        // TODO add your handling code here:
+        if(jListViewbtn.getBackground().equals(colorCliked) == false)
+            jListViewbtn.setBackground(colorMoved_2);
+    }//GEN-LAST:event_jListViewbtnMouseMoved
+
+    private void jListViewbtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListViewbtnMouseExited
+        // TODO add your handling code here:
+        if(jListViewbtn.getBackground().equals(colorCliked) == false)
+            jListViewbtn.setBackground(Color.WHITE);
+    }//GEN-LAST:event_jListViewbtnMouseExited
+
+    private void jListViewbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListViewbtnMouseReleased
+        // TODO add your handling code here:
+        jListViewbtn.setBackground(colorCliked);
+        jListViewbtn.setForeground(Color.WHITE);
+        jListViewbtn.setIcon(new ImageIcon(getClass().getResource("/Picture/List_White.png")));
+        
+        jCardViewbtn.setBackground(Color.WHITE);
+        jCardViewbtn.setForeground(Color.BLACK);
+        jCardViewbtn.setIcon(new ImageIcon(getClass().getResource("/Picture/Grid-View-black.png")));
+        
+        jConferenceView.removeAll();
+        jConferenceView.add(jListView);
+        jConferenceView.repaint();
+        jConferenceView.revalidate();
+    }//GEN-LAST:event_jListViewbtnMouseReleased
+
+    private void jCardViewbtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCardViewbtnMouseExited
+        // TODO add your handling code here:
+        if(jCardViewbtn.getBackground().equals(colorCliked) == false)
+            jCardViewbtn.setBackground(Color.WHITE);
+        
+    }//GEN-LAST:event_jCardViewbtnMouseExited
+
+    private void jCardViewbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCardViewbtnMouseMoved
+        // TODO add your handling code here:
+        if(jCardViewbtn.getBackground().equals(colorCliked) == false)
+            jCardViewbtn.setBackground(colorMoved_2);
+    }//GEN-LAST:event_jCardViewbtnMouseMoved
+
+    private void jCardViewbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCardViewbtnMouseReleased
+        // TODO add your handling code here:
+        jCardViewbtn.setBackground(colorCliked);
+        jCardViewbtn.setForeground(Color.WHITE);
+        jCardViewbtn.setIcon(new ImageIcon(getClass().getResource("/Picture/Grid-View-white.png")));
+        
+        jListViewbtn.setBackground(Color.WHITE);
+        jListViewbtn.setForeground(Color.BLACK);
+        jListViewbtn.setIcon(new ImageIcon(getClass().getResource("/Picture/ListView.png")));
+        
+        jConferenceView.removeAll();
+        jConferenceView.add(jCardView);
+        jConferenceView.repaint();
+        jConferenceView.revalidate();
+    }//GEN-LAST:event_jCardViewbtnMouseReleased
+
+    private void jSearchbtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchbtnMouseExited
+        // TODO add your handling code here:
+        jSearchbtn.setBackground(deufault);
+    }//GEN-LAST:event_jSearchbtnMouseExited
+
+    private void jSearchbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchbtnMouseMoved
+        // TODO add your handling code here:
+        jSearchbtn.setBackground(colorMoved);
+    }//GEN-LAST:event_jSearchbtnMouseMoved
+
+    private void jSearchbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchbtnMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSearchbtnMouseReleased
+
+    private void jSearchTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchTextFocusLost
+        // TODO add your handling code here:
+        if(jSearchText.getText().compareTo("") == 0)
+            jSearchText.setText("Search name conference");
+    }//GEN-LAST:event_jSearchTextFocusLost
+
+    private void jResetbtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jResetbtnMouseExited
+        // TODO add your handling code here:
+        jResetbtn.setBackground(deufault);
+    }//GEN-LAST:event_jResetbtnMouseExited
+
+    private void jResetbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jResetbtnMouseMoved
+        // TODO add your handling code here:
+        jResetbtn.setBackground(colorMoved);
+    }//GEN-LAST:event_jResetbtnMouseMoved
+
+    private void jResetbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jResetbtnMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jResetbtnMouseReleased
+
+    private void jFirstbtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFirstbtnMouseExited
+        // TODO add your handling code here:
+        jFirstbtn.setBackground(deufault);
+    }//GEN-LAST:event_jFirstbtnMouseExited
+
+    private void jFirstbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFirstbtnMouseMoved
+        // TODO add your handling code here:
+        jFirstbtn.setBackground(colorMoved);
+    }//GEN-LAST:event_jFirstbtnMouseMoved
+
+    private void jFirstbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFirstbtnMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFirstbtnMouseReleased
+
+    private void jPrebtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPrebtnMouseExited
+        // TODO add your handling code here:
+        jPrebtn.setBackground(deufault);
+    }//GEN-LAST:event_jPrebtnMouseExited
+
+    private void jPrebtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPrebtnMouseMoved
+        // TODO add your handling code here:
+        jPrebtn.setBackground(colorMoved);
+    }//GEN-LAST:event_jPrebtnMouseMoved
+
+    private void jPrebtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPrebtnMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPrebtnMouseReleased
+
+    private void jNextbtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jNextbtnMouseExited
+        // TODO add your handling code here:
+        jNextbtn.setBackground(deufault);
+    }//GEN-LAST:event_jNextbtnMouseExited
+
+    private void jNextbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jNextbtnMouseMoved
+        // TODO add your handling code here:
+        jNextbtn.setBackground(colorMoved);
+    }//GEN-LAST:event_jNextbtnMouseMoved
+
+    private void jNextbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jNextbtnMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jNextbtnMouseReleased
+
+    private void jLastbtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLastbtnMouseExited
+        // TODO add your handling code here:
+        jLastbtn.setBackground(deufault);
+    }//GEN-LAST:event_jLastbtnMouseExited
+
+    private void jLastbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLastbtnMouseMoved
+        // TODO add your handling code here:
+        jLastbtn.setBackground(colorMoved);
+    }//GEN-LAST:event_jLastbtnMouseMoved
+
+    private void jLastbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLastbtnMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLastbtnMouseReleased
 
     void setColorClicked(JPanel jp) {
         jp.setBackground(colorCliked);
@@ -949,8 +1331,12 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jCardListConference;
     private javax.swing.JPanel jCardStatistic;
     private javax.swing.JPanel jCardView;
+    private javax.swing.JLabel jCardViewbtn;
+    private javax.swing.JPanel jConferenceView;
     private javax.swing.JPanel jConferencesPnl;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JPanel jExitPnl;
+    private javax.swing.JLabel jFirstbtn;
     private javax.swing.JPanel jHomePnl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -964,6 +1350,7 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -971,17 +1358,26 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLastbtn;
     private javax.swing.JList<Conference> jList1;
     private javax.swing.JPanel jListConferencePnl;
     private javax.swing.JPanel jListConferenceView;
     private javax.swing.JPanel jListView;
+    private javax.swing.JLabel jListViewbtn;
     private javax.swing.JPanel jLoginbtn;
     private javax.swing.JPanel jMenu;
-    private javax.swing.JPanel jPaginationCard;
-    private javax.swing.JPanel jPaginationList;
+    private javax.swing.JLabel jNextbtn;
+    private javax.swing.JPanel jPaginationConference;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -990,12 +1386,17 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JLabel jPrebtn;
+    private javax.swing.JLabel jResetbtn;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JPanel jSearchPnl;
+    private javax.swing.JTextField jSearchText;
+    private javax.swing.JLabel jSearchbtn;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel jStatisticPnl;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel jUsers;
     private javax.swing.JPanel jUsersPnl;
     // End of variables declaration//GEN-END:variables
