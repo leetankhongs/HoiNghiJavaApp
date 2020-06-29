@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI;
+package MainScreenUI;
 
 /**
  *
@@ -280,7 +280,6 @@ public class Register extends javax.swing.JFrame {
         jExitbtn.setToolTipText("");
         jExitbtn.setBorderPainted(false);
         jExitbtn.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jExitbtn.setMaximumSize(new java.awt.Dimension(15, 21));
         jExitbtn.setPreferredSize(new java.awt.Dimension(40, 30));
         jExitbtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {

@@ -1,6 +1,7 @@
-package UI;
+package ComponentUI;
 
 
+import MainScreenUI.*;
 import Class.Conference;
 import java.awt.Color;
 import java.awt.Image;

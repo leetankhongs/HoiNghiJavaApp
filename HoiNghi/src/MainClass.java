@@ -1,6 +1,6 @@
 
-import UI.Login;
-import UI.Register;
+import MainScreenUI.Login;
+import MainScreenUI.Register;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

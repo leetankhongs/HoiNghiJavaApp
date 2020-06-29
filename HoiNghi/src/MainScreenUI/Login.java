@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI;
+package MainScreenUI;
 
 import java.awt.Image;
 import java.awt.color.ColorSpace;
@@ -128,7 +128,7 @@ public class Login extends javax.swing.JFrame {
                             .addGroup(loginPanelLayout.createSequentialGroup()
                                 .addGap(90, 90, 90)
                                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 28, Short.MAX_VALUE)))
+                        .addGap(0, 46, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         loginPanelLayout.setVerticalGroup(
@@ -376,7 +376,7 @@ public class Login extends javax.swing.JFrame {
 
     private void jLoginbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLoginbtnMouseReleased
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jLoginbtnMouseReleased
 
     private void jShowPasswordbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jShowPasswordbtnMouseReleased

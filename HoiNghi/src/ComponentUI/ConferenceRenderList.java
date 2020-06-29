@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI;
+package ComponentUI;
 
+import MainScreenUI.*;
 import Class.Conference;
 import java.awt.Color;
 import java.awt.Component;
