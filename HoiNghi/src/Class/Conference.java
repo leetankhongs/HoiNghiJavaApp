@@ -15,6 +15,9 @@ public class Conference {
     private String nameConference;
     private String briefDescription;
 
+    public Conference() {
+    }
+
     public String getNameConference() {
         return nameConference;
     }

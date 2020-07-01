@@ -216,8 +216,6 @@ public class Login extends javax.swing.JFrame {
         });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/Picture/temp.png"));
-        Image image = imageIcon.getImage().getScaledInstance(128, 128, Image.SCALE_SMOOTH);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/login.png"))); // NOI18N
         jLabel1.setToolTipText("");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

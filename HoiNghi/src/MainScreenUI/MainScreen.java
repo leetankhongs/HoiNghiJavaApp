@@ -6,12 +6,11 @@
 package MainScreenUI;
 
 import Class.Conference;
+import ContentUI.ConferenceUI;
 import ContentUI.Home;
 import ContentUI.ListConference;
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
+import ContentUI.Statistic;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -34,7 +33,9 @@ public class MainScreen extends javax.swing.JFrame {
     final static private Color colorMoved_2 = new Color(220,220,255);
     
     private Home mainHome = new Home();
+    private Statistic mainStatistic = new Statistic();
     private ListConference mainListConference = new ListConference();
+    private ConferenceUI mainConference = new ConferenceUI();
 
     public MainScreen() {
         initComponents();
@@ -49,16 +50,15 @@ public class MainScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
+        jMainScreen = new javax.swing.JPanel();
         jCardLayout = new javax.swing.JPanel();
         jCardStatistic = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        j = new javax.swing.JPanel();
         jCardConference = new javax.swing.JPanel();
         jUsers = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
         jMenu = new javax.swing.JPanel();
+        jOptionMenu = new javax.swing.JPanel();
+        jMenubtn = new javax.swing.JPanel();
         jButtonMenu = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jHomePnl = new javax.swing.JPanel();
@@ -76,49 +76,48 @@ public class MainScreen extends javax.swing.JFrame {
         jUsersPnl = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        jSpace = new javax.swing.JPanel();
+        jHeader = new javax.swing.JPanel();
+        jLogo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jPanel10 = new javax.swing.JPanel();
+        jLog = new javax.swing.JPanel();
         jExitPnl = new javax.swing.JPanel();
         jButtonExitPnl = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLoginbtn = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jPanel8 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jFooter = new javax.swing.JPanel();
+        jAuthor = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
-        setResizable(false);
+        setLocationByPlatform(true);
+        setMinimumSize(new java.awt.Dimension(1400, 700));
+        setSize(new java.awt.Dimension(1400, 700));
 
-        jPanel3.setBackground(new java.awt.Color(58, 1, 108));
-        jPanel3.setLayout(new java.awt.BorderLayout());
+        jMainScreen.setBackground(new java.awt.Color(58, 1, 108));
+        jMainScreen.setLayout(new java.awt.BorderLayout());
 
         jCardLayout.setLayout(new java.awt.CardLayout());
 
         jCardStatistic.setBackground(new java.awt.Color(102, 255, 0));
         jCardStatistic.setLayout(new java.awt.BorderLayout());
 
-        jList1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jList1MouseMoved(evt);
-            }
-        });
-        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jList1MouseExited(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jList1MouseReleased(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jList1);
+        j.setMinimumSize(new java.awt.Dimension(1000, 0));
 
-        jCardStatistic.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        javax.swing.GroupLayout jLayout = new javax.swing.GroupLayout(j);
+        j.setLayout(jLayout);
+        jLayout.setHorizontalGroup(
+            jLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1000, Short.MAX_VALUE)
+        );
+        jLayout.setVerticalGroup(
+            jLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 590, Short.MAX_VALUE)
+        );
+
+        jCardStatistic.add(j, java.awt.BorderLayout.CENTER);
 
         jCardLayout.add(jCardStatistic, "card3");
 
@@ -128,11 +127,11 @@ public class MainScreen extends javax.swing.JFrame {
         jCardConference.setLayout(jCardConferenceLayout);
         jCardConferenceLayout.setHorizontalGroup(
             jCardConferenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1175, Short.MAX_VALUE)
+            .addGap(0, 1000, Short.MAX_VALUE)
         );
         jCardConferenceLayout.setVerticalGroup(
             jCardConferenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 705, Short.MAX_VALUE)
+            .addGap(0, 590, Short.MAX_VALUE)
         );
 
         jCardLayout.add(jCardConference, "card4");
@@ -143,7 +142,7 @@ public class MainScreen extends javax.swing.JFrame {
         jUsers.setLayout(jUsersLayout);
         jUsersLayout.setHorizontalGroup(
             jUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1175, Short.MAX_VALUE)
+            .addGap(0, 1000, Short.MAX_VALUE)
         );
         jUsersLayout.setVerticalGroup(
             jUsersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,18 +151,18 @@ public class MainScreen extends javax.swing.JFrame {
 
         jCardLayout.add(jUsers, "card5");
 
-        jPanel3.add(jCardLayout, java.awt.BorderLayout.CENTER);
+        jMainScreen.add(jCardLayout, java.awt.BorderLayout.CENTER);
 
-        jPanel2.setBackground(new java.awt.Color(0, 153, 0));
-        jPanel2.setPreferredSize(new java.awt.Dimension(200, 590));
-        jPanel2.setLayout(new java.awt.BorderLayout());
-
-        jPanel5.setBackground(new java.awt.Color(58, 1, 108));
-        jPanel5.setPreferredSize(new java.awt.Dimension(200, 350));
-        jPanel5.setLayout(new java.awt.GridLayout(0, 1));
-
-        jMenu.setBackground(new java.awt.Color(58, 1, 108));
+        jMenu.setBackground(new java.awt.Color(0, 153, 0));
+        jMenu.setPreferredSize(new java.awt.Dimension(200, 590));
         jMenu.setLayout(new java.awt.BorderLayout());
+
+        jOptionMenu.setBackground(new java.awt.Color(58, 1, 108));
+        jOptionMenu.setPreferredSize(new java.awt.Dimension(200, 350));
+        jOptionMenu.setLayout(new java.awt.GridLayout(0, 1));
+
+        jMenubtn.setBackground(new java.awt.Color(58, 1, 108));
+        jMenubtn.setLayout(new java.awt.BorderLayout());
 
         jButtonMenu.setBackground(new java.awt.Color(58, 1, 108));
         jButtonMenu.setPreferredSize(new java.awt.Dimension(50, 0));
@@ -188,9 +187,9 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel13.setPreferredSize(new java.awt.Dimension(50, 0));
         jButtonMenu.add(jLabel13, java.awt.BorderLayout.WEST);
 
-        jMenu.add(jButtonMenu, java.awt.BorderLayout.EAST);
+        jMenubtn.add(jButtonMenu, java.awt.BorderLayout.EAST);
 
-        jPanel5.add(jMenu);
+        jOptionMenu.add(jMenubtn);
 
         jHomePnl.setBackground(new java.awt.Color(58, 1, 108));
         jHomePnl.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -218,7 +217,7 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel8.setText("Home");
         jHomePnl.add(jLabel8, java.awt.BorderLayout.CENTER);
 
-        jPanel5.add(jHomePnl);
+        jOptionMenu.add(jHomePnl);
 
         jListConferencePnl.setBackground(new java.awt.Color(58, 1, 108));
         jListConferencePnl.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -246,7 +245,7 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel12.setText("List Conference");
         jListConferencePnl.add(jLabel12, java.awt.BorderLayout.CENTER);
 
-        jPanel5.add(jListConferencePnl);
+        jOptionMenu.add(jListConferencePnl);
 
         jStatisticPnl.setBackground(new java.awt.Color(58, 1, 108));
         jStatisticPnl.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -274,7 +273,7 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel5.setText("Statistics");
         jStatisticPnl.add(jLabel5, java.awt.BorderLayout.CENTER);
 
-        jPanel5.add(jStatisticPnl);
+        jOptionMenu.add(jStatisticPnl);
 
         jConferencesPnl.setBackground(new java.awt.Color(58, 1, 108));
         jConferencesPnl.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -302,7 +301,7 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel10.setText("Conferences");
         jConferencesPnl.add(jLabel10, java.awt.BorderLayout.CENTER);
 
-        jPanel5.add(jConferencesPnl);
+        jOptionMenu.add(jConferencesPnl);
 
         jUsersPnl.setBackground(new java.awt.Color(58, 1, 108));
         jUsersPnl.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -330,36 +329,36 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel19.setText("Users");
         jUsersPnl.add(jLabel19, java.awt.BorderLayout.CENTER);
 
-        jPanel5.add(jUsersPnl);
+        jOptionMenu.add(jUsersPnl);
 
-        jPanel2.add(jPanel5, java.awt.BorderLayout.NORTH);
+        jMenu.add(jOptionMenu, java.awt.BorderLayout.NORTH);
 
-        jPanel6.setBackground(new java.awt.Color(58, 1, 108));
-        jPanel6.setPreferredSize(new java.awt.Dimension(200, 290));
+        jSpace.setBackground(new java.awt.Color(58, 1, 108));
+        jSpace.setPreferredSize(new java.awt.Dimension(200, 290));
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jSpaceLayout = new javax.swing.GroupLayout(jSpace);
+        jSpace.setLayout(jSpaceLayout);
+        jSpaceLayout.setHorizontalGroup(
+            jSpaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jSpaceLayout.setVerticalGroup(
+            jSpaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jPanel2.add(jPanel6, java.awt.BorderLayout.CENTER);
+        jMenu.add(jSpace, java.awt.BorderLayout.CENTER);
 
-        jPanel3.add(jPanel2, java.awt.BorderLayout.WEST);
+        jMainScreen.add(jMenu, java.awt.BorderLayout.WEST);
 
-        getContentPane().add(jPanel3, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jMainScreen, java.awt.BorderLayout.CENTER);
 
-        jPanel7.setBackground(new java.awt.Color(58, 1, 108));
-        jPanel7.setPreferredSize(new java.awt.Dimension(1200, 80));
-        jPanel7.setLayout(new java.awt.BorderLayout());
+        jHeader.setBackground(new java.awt.Color(58, 1, 108));
+        jHeader.setPreferredSize(new java.awt.Dimension(1200, 80));
+        jHeader.setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBackground(new java.awt.Color(58, 1, 108));
-        jPanel1.setPreferredSize(new java.awt.Dimension(200, 100));
+        jLogo.setBackground(new java.awt.Color(58, 1, 108));
+        jLogo.setPreferredSize(new java.awt.Dimension(200, 100));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Brush Script Std", 1, 22)); // NOI18N
@@ -367,27 +366,27 @@ public class MainScreen extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("CONFERENCE");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jLogoLayout = new javax.swing.GroupLayout(jLogo);
+        jLogo.setLayout(jLogoLayout);
+        jLogoLayout.setHorizontalGroup(
+            jLogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLogoLayout.createSequentialGroup()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+        jLogoLayout.setVerticalGroup(
+            jLogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLogoLayout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jPanel7.add(jPanel1, java.awt.BorderLayout.WEST);
+        jHeader.add(jLogo, java.awt.BorderLayout.WEST);
 
-        jPanel10.setLayout(new java.awt.BorderLayout());
+        jLog.setLayout(new java.awt.BorderLayout());
 
         jExitPnl.setBackground(new java.awt.Color(58, 1, 108));
         jExitPnl.setPreferredSize(new java.awt.Dimension(40, 30));
@@ -419,11 +418,11 @@ public class MainScreen extends javax.swing.JFrame {
 
         jExitPnl.add(jButtonExitPnl, java.awt.BorderLayout.EAST);
 
-        jPanel10.add(jExitPnl, java.awt.BorderLayout.NORTH);
+        jLog.add(jExitPnl, java.awt.BorderLayout.NORTH);
 
         jPanel4.setBackground(new java.awt.Color(58, 1, 108));
-        jPanel4.setPreferredSize(new java.awt.Dimension(1000, 50));
-        jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanel4.setPreferredSize(new java.awt.Dimension(1000, 40));
+        jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 5, 0));
 
         jLoginbtn.setBackground(new java.awt.Color(58, 1, 108));
         jLoginbtn.setPreferredSize(new java.awt.Dimension(150, 50));
@@ -451,24 +450,24 @@ public class MainScreen extends javax.swing.JFrame {
 
         jPanel4.add(jLoginbtn);
 
-        jPanel10.add(jPanel4, java.awt.BorderLayout.CENTER);
+        jLog.add(jPanel4, java.awt.BorderLayout.CENTER);
 
-        jPanel7.add(jPanel10, java.awt.BorderLayout.CENTER);
+        jHeader.add(jLog, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(jPanel7, java.awt.BorderLayout.NORTH);
+        getContentPane().add(jHeader, java.awt.BorderLayout.NORTH);
 
-        jPanel8.setBackground(new java.awt.Color(58, 1, 108));
-        jPanel8.setPreferredSize(new java.awt.Dimension(1200, 30));
-        jPanel8.setLayout(new java.awt.BorderLayout());
+        jFooter.setBackground(new java.awt.Color(58, 1, 108));
+        jFooter.setPreferredSize(new java.awt.Dimension(1200, 30));
+        jFooter.setLayout(new java.awt.BorderLayout());
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("@Author: Lê Tấn Hưng @MSSV: 1712479   ");
-        jLabel3.setPreferredSize(new java.awt.Dimension(300, 13));
-        jPanel8.add(jLabel3, java.awt.BorderLayout.EAST);
+        jAuthor.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
+        jAuthor.setForeground(new java.awt.Color(255, 255, 255));
+        jAuthor.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jAuthor.setText("@Author: Lê Tấn Hưng @MSSV: 1712479   ");
+        jAuthor.setPreferredSize(new java.awt.Dimension(300, 13));
+        jFooter.add(jAuthor, java.awt.BorderLayout.EAST);
 
-        getContentPane().add(jPanel8, java.awt.BorderLayout.SOUTH);
+        getContentPane().add(jFooter, java.awt.BorderLayout.SOUTH);
 
         pack();
         setLocationRelativeTo(null);
@@ -497,7 +496,7 @@ public class MainScreen extends javax.swing.JFrame {
         resetColorUnClicked(jUsersPnl);
         
         jCardLayout.removeAll();
-        jCardLayout.add(jCardStatistic);
+        jCardLayout.add(mainStatistic);
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }//GEN-LAST:event_jStatisticPnlMouseReleased
@@ -511,7 +510,7 @@ public class MainScreen extends javax.swing.JFrame {
         resetColorUnClicked(jUsersPnl);
         
         jCardLayout.removeAll();
-        jCardLayout.add(jCardConference);
+        jCardLayout.add(mainConference);
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }//GEN-LAST:event_jConferencesPnlMouseReleased
@@ -611,19 +610,18 @@ public class MainScreen extends javax.swing.JFrame {
     private void jButtonMenuMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonMenuMouseReleased
         // TODO add your handling code here:
         // TODO add your handling code here:
-        if (jPanel2.getWidth() == 200) {
+        if (jMenu.getWidth() == 200) {
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         for (int i = 200; i >= 50; i = i - 1) {
                             Thread.sleep(1);
-                            jPanel2.setSize(i, 640);
+                            jMenu.setSize(i, 640);
                         }
                         
-                        jPanel2.setPreferredSize(new Dimension(50, 0));
+                        jMenu.setPreferredSize(new Dimension(50, 0));
                         revalidate();
-                        System.out.println(jPanel2.getWidth());
                         
                     } catch (Exception e) {
                     }
@@ -632,17 +630,17 @@ public class MainScreen extends javax.swing.JFrame {
             thread.start();
         }
 
-        if (jPanel2.getWidth() == 50) {
+        if (jMenu.getWidth() == 50) {
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         for (int i = 50; i <= 200; i = i + 1) {
                             Thread.sleep(1);
-                            jPanel2.setSize(i, 640);
+                            jMenu.setSize(i, 640);
                         }
                         
-                        jPanel2.setPreferredSize(new Dimension(200, 0));
+                        jMenu.setPreferredSize(new Dimension(200, 0));
                         repaint();
                         revalidate();
                     } catch (Exception e) {
@@ -694,22 +692,6 @@ public class MainScreen extends javax.swing.JFrame {
         jCardLayout.revalidate();
     }//GEN-LAST:event_jListConferencePnlMouseReleased
 
-    private void jList1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseReleased
-        // TODO add your handling code here:
-        System.out.println(jList1.getSelectedIndex());
-
-    }//GEN-LAST:event_jList1MouseReleased
-
-    private void jList1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseMoved
-        // TODO add your handling code here:
-        Component component = evt.getComponent();
-        component.setBackground(Color.GRAY);
-    }//GEN-LAST:event_jList1MouseMoved
-
-    private void jList1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jList1MouseExited
-
     void setColorClicked(JPanel jp) {
         jp.setBackground(colorCliked);
 
@@ -760,23 +742,12 @@ public class MainScreen extends javax.swing.JFrame {
 
     
 
-    private void createListBooks() {
-        // create List model
-        DefaultListModel<Conference> model = new DefaultListModel<>();
-        // add item to model
-        model.addElement(new Conference("C/C++ Programming", "A"));
-        model.addElement(new Conference("Java Programming", "B"));
-        model.addElement(new Conference("C# Programming", "C"));
-        model.addElement(new Conference("IOS Programming", "D"));
-        model.addElement(new Conference("Windows Phone Programming", "E"));
-        model.addElement(new Conference("Android Programming", "F"));
-        // set cell renderer 
-//        .setCellRenderer(new ConferenceRender());
-//                jList1.setModel(model);
 
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel j;
+    private javax.swing.JLabel jAuthor;
     private javax.swing.JPanel jButtonExitPnl;
     private javax.swing.JPanel jButtonMenu;
     private javax.swing.JPanel jCardConference;
@@ -784,6 +755,8 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jCardStatistic;
     private javax.swing.JPanel jConferencesPnl;
     private javax.swing.JPanel jExitPnl;
+    private javax.swing.JPanel jFooter;
+    private javax.swing.JPanel jHeader;
     private javax.swing.JPanel jHomePnl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -793,28 +766,23 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<Conference> jList1;
     private javax.swing.JPanel jListConferencePnl;
+    private javax.swing.JPanel jLog;
     private javax.swing.JPanel jLoginbtn;
+    private javax.swing.JPanel jLogo;
+    private javax.swing.JPanel jMainScreen;
     private javax.swing.JPanel jMenu;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jMenubtn;
+    private javax.swing.JPanel jOptionMenu;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPanel jSpace;
     private javax.swing.JPanel jStatisticPnl;
     private javax.swing.JPanel jUsers;
     private javax.swing.JPanel jUsersPnl;

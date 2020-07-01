@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author ADMIN
  */
-public class ConferenceRenderCard extends javax.swing.JPanel {
+public class ConferenceRendererCard extends javax.swing.JPanel {
 
     /**
      * Creates new form ConferenceRenderCard
@@ -27,7 +27,7 @@ public class ConferenceRenderCard extends javax.swing.JPanel {
     private final Color defaultColor = new Color(238,238,255);
     private Conference conference;
     
-    public ConferenceRenderCard(Conference con) {
+    public ConferenceRendererCard(Conference con) {
         initComponents();
         conference = con;
         initData();
@@ -49,7 +49,6 @@ public class ConferenceRenderCard extends javax.swing.JPanel {
         jName = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(238, 238, 255));
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 153)));
         setPreferredSize(new java.awt.Dimension(300, 200));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {

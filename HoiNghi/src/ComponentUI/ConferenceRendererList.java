@@ -19,7 +19,7 @@ import javax.swing.ListCellRenderer;
  *
  * @author ADMIN
  */
-public class ConferenceRenderList extends javax.swing.JPanel {
+public class ConferenceRendererList extends javax.swing.JPanel {
 
     /**
      * Creates new form ConferenceRender
@@ -30,11 +30,11 @@ public class ConferenceRenderList extends javax.swing.JPanel {
     
     Conference conference;
 
-    public ConferenceRenderList() {
+    public ConferenceRendererList() {
         initComponents();
         
     }
-    public ConferenceRenderList(Conference con){
+    public ConferenceRendererList(Conference con){
         initComponents();
         conference = con;
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/Picture/hoi-nghi-truyen-hinh.jpg"));
@@ -54,13 +54,12 @@ public class ConferenceRenderList extends javax.swing.JPanel {
     private void initComponents() {
 
         jIcon = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        jContent = new javax.swing.JPanel();
         jName = new javax.swing.JLabel();
         jDescription = new javax.swing.JLabel();
         jDate = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(238, 238, 255));
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         setPreferredSize(new java.awt.Dimension(571, 100));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -82,29 +81,29 @@ public class ConferenceRenderList extends javax.swing.JPanel {
         jIcon.setPreferredSize(new java.awt.Dimension(150, 13));
         add(jIcon, java.awt.BorderLayout.WEST);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        jContent.setBackground(new java.awt.Color(255, 255, 255));
+        jContent.setOpaque(false);
+        jContent.setLayout(new java.awt.BorderLayout());
 
         jName.setBackground(new java.awt.Color(255, 255, 255));
         jName.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jName.setPreferredSize(new java.awt.Dimension(31, 40));
-        jPanel1.add(jName, java.awt.BorderLayout.NORTH);
+        jContent.add(jName, java.awt.BorderLayout.NORTH);
 
         jDescription.setBackground(new java.awt.Color(255, 255, 255));
         jDescription.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
         jDescription.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jDescription, java.awt.BorderLayout.LINE_START);
+        jContent.add(jDescription, java.awt.BorderLayout.LINE_START);
 
         jDate.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jDate.setForeground(new java.awt.Color(255, 0, 51));
         jDate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jDate.setText("17/07/1999");
         jDate.setPreferredSize(new java.awt.Dimension(45, 20));
-        jPanel1.add(jDate, java.awt.BorderLayout.PAGE_END);
+        jContent.add(jDate, java.awt.BorderLayout.PAGE_END);
 
-        add(jPanel1, java.awt.BorderLayout.CENTER);
+        add(jContent, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
@@ -131,11 +130,11 @@ public class ConferenceRenderList extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jContent;
     private javax.swing.JLabel jDate;
     private javax.swing.JLabel jDescription;
     private javax.swing.JLabel jIcon;
     private javax.swing.JLabel jName;
-    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
 

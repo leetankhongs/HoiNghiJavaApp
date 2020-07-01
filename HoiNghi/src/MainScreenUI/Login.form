@@ -368,7 +368,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="horizontalAlignment" type="int" value="0" postCode="ImageIcon imageIcon = new ImageIcon(getClass().getResource(&quot;/Picture/temp.png&quot;));&#xa;Image image = imageIcon.getImage().getScaledInstance(128, 128, Image.SCALE_SMOOTH);"/>
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Picture/login.png"/>
             </Property>

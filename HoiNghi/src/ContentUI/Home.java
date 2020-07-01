@@ -27,57 +27,57 @@ public class Home extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel9 = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
+        jHeader = new javax.swing.JPanel();
+        jNameApp = new javax.swing.JLabel();
+        jIntroduce = new javax.swing.JLabel();
+        jUniversity = new javax.swing.JLabel();
+        jImageConference = new javax.swing.JPanel();
+        jImage = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
-        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel9.setPreferredSize(new java.awt.Dimension(1203, 150));
-        jPanel9.setLayout(new java.awt.BorderLayout());
+        jHeader.setBackground(new java.awt.Color(255, 255, 255));
+        jHeader.setPreferredSize(new java.awt.Dimension(1203, 150));
+        jHeader.setLayout(new java.awt.BorderLayout());
 
-        jLabel14.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(102, 0, 153));
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText("CONFERENCE APPLICATION");
-        jLabel14.setPreferredSize(new java.awt.Dimension(516, 50));
-        jPanel9.add(jLabel14, java.awt.BorderLayout.NORTH);
+        jNameApp.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        jNameApp.setForeground(new java.awt.Color(102, 0, 153));
+        jNameApp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jNameApp.setText("CONFERENCE APPLICATION");
+        jNameApp.setPreferredSize(new java.awt.Dimension(516, 50));
+        jHeader.add(jNameApp, java.awt.BorderLayout.NORTH);
 
-        jLabel15.setFont(new java.awt.Font("Times New Roman", 1, 28)); // NOI18N
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Frovide Conferences For Those Who Need It");
-        jPanel9.add(jLabel15, java.awt.BorderLayout.CENTER);
+        jIntroduce.setFont(new java.awt.Font("Times New Roman", 1, 28)); // NOI18N
+        jIntroduce.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jIntroduce.setText("Frovide Conferences For Those Who Need It");
+        jHeader.add(jIntroduce, java.awt.BorderLayout.CENTER);
 
-        jLabel17.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("University Of Science");
-        jLabel17.setPreferredSize(new java.awt.Dimension(38, 50));
-        jPanel9.add(jLabel17, java.awt.BorderLayout.SOUTH);
+        jUniversity.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jUniversity.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jUniversity.setText("University Of Science");
+        jUniversity.setPreferredSize(new java.awt.Dimension(38, 50));
+        jHeader.add(jUniversity, java.awt.BorderLayout.SOUTH);
 
-        add(jPanel9, java.awt.BorderLayout.PAGE_START);
+        add(jHeader, java.awt.BorderLayout.PAGE_START);
 
-        jPanel11.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel11.setLayout(new java.awt.BorderLayout());
+        jImageConference.setBackground(new java.awt.Color(255, 255, 255));
+        jImageConference.setLayout(new java.awt.BorderLayout());
 
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/velocityca2019_og_image.jpg"))); // NOI18N
-        jLabel16.setPreferredSize(new java.awt.Dimension(500, 13));
-        jPanel11.add(jLabel16, java.awt.BorderLayout.CENTER);
+        jImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/velocityca2019_og_image.jpg"))); // NOI18N
+        jImage.setPreferredSize(new java.awt.Dimension(500, 13));
+        jImageConference.add(jImage, java.awt.BorderLayout.CENTER);
 
-        add(jPanel11, java.awt.BorderLayout.CENTER);
+        add(jImageConference, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jHeader;
+    private javax.swing.JLabel jImage;
+    private javax.swing.JPanel jImageConference;
+    private javax.swing.JLabel jIntroduce;
+    private javax.swing.JLabel jNameApp;
+    private javax.swing.JLabel jUniversity;
     // End of variables declaration//GEN-END:variables
 }

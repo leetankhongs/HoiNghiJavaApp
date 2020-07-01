@@ -6,8 +6,8 @@
 package ContentUI;
 
 import Class.Conference;
-import ComponentUI.ConferenceRenderCard;
-import ComponentUI.ConferenceRenderList;
+import ComponentUI.ConferenceRendererCard;
+import ComponentUI.ConferenceRendererList;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 
@@ -21,9 +21,9 @@ public class ListConference extends javax.swing.JPanel {
      * Creates new form ListConference
      */
     
-    final static private Color deufault = new Color(58, 1, 108);
+    final static private Color deufault = new Color(224,224,250);
     final static private Color colorCliked = new Color(84, 3, 156);
-    final static private Color colorMoved = new Color(74,2,137);
+    final static private Color colorMoved = new Color(153,153,255);
     final static private Color colorMoved_2 = new Color(220,220,255);
     
     public ListConference() {
@@ -41,15 +41,15 @@ public class ListConference extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel13 = new javax.swing.JPanel();
-        jPanel12 = new javax.swing.JPanel();
+        jHeader = new javax.swing.JPanel();
+        jChoiceView = new javax.swing.JPanel();
         jListViewbtn = new javax.swing.JLabel();
         jCardViewbtn = new javax.swing.JLabel();
-        jPanel14 = new javax.swing.JPanel();
-        jPanel15 = new javax.swing.JPanel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jPanel17 = new javax.swing.JPanel();
-        jPanel18 = new javax.swing.JPanel();
+        jAdditionOption = new javax.swing.JPanel();
+        jResetAndDate = new javax.swing.JPanel();
+        jDateChooser = new com.toedter.calendar.JDateChooser();
+        jSpace = new javax.swing.JPanel();
+        jReset = new javax.swing.JPanel();
         jResetbtn = new javax.swing.JLabel();
         jSearchPnl = new javax.swing.JPanel();
         jSearchbtn = new javax.swing.JLabel();
@@ -62,23 +62,23 @@ public class ListConference extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         jCardConferenceView = new javax.swing.JPanel();
         jPaginationConference = new javax.swing.JPanel();
-        jLabel20 = new javax.swing.JLabel();
-        jPanel16 = new javax.swing.JPanel();
+        jDescriptionPag = new javax.swing.JLabel();
+        jPaginationButton = new javax.swing.JPanel();
         jFirstbtn = new javax.swing.JLabel();
         jPrebtn = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jPosition = new javax.swing.JTextField();
         jNextbtn = new javax.swing.JLabel();
         jLastbtn = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
-        jPanel13.setBackground(new java.awt.Color(58, 1, 108));
-        jPanel13.setPreferredSize(new java.awt.Dimension(0, 50));
-        jPanel13.setLayout(new java.awt.BorderLayout());
+        jHeader.setBackground(new java.awt.Color(224, 224, 250));
+        jHeader.setPreferredSize(new java.awt.Dimension(0, 50));
+        jHeader.setLayout(new java.awt.BorderLayout());
 
-        jPanel12.setBackground(new java.awt.Color(58, 1, 108));
-        jPanel12.setPreferredSize(new java.awt.Dimension(300, 50));
-        jPanel12.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
+        jChoiceView.setBackground(new java.awt.Color(224, 224, 250));
+        jChoiceView.setPreferredSize(new java.awt.Dimension(300, 50));
+        jChoiceView.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
         jListViewbtn.setBackground(new java.awt.Color(84, 3, 156));
         jListViewbtn.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -99,7 +99,7 @@ public class ListConference extends javax.swing.JPanel {
                 jListViewbtnMouseReleased(evt);
             }
         });
-        jPanel12.add(jListViewbtn);
+        jChoiceView.add(jListViewbtn);
 
         jCardViewbtn.setBackground(new java.awt.Color(255, 255, 255));
         jCardViewbtn.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -119,43 +119,44 @@ public class ListConference extends javax.swing.JPanel {
                 jCardViewbtnMouseReleased(evt);
             }
         });
-        jPanel12.add(jCardViewbtn);
+        jChoiceView.add(jCardViewbtn);
 
-        jPanel13.add(jPanel12, java.awt.BorderLayout.WEST);
+        jHeader.add(jChoiceView, java.awt.BorderLayout.WEST);
 
-        jPanel14.setBackground(new java.awt.Color(58, 1, 108));
-        jPanel14.setLayout(new java.awt.BorderLayout());
+        jAdditionOption.setBackground(new java.awt.Color(58, 1, 108));
+        jAdditionOption.setLayout(new java.awt.BorderLayout());
 
-        jPanel15.setBackground(new java.awt.Color(58, 1, 108));
-        jPanel15.setPreferredSize(new java.awt.Dimension(150, 50));
-        jPanel15.setLayout(new java.awt.BorderLayout());
+        jResetAndDate.setBackground(new java.awt.Color(224, 224, 250));
+        jResetAndDate.setPreferredSize(new java.awt.Dimension(400, 50));
+        jResetAndDate.setLayout(new java.awt.BorderLayout());
 
-        jDateChooser1.setDateFormatString("dd/MM/yyyy");
-        jDateChooser1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jDateChooser1.setOpaque(false);
-        jDateChooser1.setPreferredSize(new java.awt.Dimension(150, 20));
-        jPanel15.add(jDateChooser1, java.awt.BorderLayout.CENTER);
+        jDateChooser.setDateFormatString("dd/MM/yyyy");
+        jDateChooser.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jDateChooser.setOpaque(false);
+        jDateChooser.setPreferredSize(new java.awt.Dimension(150, 20));
+        jResetAndDate.add(jDateChooser, java.awt.BorderLayout.CENTER);
 
-        jPanel17.setOpaque(false);
-        jPanel17.setPreferredSize(new java.awt.Dimension(50, 50));
+        jSpace.setBackground(new java.awt.Color(224, 224, 250));
+        jSpace.setOpaque(false);
+        jSpace.setPreferredSize(new java.awt.Dimension(50, 50));
 
-        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
-        jPanel17.setLayout(jPanel17Layout);
-        jPanel17Layout.setHorizontalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jSpaceLayout = new javax.swing.GroupLayout(jSpace);
+        jSpace.setLayout(jSpaceLayout);
+        jSpaceLayout.setHorizontalGroup(
+            jSpaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel17Layout.setVerticalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jSpaceLayout.setVerticalGroup(
+            jSpaceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jPanel15.add(jPanel17, java.awt.BorderLayout.EAST);
+        jResetAndDate.add(jSpace, java.awt.BorderLayout.EAST);
 
-        jPanel18.setOpaque(false);
-        jPanel18.setPreferredSize(new java.awt.Dimension(200, 50));
+        jReset.setOpaque(false);
+        jReset.setPreferredSize(new java.awt.Dimension(200, 50));
 
-        jResetbtn.setBackground(new java.awt.Color(58, 1, 108));
+        jResetbtn.setBackground(new java.awt.Color(224, 224, 250));
         jResetbtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jResetbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Available-Updates-icon.png"))); // NOI18N
         jResetbtn.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -174,17 +175,17 @@ public class ListConference extends javax.swing.JPanel {
                 jResetbtnMouseReleased(evt);
             }
         });
-        jPanel18.add(jResetbtn);
+        jReset.add(jResetbtn);
 
-        jPanel15.add(jPanel18, java.awt.BorderLayout.WEST);
+        jResetAndDate.add(jReset, java.awt.BorderLayout.WEST);
 
-        jPanel14.add(jPanel15, java.awt.BorderLayout.CENTER);
+        jAdditionOption.add(jResetAndDate, java.awt.BorderLayout.WEST);
 
-        jSearchPnl.setBackground(new java.awt.Color(58, 1, 108));
+        jSearchPnl.setBackground(new java.awt.Color(224, 224, 250));
         jSearchPnl.setPreferredSize(new java.awt.Dimension(300, 50));
         jSearchPnl.setLayout(new java.awt.BorderLayout());
 
-        jSearchbtn.setBackground(new java.awt.Color(58, 1, 108));
+        jSearchbtn.setBackground(new java.awt.Color(224, 224, 250));
         jSearchbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Search-icon.png"))); // NOI18N
         jSearchbtn.setOpaque(true);
         jSearchbtn.setPreferredSize(new java.awt.Dimension(50, 13));
@@ -204,7 +205,7 @@ public class ListConference extends javax.swing.JPanel {
         jSearchPnl.add(jSearchbtn, java.awt.BorderLayout.WEST);
 
         jSearchText.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jSearchText.setText("Search name conference");
+        jSearchText.setText("Search conference name");
         jSearchText.setToolTipText("");
         jSearchText.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -213,11 +214,11 @@ public class ListConference extends javax.swing.JPanel {
         });
         jSearchPnl.add(jSearchText, java.awt.BorderLayout.CENTER);
 
-        jPanel14.add(jSearchPnl, java.awt.BorderLayout.EAST);
+        jAdditionOption.add(jSearchPnl, java.awt.BorderLayout.CENTER);
 
-        jPanel13.add(jPanel14, java.awt.BorderLayout.CENTER);
+        jHeader.add(jAdditionOption, java.awt.BorderLayout.CENTER);
 
-        add(jPanel13, java.awt.BorderLayout.NORTH);
+        add(jHeader, java.awt.BorderLayout.NORTH);
 
         jConferenceView.setLayout(new java.awt.CardLayout());
 
@@ -228,7 +229,7 @@ public class ListConference extends javax.swing.JPanel {
         jListView.setLayout(new java.awt.BorderLayout(0, 10));
 
         jListConferenceView.setBackground(new java.awt.Color(255, 255, 255));
-        jListConferenceView.setLayout(new java.awt.GridLayout(0, 1, 0, 10));
+        jListConferenceView.setLayout(new java.awt.GridLayout(0, 1, 20, 20));
         jScrollPane3.setViewportView(jListConferenceView);
 
         jListView.add(jScrollPane3, java.awt.BorderLayout.CENTER);
@@ -245,7 +246,7 @@ public class ListConference extends javax.swing.JPanel {
         jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jCardConferenceView.setBackground(new java.awt.Color(255, 255, 255));
-        jCardConferenceView.setLayout(new java.awt.GridLayout(0, 3, 10, 10));
+        jCardConferenceView.setLayout(new java.awt.GridLayout(0, 3, 20, 20));
         jScrollPane4.setViewportView(jCardConferenceView);
 
         jCardView.add(jScrollPane4, java.awt.BorderLayout.CENTER);
@@ -254,23 +255,22 @@ public class ListConference extends javax.swing.JPanel {
 
         add(jConferenceView, java.awt.BorderLayout.CENTER);
 
-        jPaginationConference.setBackground(new java.awt.Color(58, 1, 108));
+        jPaginationConference.setBackground(new java.awt.Color(224, 224, 250));
         jPaginationConference.setPreferredSize(new java.awt.Dimension(1198, 50));
         jPaginationConference.setLayout(new java.awt.BorderLayout());
 
-        jLabel20.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel20.setText("Page 1 for 1-6/100");
-        jLabel20.setPreferredSize(new java.awt.Dimension(300, 13));
-        jPaginationConference.add(jLabel20, java.awt.BorderLayout.WEST);
+        jDescriptionPag.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jDescriptionPag.setText("Page 1 for 1-6/100");
+        jDescriptionPag.setPreferredSize(new java.awt.Dimension(300, 13));
+        jPaginationConference.add(jDescriptionPag, java.awt.BorderLayout.WEST);
 
-        jPanel16.setOpaque(false);
-        jPanel16.setPreferredSize(new java.awt.Dimension(290, 50));
-        jPanel16.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
+        jPaginationButton.setOpaque(false);
+        jPaginationButton.setPreferredSize(new java.awt.Dimension(290, 50));
+        jPaginationButton.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
 
-        jFirstbtn.setBackground(new java.awt.Color(58, 1, 108));
+        jFirstbtn.setBackground(new java.awt.Color(224, 224, 250));
         jFirstbtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jFirstbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Rewind-icon-2.png"))); // NOI18N
+        jFirstbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Rewind-icon.png"))); // NOI18N
         jFirstbtn.setOpaque(true);
         jFirstbtn.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -285,9 +285,9 @@ public class ListConference extends javax.swing.JPanel {
                 jFirstbtnMouseReleased(evt);
             }
         });
-        jPanel16.add(jFirstbtn);
+        jPaginationButton.add(jFirstbtn);
 
-        jPrebtn.setBackground(new java.awt.Color(58, 1, 108));
+        jPrebtn.setBackground(new java.awt.Color(224, 224, 250));
         jPrebtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPrebtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Chevron-Left-icon.png"))); // NOI18N
         jPrebtn.setOpaque(true);
@@ -304,12 +304,12 @@ public class ListConference extends javax.swing.JPanel {
                 jPrebtnMouseReleased(evt);
             }
         });
-        jPanel16.add(jPrebtn);
+        jPaginationButton.add(jPrebtn);
 
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPanel16.add(jTextField1);
+        jPosition.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPaginationButton.add(jPosition);
 
-        jNextbtn.setBackground(new java.awt.Color(58, 1, 108));
+        jNextbtn.setBackground(new java.awt.Color(224, 224, 250));
         jNextbtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jNextbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Chevron-Right-icon.png"))); // NOI18N
         jNextbtn.setOpaque(true);
@@ -326,9 +326,9 @@ public class ListConference extends javax.swing.JPanel {
                 jNextbtnMouseReleased(evt);
             }
         });
-        jPanel16.add(jNextbtn);
+        jPaginationButton.add(jNextbtn);
 
-        jLastbtn.setBackground(new java.awt.Color(58, 1, 108));
+        jLastbtn.setBackground(new java.awt.Color(224, 224, 250));
         jLastbtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLastbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Fast-Forward-icon.png"))); // NOI18N
         jLastbtn.setOpaque(true);
@@ -345,9 +345,9 @@ public class ListConference extends javax.swing.JPanel {
                 jLastbtnMouseReleased(evt);
             }
         });
-        jPanel16.add(jLastbtn);
+        jPaginationButton.add(jLastbtn);
 
-        jPaginationConference.add(jPanel16, java.awt.BorderLayout.EAST);
+        jPaginationConference.add(jPaginationButton, java.awt.BorderLayout.EAST);
 
         add(jPaginationConference, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
@@ -440,7 +440,7 @@ public class ListConference extends javax.swing.JPanel {
     private void jSearchTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchTextFocusLost
         // TODO add your handling code here:
         if(jSearchText.getText().compareTo("") == 0)
-        jSearchText.setText("Search name conference");
+        jSearchText.setText("Search conference name ");
     }//GEN-LAST:event_jSearchTextFocusLost
 
     private void jFirstbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFirstbtnMouseMoved
@@ -500,69 +500,69 @@ public class ListConference extends javax.swing.JPanel {
     }//GEN-LAST:event_jLastbtnMouseReleased
 
     private void createViewList() {
-        jListConferenceView.add(new ConferenceRenderList(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jListConferenceView.add(new ConferenceRenderList(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jListConferenceView.add(new ConferenceRenderList(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jListConferenceView.add(new ConferenceRenderList(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jListConferenceView.add(new ConferenceRenderList(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
-        jListConferenceView.add(new ConferenceRenderList(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
-        jListConferenceView.add(new ConferenceRenderList(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
-        jListConferenceView.add(new ConferenceRenderList(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
-        jListConferenceView.add(new ConferenceRenderList(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
-        jListConferenceView.add(new ConferenceRenderList(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
-        jListConferenceView.add(new ConferenceRenderList(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
-        jListConferenceView.add(new ConferenceRenderList(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
-        jListConferenceView.add(new ConferenceRenderList(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
-        jListConferenceView.add(new ConferenceRenderList(new Conference("IOS Programming", "VLưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
-        jListConferenceView.add(new ConferenceRenderList(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference("IOS Programming", "VLưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
     }
     
     private void createViewCard(){
-        jCardConferenceView.add(new ConferenceRenderCard(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jCardConferenceView.add(new ConferenceRenderCard(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jCardConferenceView.add(new ConferenceRenderCard(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jCardConferenceView.add(new ConferenceRenderCard(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jCardConferenceView.add(new ConferenceRenderCard(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
-        jCardConferenceView.add(new ConferenceRenderCard(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
-        jCardConferenceView.add(new ConferenceRenderCard(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
-        jCardConferenceView.add(new ConferenceRenderCard(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
-        jCardConferenceView.add(new ConferenceRenderCard(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
-        jCardConferenceView.add(new ConferenceRenderCard(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
-        jCardConferenceView.add(new ConferenceRenderCard(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
-        jCardConferenceView.add(new ConferenceRenderCard(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
-        jCardConferenceView.add(new ConferenceRenderCard(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
-        jCardConferenceView.add(new ConferenceRenderCard(new Conference("IOS Programming", "VLưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
-        jCardConferenceView.add(new ConferenceRenderCard(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference("IOS Programming", "VLưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jAdditionOption;
     private javax.swing.JPanel jCardConferenceView;
     private javax.swing.JPanel jCardView;
     private javax.swing.JLabel jCardViewbtn;
+    private javax.swing.JPanel jChoiceView;
     private javax.swing.JPanel jConferenceView;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser;
+    private javax.swing.JLabel jDescriptionPag;
     private javax.swing.JLabel jFirstbtn;
-    private javax.swing.JLabel jLabel20;
+    private javax.swing.JPanel jHeader;
     private javax.swing.JLabel jLastbtn;
     private javax.swing.JPanel jListConferenceView;
     private javax.swing.JPanel jListView;
     private javax.swing.JLabel jListViewbtn;
     private javax.swing.JLabel jNextbtn;
+    private javax.swing.JPanel jPaginationButton;
     private javax.swing.JPanel jPaginationConference;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
+    private javax.swing.JTextField jPosition;
     private javax.swing.JLabel jPrebtn;
+    private javax.swing.JPanel jReset;
+    private javax.swing.JPanel jResetAndDate;
     private javax.swing.JLabel jResetbtn;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JPanel jSearchPnl;
     private javax.swing.JTextField jSearchText;
     private javax.swing.JLabel jSearchbtn;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel jSpace;
     // End of variables declaration//GEN-END:variables
 }
