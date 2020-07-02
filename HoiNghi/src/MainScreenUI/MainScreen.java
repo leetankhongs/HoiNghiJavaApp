@@ -5,7 +5,7 @@
  */
 package MainScreenUI;
 
-import Class.Conference;
+import Class.Conference11;
 import ContentUI.ConferenceUI;
 import ContentUI.Home;
 import ContentUI.ListConference;
@@ -16,7 +16,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 
 /**
  *
@@ -29,9 +28,9 @@ public class MainScreen extends javax.swing.JFrame {
      */
     final static private Color deufault = new Color(58, 1, 108);
     final static private Color colorCliked = new Color(84, 3, 156);
-    final static private Color colorMoved = new Color(74,2,137);
-    final static private Color colorMoved_2 = new Color(220,220,255);
-    
+    final static private Color colorMoved = new Color(74, 2, 137);
+    final static private Color colorMoved_2 = new Color(220, 220, 255);
+
     private Home mainHome = new Home();
     private Statistic mainStatistic = new Statistic();
     private ListConference mainListConference = new ListConference();
@@ -480,7 +479,7 @@ public class MainScreen extends javax.swing.JFrame {
         resetColorUnClicked(jStatisticPnl);
         resetColorUnClicked(jConferencesPnl);
         resetColorUnClicked(jUsersPnl);
-        
+
         jCardLayout.removeAll();
         jCardLayout.add(mainHome);
         jCardLayout.repaint();
@@ -494,7 +493,7 @@ public class MainScreen extends javax.swing.JFrame {
         resetColorUnClicked(jListConferencePnl);
         resetColorUnClicked(jConferencesPnl);
         resetColorUnClicked(jUsersPnl);
-        
+
         jCardLayout.removeAll();
         jCardLayout.add(mainStatistic);
         jCardLayout.repaint();
@@ -508,7 +507,7 @@ public class MainScreen extends javax.swing.JFrame {
         resetColorUnClicked(jListConferencePnl);
         resetColorUnClicked(jStatisticPnl);
         resetColorUnClicked(jUsersPnl);
-        
+
         jCardLayout.removeAll();
         jCardLayout.add(mainConference);
         jCardLayout.repaint();
@@ -522,7 +521,7 @@ public class MainScreen extends javax.swing.JFrame {
         resetColorUnClicked(jListConferencePnl);
         resetColorUnClicked(jStatisticPnl);
         resetColorUnClicked(jConferencesPnl);
-        
+
         jCardLayout.removeAll();
         jCardLayout.add(jUsers);
         jCardLayout.repaint();
@@ -619,10 +618,10 @@ public class MainScreen extends javax.swing.JFrame {
                             Thread.sleep(1);
                             jMenu.setSize(i, 640);
                         }
-                        
+
                         jMenu.setPreferredSize(new Dimension(50, 0));
                         revalidate();
-                        
+
                     } catch (Exception e) {
                     }
                 }
@@ -639,7 +638,7 @@ public class MainScreen extends javax.swing.JFrame {
                             Thread.sleep(1);
                             jMenu.setSize(i, 640);
                         }
-                        
+
                         jMenu.setPreferredSize(new Dimension(200, 0));
                         repaint();
                         revalidate();
@@ -685,7 +684,7 @@ public class MainScreen extends javax.swing.JFrame {
         resetColorUnClicked(jStatisticPnl);
         resetColorUnClicked(jConferencesPnl);
         resetColorUnClicked(jUsersPnl);
-        
+
         jCardLayout.removeAll();
         jCardLayout.add(mainListConference);
         jCardLayout.repaint();
@@ -740,10 +739,6 @@ public class MainScreen extends javax.swing.JFrame {
         });
     }
 
-    
-
-
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel j;

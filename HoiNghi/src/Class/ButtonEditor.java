@@ -24,7 +24,7 @@ public class ButtonEditor extends DefaultCellEditor{
     private JButton button;
     private String lbl;
     private Boolean clicked;
-    private Conference con;
+    private Conference11 con;
     
     public ButtonEditor(JTextField txt){
         super(txt);
@@ -44,7 +44,7 @@ public class ButtonEditor extends DefaultCellEditor{
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object object, boolean isSelected, int row, int column) {
-        Conference conference = (Conference)object;
+        Conference11 conference = (Conference11)object;
         con = conference;
         lbl = conference.getNameConference();
         button.setText(lbl);

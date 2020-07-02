@@ -120,7 +120,7 @@ public class NewConference extends javax.swing.JFrame {
         jInformationConference.add(jPlaceChooser, gridBagConstraints);
 
         jAddNewPlace.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jAddNewPlace.setText("Add");
+        jAddNewPlace.setText("ADD");
         jAddNewPlace.setPreferredSize(new java.awt.Dimension(80, 40));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 2;

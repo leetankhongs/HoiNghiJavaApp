@@ -11,11 +11,11 @@ import java.util.Date;
  *
  * @author ADMIN
  */
-public class Conference {
+public class Conference11 {
     private String nameConference;
     private String briefDescription;
 
-    public Conference() {
+    public Conference11() {
     }
 
     public String getNameConference() {
@@ -34,7 +34,7 @@ public class Conference {
         this.briefDescription = briefDescription;
     }
 
-    public Conference(String nameConference, String briefDescription) {
+    public Conference11(String nameConference, String briefDescription) {
         this.nameConference = nameConference;
         this.briefDescription = briefDescription;
     }

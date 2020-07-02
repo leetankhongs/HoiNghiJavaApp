@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 2, 2020, 12:09:00 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJO.Place" table="place" catalog="conferencemanagement" optimistic-lock="version">
+        <id name="id" type="string">
+            <column name="ID" length="7" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="conference" class="POJO.Conference" fetch="select">
+            <column name="IDConference" length="4" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="Name" length="64" />
+        </property>
+        <property name="address" type="string">
+            <column name="Address" length="256" />
+        </property>
+        <property name="capacity" type="java.lang.Integer">
+            <column name="Capacity" />
+        </property>
+    </class>
+</hibernate-mapping>

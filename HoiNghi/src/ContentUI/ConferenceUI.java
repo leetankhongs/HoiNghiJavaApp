@@ -7,7 +7,7 @@ package ContentUI;
 
 import Class.ButtonEditor;
 import Class.ButtonRenderer;
-import Class.Conference;
+import Class.Conference11;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.ParseException;
@@ -42,10 +42,10 @@ public class ConferenceUI extends javax.swing.JPanel {
             
             DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
             
-            tm.addRow(new Object[]{1, "A", sdf.parse("11-11-2020"), sdf.parse("11-11-2020"), "Column 4", new Conference("C#", "1")});
-            tm.addRow(new Object[]{2, "C", sdf.parse("12-11-2020"), sdf.parse("11-11-2020"), "Column 4", new Conference("JAVA", "2")});
-            tm.addRow(new Object[]{3, "E", sdf.parse("11-11-2020"), sdf.parse("13-11-2016"), "Column 4", new Conference("PTHON", "3")});
-            tm.addRow(new Object[]{4, "B", sdf.parse("11-11-2020"), sdf.parse("14-11-2015"), "Column 4", new Conference("TEMP", "4")});
+            tm.addRow(new Object[]{1, "A", sdf.parse("11-11-2020"), sdf.parse("11-11-2020"), "Column 4", new Conference11("C#", "1")});
+            tm.addRow(new Object[]{2, "C", sdf.parse("12-11-2020"), sdf.parse("11-11-2020"), "Column 4", new Conference11("JAVA", "2")});
+            tm.addRow(new Object[]{3, "E", sdf.parse("11-11-2020"), sdf.parse("13-11-2016"), "Column 4", new Conference11("PTHON", "3")});
+            tm.addRow(new Object[]{4, "B", sdf.parse("11-11-2020"), sdf.parse("14-11-2015"), "Column 4", new Conference11("TEMP", "4")});
             
             jTable.setModel(tm);
             jTable.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
@@ -70,21 +70,24 @@ public class ConferenceUI extends javax.swing.JPanel {
         jOption1 = new javax.swing.JPanel();
         jResetbtn = new javax.swing.JLabel();
         jFilter = new javax.swing.JPanel();
-        jSearchPnl = new javax.swing.JPanel();
-        jSearchbtn = new javax.swing.JLabel();
-        jSearchText = new javax.swing.JTextField();
-        jDate = new javax.swing.JPanel();
-        jOrganizedDate = new javax.swing.JPanel();
-        jDateChooser = new com.toedter.calendar.JDateChooser();
-        jOrganizedDateText = new javax.swing.JLabel();
         jRegisterdDate = new javax.swing.JPanel();
         jRegisteredDateText1 = new javax.swing.JLabel();
         jNewRequest = new javax.swing.JComboBox<>();
+        jOrganizedDate1 = new javax.swing.JPanel();
+        jOrganizedDateText1 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jAddNewConference = new javax.swing.JButton();
         jOption2 = new javax.swing.JPanel();
+        jSearchPnl = new javax.swing.JPanel();
+        jSearchbtn = new javax.swing.JLabel();
+        jSearchText = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
         jCount = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jAddNewConference = new javax.swing.JButton();
+        jOrganizedDate = new javax.swing.JPanel();
+        jDateChooser = new com.toedter.calendar.JDateChooser();
+        jOrganizedDateText = new javax.swing.JLabel();
         jBrief = new javax.swing.JLabel();
         jData = new javax.swing.JPanel();
         jPagination = new javax.swing.JPanel();
@@ -135,9 +138,73 @@ public class ConferenceUI extends javax.swing.JPanel {
         jOption1.add(jResetbtn, java.awt.BorderLayout.WEST);
 
         jFilter.setBackground(new java.awt.Color(224, 224, 250));
-        jFilter.setLayout(new java.awt.BorderLayout());
+        jFilter.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        jFilter.setLayout(new java.awt.GridLayout());
+
+        jRegisterdDate.setBackground(new java.awt.Color(224, 224, 250));
+        jRegisterdDate.setMinimumSize(new java.awt.Dimension(125, 27));
+        jRegisterdDate.setPreferredSize(new java.awt.Dimension(325, 50));
+        jRegisterdDate.setLayout(new java.awt.BorderLayout());
+
+        jRegisteredDateText1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jRegisteredDateText1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jRegisteredDateText1.setText("Status");
+        jRegisteredDateText1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
+        jRegisteredDateText1.setPreferredSize(new java.awt.Dimension(125, 50));
+        jRegisterdDate.add(jRegisteredDateText1, java.awt.BorderLayout.WEST);
+
+        jNewRequest.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jNewRequest.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Took place", "Not take place" }));
+        jNewRequest.setPreferredSize(new java.awt.Dimension(100, 23));
+        jRegisterdDate.add(jNewRequest, java.awt.BorderLayout.CENTER);
+
+        jFilter.add(jRegisterdDate);
+
+        jOrganizedDate1.setBackground(new java.awt.Color(224, 224, 250));
+        jOrganizedDate1.setEnabled(false);
+        jOrganizedDate1.setPreferredSize(new java.awt.Dimension(275, 50));
+        jOrganizedDate1.setLayout(new java.awt.BorderLayout());
+
+        jOrganizedDateText1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jOrganizedDateText1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jOrganizedDateText1.setText("Request");
+        jOrganizedDateText1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
+        jOrganizedDateText1.setPreferredSize(new java.awt.Dimension(150, 50));
+        jOrganizedDate1.add(jOrganizedDateText1, java.awt.BorderLayout.WEST);
+
+        jComboBox2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Default", "New request" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
+        jOrganizedDate1.add(jComboBox2, java.awt.BorderLayout.CENTER);
+
+        jFilter.add(jOrganizedDate1);
+
+        jOption1.add(jFilter, java.awt.BorderLayout.CENTER);
+
+        jAddNewConference.setBackground(new java.awt.Color(255, 255, 255));
+        jAddNewConference.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jAddNewConference.setText("Add New Conference");
+        jAddNewConference.setBorderPainted(false);
+        jAddNewConference.setPreferredSize(new java.awt.Dimension(230, 21));
+        jAddNewConference.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jAddNewConferenceActionPerformed(evt);
+            }
+        });
+        jOption1.add(jAddNewConference, java.awt.BorderLayout.EAST);
+
+        jOption.add(jOption1, java.awt.BorderLayout.NORTH);
+
+        jOption2.setBackground(new java.awt.Color(224, 224, 250));
+        jOption2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jOption2.setLayout(new java.awt.BorderLayout());
 
         jSearchPnl.setBackground(new java.awt.Color(224, 224, 250));
+        jSearchPnl.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
         jSearchPnl.setPreferredSize(new java.awt.Dimension(250, 50));
         jSearchPnl.setLayout(new java.awt.BorderLayout());
 
@@ -173,55 +240,11 @@ public class ConferenceUI extends javax.swing.JPanel {
         });
         jSearchPnl.add(jSearchText, java.awt.BorderLayout.CENTER);
 
-        jFilter.add(jSearchPnl, java.awt.BorderLayout.CENTER);
+        jOption2.add(jSearchPnl, java.awt.BorderLayout.CENTER);
 
-        jDate.setPreferredSize(new java.awt.Dimension(650, 100));
-        jDate.setLayout(new java.awt.BorderLayout());
-
-        jOrganizedDate.setBackground(new java.awt.Color(224, 224, 250));
-        jOrganizedDate.setPreferredSize(new java.awt.Dimension(275, 50));
-        jOrganizedDate.setLayout(new java.awt.BorderLayout());
-
-        jDateChooser.setDateFormatString("dd/MM/yyyy");
-        jDateChooser.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jDateChooser.setOpaque(false);
-        jDateChooser.setPreferredSize(new java.awt.Dimension(75, 50));
-        jOrganizedDate.add(jDateChooser, java.awt.BorderLayout.CENTER);
-
-        jOrganizedDateText.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jOrganizedDateText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jOrganizedDateText.setText("Organized Date");
-        jOrganizedDateText.setPreferredSize(new java.awt.Dimension(150, 50));
-        jOrganizedDate.add(jOrganizedDateText, java.awt.BorderLayout.WEST);
-
-        jDate.add(jOrganizedDate, java.awt.BorderLayout.CENTER);
-
-        jRegisterdDate.setBackground(new java.awt.Color(224, 224, 250));
-        jRegisterdDate.setMinimumSize(new java.awt.Dimension(125, 27));
-        jRegisterdDate.setPreferredSize(new java.awt.Dimension(325, 50));
-        jRegisterdDate.setLayout(new java.awt.BorderLayout());
-
-        jRegisteredDateText1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jRegisteredDateText1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jRegisteredDateText1.setText("New Request");
-        jRegisteredDateText1.setPreferredSize(new java.awt.Dimension(125, 50));
-        jRegisterdDate.add(jRegisteredDateText1, java.awt.BorderLayout.WEST);
-
-        jNewRequest.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jNewRequest.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All Conference", "New Request" }));
-        jRegisterdDate.add(jNewRequest, java.awt.BorderLayout.CENTER);
-
-        jDate.add(jRegisterdDate, java.awt.BorderLayout.WEST);
-
-        jFilter.add(jDate, java.awt.BorderLayout.WEST);
-
-        jOption1.add(jFilter, java.awt.BorderLayout.CENTER);
-
-        jOption.add(jOption1, java.awt.BorderLayout.NORTH);
-
-        jOption2.setBackground(new java.awt.Color(224, 224, 250));
-        jOption2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        jOption2.setLayout(new java.awt.BorderLayout());
+        jPanel1.setBackground(new java.awt.Color(224, 224, 250));
+        jPanel1.setPreferredSize(new java.awt.Dimension(600, 60));
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
         jCount.setPreferredSize(new java.awt.Dimension(220, 0));
         jCount.setLayout(new java.awt.BorderLayout());
@@ -243,19 +266,28 @@ public class ConferenceUI extends javax.swing.JPanel {
         jLabel1.setOpaque(true);
         jCount.add(jLabel1, java.awt.BorderLayout.CENTER);
 
-        jOption2.add(jCount, java.awt.BorderLayout.WEST);
+        jPanel1.add(jCount, java.awt.BorderLayout.WEST);
 
-        jAddNewConference.setBackground(new java.awt.Color(255, 255, 255));
-        jAddNewConference.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jAddNewConference.setText("Add New Conference");
-        jAddNewConference.setBorderPainted(false);
-        jAddNewConference.setPreferredSize(new java.awt.Dimension(250, 21));
-        jAddNewConference.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jAddNewConferenceActionPerformed(evt);
-            }
-        });
-        jOption2.add(jAddNewConference, java.awt.BorderLayout.EAST);
+        jOrganizedDate.setBackground(new java.awt.Color(224, 224, 250));
+        jOrganizedDate.setPreferredSize(new java.awt.Dimension(275, 50));
+        jOrganizedDate.setLayout(new java.awt.BorderLayout());
+
+        jDateChooser.setDateFormatString("dd/MM/yyyy");
+        jDateChooser.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        jDateChooser.setOpaque(false);
+        jDateChooser.setPreferredSize(new java.awt.Dimension(75, 50));
+        jOrganizedDate.add(jDateChooser, java.awt.BorderLayout.CENTER);
+
+        jOrganizedDateText.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jOrganizedDateText.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jOrganizedDateText.setText("Organized Date");
+        jOrganizedDateText.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
+        jOrganizedDateText.setPreferredSize(new java.awt.Dimension(150, 50));
+        jOrganizedDate.add(jOrganizedDateText, java.awt.BorderLayout.WEST);
+
+        jPanel1.add(jOrganizedDate, java.awt.BorderLayout.CENTER);
+
+        jOption2.add(jPanel1, java.awt.BorderLayout.WEST);
 
         jOption.add(jOption2, java.awt.BorderLayout.CENTER);
 
@@ -372,7 +404,7 @@ public class ConferenceUI extends javax.swing.JPanel {
         jScrollPane1.setOpaque(false);
 
         jTable.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Conference Name", "Registered Date", "Organized Date", "Status", "Detail"}) {
+        DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Conference Name", "Organized Date", "Status", "Detail", "New Request"}) {
             @Override
             public Class
 
@@ -513,14 +545,18 @@ public class ConferenceUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jAddNewConferenceActionPerformed
 
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jAddNewConference;
     private javax.swing.JLabel jBrief;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JPanel jCount;
     private javax.swing.JPanel jData;
-    private javax.swing.JPanel jDate;
     private com.toedter.calendar.JDateChooser jDateChooser;
     private javax.swing.JLabel jDescriptionPag;
     private javax.swing.JPanel jFilter;
@@ -534,9 +570,12 @@ public class ConferenceUI extends javax.swing.JPanel {
     private javax.swing.JPanel jOption1;
     private javax.swing.JPanel jOption2;
     private javax.swing.JPanel jOrganizedDate;
+    private javax.swing.JPanel jOrganizedDate1;
     private javax.swing.JLabel jOrganizedDateText;
+    private javax.swing.JLabel jOrganizedDateText1;
     private javax.swing.JPanel jPagination;
     private javax.swing.JPanel jPaginationButton;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jPosition;
     private javax.swing.JLabel jPrebtn;
     private javax.swing.JPanel jRegisterdDate;

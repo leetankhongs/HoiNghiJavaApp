@@ -7,7 +7,7 @@ package ContentUI;
 
 import Class.ButtonEditor;
 import Class.ButtonRenderer;
-import Class.Conference;
+import Class.Conference11;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.List;
@@ -49,10 +49,10 @@ public class Statistic extends javax.swing.JPanel {
             
             DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
             
-            tm.addRow(new Object[]{1, "A", sdf.parse("11-11-2020"), sdf.parse("11-11-2020"), "Column 4", new Conference("C#", "1")});
-            tm.addRow(new Object[]{2, "C", sdf.parse("12-11-2020"), sdf.parse("11-11-2020"), "Column 4", new Conference("JAVA", "2")});
-            tm.addRow(new Object[]{3, "E", sdf.parse("11-11-2020"), sdf.parse("13-11-2016"), "Column 4", new Conference("PTHON", "3")});
-            tm.addRow(new Object[]{4, "B", sdf.parse("11-11-2020"), sdf.parse("14-11-2015"), "Column 4", new Conference("TEMP", "4")});
+            tm.addRow(new Object[]{1, "A", sdf.parse("11-11-2020"), sdf.parse("11-11-2020"), "Column 4", new Conference11("C#", "1")});
+            tm.addRow(new Object[]{2, "C", sdf.parse("12-11-2020"), sdf.parse("11-11-2020"), "Column 4", new Conference11("JAVA", "2")});
+            tm.addRow(new Object[]{3, "E", sdf.parse("11-11-2020"), sdf.parse("13-11-2016"), "Column 4", new Conference11("PTHON", "3")});
+            tm.addRow(new Object[]{4, "B", sdf.parse("11-11-2020"), sdf.parse("14-11-2015"), "Column 4", new Conference11("TEMP", "4")});
             
             jTable.setModel(tm);
             jTable.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());

@@ -6,7 +6,7 @@
 package ComponentUI;
 
 import MainScreenUI.*;
-import Class.Conference;
+import Class.Conference11;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
@@ -28,13 +28,13 @@ public class ConferenceRendererList extends javax.swing.JPanel {
     private final Color moveColor = new Color(220,220,255);
     private final Color defaultColor = new Color(238,238,255);
     
-    Conference conference;
+    Conference11 conference;
 
     public ConferenceRendererList() {
         initComponents();
         
     }
-    public ConferenceRendererList(Conference con){
+    public ConferenceRendererList(Conference11 con){
         initComponents();
         conference = con;
         ImageIcon imageIcon = new ImageIcon(getClass().getResource("/Picture/hoi-nghi-truyen-hinh.jpg"));
@@ -60,6 +60,7 @@ public class ConferenceRendererList extends javax.swing.JPanel {
         jDate = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(238, 238, 255));
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setPreferredSize(new java.awt.Dimension(571, 100));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {

@@ -22,7 +22,7 @@ public class ButtonRenderer extends JButton implements TableCellRenderer{
     }
     @Override
     public Component getTableCellRendererComponent(JTable table, Object object, boolean isSelected, boolean hasFocus, int row, int column) {
-        Conference conference = (Conference)object;
+        Conference11 conference = (Conference11)object;
         setText(conference.getNameConference());            
         return this;
     }

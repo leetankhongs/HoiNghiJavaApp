@@ -2,7 +2,7 @@ package ComponentUI;
 
 
 import MainScreenUI.*;
-import Class.Conference;
+import Class.Conference11;
 import java.awt.Color;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -25,9 +25,9 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
      */
     private final Color moveColor = new Color(220,220,255);
     private final Color defaultColor = new Color(238,238,255);
-    private Conference conference;
+    private Conference11 conference;
     
-    public ConferenceRendererCard(Conference con) {
+    public ConferenceRendererCard(Conference11 con) {
         initComponents();
         conference = con;
         initData();
@@ -49,6 +49,7 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
         jName = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(238, 238, 255));
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setPreferredSize(new java.awt.Dimension(300, 200));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -76,7 +77,7 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
         add(jDate, java.awt.BorderLayout.SOUTH);
 
         jScrollDescription.setBackground(new java.awt.Color(238, 238, 255));
-        jScrollDescription.setBorder(null);
+        jScrollDescription.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jScrollDescription.setEnabled(false);
         jScrollDescription.setFocusable(false);
         jScrollDescription.setOpaque(false);

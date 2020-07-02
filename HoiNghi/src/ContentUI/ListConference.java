@@ -5,7 +5,7 @@
  */
 package ContentUI;
 
-import Class.Conference;
+import Class.Conference11;
 import ComponentUI.ConferenceRendererCard;
 import ComponentUI.ConferenceRendererList;
 import java.awt.Color;
@@ -500,39 +500,39 @@ public class ListConference extends javax.swing.JPanel {
     }//GEN-LAST:event_jLastbtnMouseReleased
 
     private void createViewList() {
-        jListConferenceView.add(new ConferenceRendererList(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference("IOS Programming", "VLưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference11("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference11("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference11("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference11("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference11("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference11("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference11("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference11("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference11("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference11("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference11("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference11("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference11("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference11("IOS Programming", "VLưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
+        jListConferenceView.add(new ConferenceRendererList(new Conference11("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
     }
     
     private void createViewCard(){
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference("IOS Programming", "VLưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("IOS Programming", "VLưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
+        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 2, 2020, 12:09:00 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJO.UserConference" table="user_conference" catalog="conferencemanagement" optimistic-lock="version">
+        <composite-id name="id" class="POJO.UserConferenceId">
+            <key-property name="idconference" type="string">
+                <column name="IDConference" length="4" />
+            </key-property>
+            <key-property name="iduser" type="string">
+                <column name="IDUser" length="10" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="conference" class="POJO.Conference" update="false" insert="false" fetch="select">
+            <column name="IDConference" length="4" not-null="true" />
+        </many-to-one>
+        <many-to-one name="user" class="POJO.User" update="false" insert="false" fetch="select">
+            <column name="IDUser" length="10" not-null="true" />
+        </many-to-one>
+        <property name="registationTime" type="timestamp">
+            <column name="RegistationTime" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

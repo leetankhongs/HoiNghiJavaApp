@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 2, 2020, 12:09:00 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJO.Conference" table="conference" catalog="conferencemanagement" optimistic-lock="version">
+        <id name="id" type="string">
+            <column name="ID" length="4" />
+            <generator class="assigned" />
+        </id>
+        <property name="name" type="string">
+            <column name="Name" length="64" />
+        </property>
+        <property name="briefDescription" type="string">
+            <column name="BriefDescription" length="256" />
+        </property>
+        <property name="detailDescription" type="string">
+            <column name="DetailDescription" length="8192" />
+        </property>
+        <property name="image" type="string">
+            <column name="Image" length="256" />
+        </property>
+        <property name="startTime" type="timestamp">
+            <column name="StartTime" length="19" />
+        </property>
+        <property name="endTime" type="timestamp">
+            <column name="EndTime" length="19" />
+        </property>
+        <property name="limitedQuantity" type="java.lang.Integer">
+            <column name="LimitedQuantity" />
+        </property>
+        <set name="places" table="place" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IDConference" length="4" />
+            </key>
+            <one-to-many class="POJO.Place" />
+        </set>
+        <set name="userConferences" table="user_conference" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IDConference" length="4" not-null="true" />
+            </key>
+            <one-to-many class="POJO.UserConference" />
+        </set>
+    </class>
+</hibernate-mapping>
