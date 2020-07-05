@@ -5,14 +5,13 @@
  */
 package MainScreenUI;
 
-import Class.Conference11;
 import ContentUI.ConferenceUI;
 import ContentUI.Home;
 import ContentUI.ListConference;
 import ContentUI.Statistic;
+import POJO.User;
 import java.awt.Color;
 import java.awt.Dimension;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,13 +30,36 @@ public class MainScreen extends javax.swing.JFrame {
     final static private Color colorMoved = new Color(74, 2, 137);
     final static private Color colorMoved_2 = new Color(220, 220, 255);
 
+    private User user = null;
+
     private Home mainHome = new Home();
     private Statistic mainStatistic = new Statistic();
-    private ListConference mainListConference = new ListConference();
+    private ListConference mainListConference = new ListConference(user);
     private ConferenceUI mainConference = new ConferenceUI();
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        jName.setText("Hello " + user.getName());
+        jStatisticPnl.setVisible(true);
+        jLogin.setText("Log out");
+        mainListConference.setUser(user);
+
+        if (user.getIsAdmin() == 1) {
+            jConferencesPnl.setVisible(true);
+            jUsersPnl.setVisible(true);
+        }
+
+    }
 
     public MainScreen() {
         initComponents();
+        jStatisticPnl.setVisible(false);
+        jConferencesPnl.setVisible(false);
+        jUsersPnl.setVisible(false);
     }
 
     /**
@@ -51,9 +73,6 @@ public class MainScreen extends javax.swing.JFrame {
 
         jMainScreen = new javax.swing.JPanel();
         jCardLayout = new javax.swing.JPanel();
-        jCardStatistic = new javax.swing.JPanel();
-        j = new javax.swing.JPanel();
-        jCardConference = new javax.swing.JPanel();
         jUsers = new javax.swing.JPanel();
         jMenu = new javax.swing.JPanel();
         jOptionMenu = new javax.swing.JPanel();
@@ -85,8 +104,9 @@ public class MainScreen extends javax.swing.JFrame {
         jButtonExitPnl = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        jName = new javax.swing.JLabel();
         jLoginbtn = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        jLogin = new javax.swing.JLabel();
         jFooter = new javax.swing.JPanel();
         jAuthor = new javax.swing.JLabel();
 
@@ -99,41 +119,6 @@ public class MainScreen extends javax.swing.JFrame {
         jMainScreen.setLayout(new java.awt.BorderLayout());
 
         jCardLayout.setLayout(new java.awt.CardLayout());
-
-        jCardStatistic.setBackground(new java.awt.Color(102, 255, 0));
-        jCardStatistic.setLayout(new java.awt.BorderLayout());
-
-        j.setMinimumSize(new java.awt.Dimension(1000, 0));
-
-        javax.swing.GroupLayout jLayout = new javax.swing.GroupLayout(j);
-        j.setLayout(jLayout);
-        jLayout.setHorizontalGroup(
-            jLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
-        );
-        jLayout.setVerticalGroup(
-            jLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
-        );
-
-        jCardStatistic.add(j, java.awt.BorderLayout.CENTER);
-
-        jCardLayout.add(jCardStatistic, "card3");
-
-        jCardConference.setBackground(new java.awt.Color(102, 102, 0));
-
-        javax.swing.GroupLayout jCardConferenceLayout = new javax.swing.GroupLayout(jCardConference);
-        jCardConference.setLayout(jCardConferenceLayout);
-        jCardConferenceLayout.setHorizontalGroup(
-            jCardConferenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
-        );
-        jCardConferenceLayout.setVerticalGroup(
-            jCardConferenceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
-        );
-
-        jCardLayout.add(jCardConference, "card4");
 
         jUsers.setBackground(new java.awt.Color(102, 102, 255));
 
@@ -423,6 +408,12 @@ public class MainScreen extends javax.swing.JFrame {
         jPanel4.setPreferredSize(new java.awt.Dimension(1000, 40));
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 5, 0));
 
+        jName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jName.setForeground(new java.awt.Color(255, 255, 255));
+        jName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jName.setPreferredSize(new java.awt.Dimension(250, 40));
+        jPanel4.add(jName);
+
         jLoginbtn.setBackground(new java.awt.Color(58, 1, 108));
         jLoginbtn.setPreferredSize(new java.awt.Dimension(150, 50));
         jLoginbtn.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -440,12 +431,12 @@ public class MainScreen extends javax.swing.JFrame {
         });
         jLoginbtn.setLayout(new java.awt.BorderLayout());
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/login_24px.png"))); // NOI18N
-        jLabel6.setText("Đăng nhập");
-        jLoginbtn.add(jLabel6, java.awt.BorderLayout.CENTER);
+        jLogin.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLogin.setForeground(new java.awt.Color(255, 255, 255));
+        jLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/login_24px.png"))); // NOI18N
+        jLogin.setText("Log in");
+        jLoginbtn.add(jLogin, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(jLoginbtn);
 
@@ -662,7 +653,17 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void jLoginbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLoginbtnMouseReleased
         // TODO add your handling code here:
-        new Login().setVisible(true);
+        if (jLogin.getText().compareTo("Log in") == 0)
+            new Login(this).setVisible(true);
+        else {
+            user = null;
+            jLogin.setText("Log in");
+            jName.setText("");
+            jStatisticPnl.setVisible(false);
+            jConferencesPnl.setVisible(false);
+            jUsersPnl.setVisible(false);
+            JOptionPane.showMessageDialog(this, "Log out success");
+        }
     }//GEN-LAST:event_jLoginbtnMouseReleased
 
     private void jListConferencePnlMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListConferencePnlMouseExited
@@ -707,47 +708,12 @@ public class MainScreen extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainScreen().setVisible(true);
-            }
-        });
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel j;
     private javax.swing.JLabel jAuthor;
     private javax.swing.JPanel jButtonExitPnl;
     private javax.swing.JPanel jButtonMenu;
-    private javax.swing.JPanel jCardConference;
     private javax.swing.JPanel jCardLayout;
-    private javax.swing.JPanel jCardStatistic;
     private javax.swing.JPanel jConferencesPnl;
     private javax.swing.JPanel jExitPnl;
     private javax.swing.JPanel jFooter;
@@ -763,17 +729,18 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jListConferencePnl;
     private javax.swing.JPanel jLog;
+    private javax.swing.JLabel jLogin;
     private javax.swing.JPanel jLoginbtn;
     private javax.swing.JPanel jLogo;
     private javax.swing.JPanel jMainScreen;
     private javax.swing.JPanel jMenu;
     private javax.swing.JPanel jMenubtn;
+    private javax.swing.JLabel jName;
     private javax.swing.JPanel jOptionMenu;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;

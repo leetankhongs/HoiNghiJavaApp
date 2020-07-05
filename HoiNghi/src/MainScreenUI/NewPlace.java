@@ -5,6 +5,10 @@
  */
 package MainScreenUI;
 
+import Business.PlaceBus;
+import POJO.Place;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ADMIN
@@ -14,8 +18,10 @@ public class NewPlace extends javax.swing.JFrame {
     /**
      * Creates new form NewPlace
      */
-    public NewPlace() {
+    NewConference conference;
+    public NewPlace(NewConference conference) {
         initComponents();
+        this.conference = conference;
     }
 
     /**
@@ -29,12 +35,12 @@ public class NewPlace extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jInformation = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        jNameText = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jAddressText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jCapacityText = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -47,13 +53,12 @@ public class NewPlace extends javax.swing.JFrame {
         jInformation.setPreferredSize(new java.awt.Dimension(400, 200));
         jInformation.setLayout(new java.awt.GridBagLayout());
 
-        jTextField1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jTextField1.setText("jTextField1");
-        jTextField1.setPreferredSize(new java.awt.Dimension(400, 40));
+        jNameText.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jNameText.setPreferredSize(new java.awt.Dimension(400, 40));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
-        jInformation.add(jTextField1, gridBagConstraints);
+        jInformation.add(jNameText, gridBagConstraints);
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel2.setText("Name");
@@ -70,12 +75,11 @@ public class NewPlace extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         jInformation.add(jLabel1, gridBagConstraints);
 
-        jTextField2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jTextField2.setText("jTextField2");
-        jTextField2.setPreferredSize(new java.awt.Dimension(400, 40));
+        jAddressText.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jAddressText.setPreferredSize(new java.awt.Dimension(400, 40));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 1;
-        jInformation.add(jTextField2, gridBagConstraints);
+        jInformation.add(jAddressText, gridBagConstraints);
 
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jLabel3.setText("Capacity");
@@ -84,12 +88,11 @@ public class NewPlace extends javax.swing.JFrame {
         gridBagConstraints.gridy = 2;
         jInformation.add(jLabel3, gridBagConstraints);
 
-        jTextField3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jTextField3.setText("jTextField3");
-        jTextField3.setPreferredSize(new java.awt.Dimension(400, 40));
+        jCapacityText.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jCapacityText.setPreferredSize(new java.awt.Dimension(400, 40));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 2;
-        jInformation.add(jTextField3, gridBagConstraints);
+        jInformation.add(jCapacityText, gridBagConstraints);
 
         getContentPane().add(jInformation, java.awt.BorderLayout.NORTH);
 
@@ -103,9 +106,9 @@ public class NewPlace extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jButton1.setText("OK");
         jButton1.setPreferredSize(new java.awt.Dimension(100, 21));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton1MousePressed(evt);
             }
         });
         jPanel2.add(jButton1, java.awt.BorderLayout.WEST);
@@ -132,56 +135,38 @@ public class NewPlace extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        Place newPlace = new Place(jNameText.getText(), jAddressText.getText(), Integer.valueOf(jCapacityText.getText()));
+        String result = PlaceBus.insertNewPlace(newPlace);
+        if(result != null)
+        {
+           JOptionPane.showMessageDialog(this, "Success");
+           conference.reset(result);
+        }
+        else
+            JOptionPane.showMessageDialog(this, "false");
+
+        setVisible(false);
+        
+    }//GEN-LAST:event_jButton1MousePressed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewPlace.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewPlace.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewPlace.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewPlace.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new NewPlace().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField jAddressText;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JTextField jCapacityText;
     private javax.swing.JPanel jInformation;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField jNameText;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }

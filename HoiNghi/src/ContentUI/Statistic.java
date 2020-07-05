@@ -5,8 +5,8 @@
  */
 package ContentUI;
 
-import Class.ButtonEditor;
-import Class.ButtonRenderer;
+import UserUI.UserButtonEditor;
+import UserUI.UserButtonRenderer;
 import Class.Conference11;
 import java.awt.Color;
 import java.awt.Font;
@@ -40,7 +40,7 @@ public class Statistic extends javax.swing.JPanel {
 
     public Statistic()  {
 
-        try {
+//        try {
             initComponents();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             jTable.getTableHeader().setOpaque(true);
@@ -49,18 +49,18 @@ public class Statistic extends javax.swing.JPanel {
             
             DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
             
-            tm.addRow(new Object[]{1, "A", sdf.parse("11-11-2020"), sdf.parse("11-11-2020"), "Column 4", new Conference11("C#", "1")});
-            tm.addRow(new Object[]{2, "C", sdf.parse("12-11-2020"), sdf.parse("11-11-2020"), "Column 4", new Conference11("JAVA", "2")});
-            tm.addRow(new Object[]{3, "E", sdf.parse("11-11-2020"), sdf.parse("13-11-2016"), "Column 4", new Conference11("PTHON", "3")});
-            tm.addRow(new Object[]{4, "B", sdf.parse("11-11-2020"), sdf.parse("14-11-2015"), "Column 4", new Conference11("TEMP", "4")});
+//            tm.addRow(new Object[]{1, "A", sdf.parse("11-11-2020"), sdf.parse("11-11-2020"), "Column 4", new Conference11("C#", "1")});
+//            tm.addRow(new Object[]{2, "C", sdf.parse("12-11-2020"), sdf.parse("11-11-2020"), "Column 4", new Conference11("JAVA", "2")});
+//            tm.addRow(new Object[]{3, "E", sdf.parse("11-11-2020"), sdf.parse("13-11-2016"), "Column 4", new Conference11("PTHON", "3")});
+//            tm.addRow(new Object[]{4, "B", sdf.parse("11-11-2020"), sdf.parse("14-11-2015"), "Column 4", new Conference11("TEMP", "4")});
             
             jTable.setModel(tm);
-            jTable.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
-            jTable.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new JTextField()));
+            jTable.getColumnModel().getColumn(5).setCellRenderer(new UserButtonRenderer());
+            jTable.getColumnModel().getColumn(5).setCellEditor(new UserButtonEditor(new JTextField()));
             jTable.setAutoCreateRowSorter(true);
-        } catch (ParseException ex) {
-            Logger.getLogger(Statistic.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (ParseException ex) {
+//            Logger.getLogger(Statistic.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
 
 
@@ -148,6 +148,7 @@ public class Statistic extends javax.swing.JPanel {
         jFilter.setLayout(new java.awt.BorderLayout());
 
         jSearchPnl.setBackground(new java.awt.Color(224, 224, 250));
+        jSearchPnl.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0));
         jSearchPnl.setPreferredSize(new java.awt.Dimension(250, 50));
         jSearchPnl.setLayout(new java.awt.BorderLayout());
 
@@ -199,8 +200,9 @@ public class Statistic extends javax.swing.JPanel {
         jOrganizedDate.add(jDateChooser, java.awt.BorderLayout.CENTER);
 
         jOrganizedDateText.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jOrganizedDateText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jOrganizedDateText.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jOrganizedDateText.setText("Organized Date");
+        jOrganizedDateText.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
         jOrganizedDateText.setPreferredSize(new java.awt.Dimension(150, 50));
         jOrganizedDate.add(jOrganizedDateText, java.awt.BorderLayout.WEST);
 
@@ -218,8 +220,9 @@ public class Statistic extends javax.swing.JPanel {
         jRegisterdDate.add(jDateChooser1, java.awt.BorderLayout.CENTER);
 
         jRegisteredDateText1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jRegisteredDateText1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jRegisteredDateText1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jRegisteredDateText1.setText("Registered Date");
+        jRegisteredDateText1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
         jRegisteredDateText1.setPreferredSize(new java.awt.Dimension(150, 50));
         jRegisterdDate.add(jRegisteredDateText1, java.awt.BorderLayout.WEST);
 

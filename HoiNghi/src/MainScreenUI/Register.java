@@ -5,6 +5,20 @@
  */
 package MainScreenUI;
 
+import Business.AccountBus;
+import Business.UserBus;
+import DAO.AccountDao;
+import POJO.Account;
+import POJO.User;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.swing.ImageIcon;
+
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ADMIN
@@ -188,6 +202,11 @@ public class Register extends javax.swing.JFrame {
         jRegisterbtn.setForeground(new java.awt.Color(255, 255, 255));
         jRegisterbtn.setText("Register");
         jRegisterbtn.setBorder(null);
+        jRegisterbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jRegisterbtnMouseReleased(evt);
+            }
+        });
 
         jName.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jName.setForeground(new java.awt.Color(255, 255, 255));
@@ -380,78 +399,75 @@ public class Register extends javax.swing.JFrame {
 
     private void jNameTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jNameTFFocusGained
         // TODO add your handling code here:
-        if(jNameTF.getText().compareTo("") == 0 || jNameTF.getText().compareTo("Enter your name") == 0)
+        if (jNameTF.getText().compareTo("") == 0 || jNameTF.getText().compareTo("Enter your name") == 0)
             jNameTF.setText("");
     }//GEN-LAST:event_jNameTFFocusGained
 
     private void jNameTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jNameTFFocusLost
         // TODO add your handling code here:
-        if(jNameTF.getText().compareTo("") == 0)
+        if (jNameTF.getText().compareTo("") == 0)
             jNameTF.setText("Enter your name");
     }//GEN-LAST:event_jNameTFFocusLost
 
     private void jPasswordTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordTFFocusGained
         // TODO add your handling code here:
-        if(jPasswordTF.getText().compareTo("") == 0 || jPasswordTF.getText().compareTo("123456789") == 0)
+        if (jPasswordTF.getText().compareTo("") == 0 || jPasswordTF.getText().compareTo("123456789") == 0)
             jPasswordTF.setText("");
     }//GEN-LAST:event_jPasswordTFFocusGained
 
     private void jPasswordTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordTFFocusLost
         // TODO add your handling code here:
-        if(jPasswordTF.getText().compareTo("") == 0)
+        if (jPasswordTF.getText().compareTo("") == 0)
             jPasswordTF.setText("123456789");
     }//GEN-LAST:event_jPasswordTFFocusLost
 
     private void jUsernameTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jUsernameTFFocusGained
         // TODO add your handling code here:
-        if(jUsernameTF.getText().compareTo("") == 0 || jUsernameTF.getText().compareTo("Enter your username") == 0)
+        if (jUsernameTF.getText().compareTo("") == 0 || jUsernameTF.getText().compareTo("Enter your username") == 0)
             jUsernameTF.setText("");
     }//GEN-LAST:event_jUsernameTFFocusGained
 
     private void jUsernameTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jUsernameTFFocusLost
         // TODO add your handling code here:
-        if(jUsernameTF.getText().compareTo("") == 0)
+        if (jUsernameTF.getText().compareTo("") == 0)
             jUsernameTF.setText("Enter your username");
     }//GEN-LAST:event_jUsernameTFFocusLost
 
     private void jConfirmPasswordTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jConfirmPasswordTFFocusGained
         // TODO add your handling code here:
-        if(jConfirmPasswordTF.getText().compareTo("") == 0 || jConfirmPasswordTF.getText().compareTo("123456789") == 0)
+        if (jConfirmPasswordTF.getText().compareTo("") == 0 || jConfirmPasswordTF.getText().compareTo("123456789") == 0)
             jConfirmPasswordTF.setText("");
     }//GEN-LAST:event_jConfirmPasswordTFFocusGained
 
     private void jConfirmPasswordTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jConfirmPasswordTFFocusLost
         // TODO add your handling code here:
-        if(jConfirmPasswordTF.getText().compareTo("") == 0)
+        if (jConfirmPasswordTF.getText().compareTo("") == 0)
             jConfirmPasswordTF.setText("123456789");
     }//GEN-LAST:event_jConfirmPasswordTFFocusLost
 
     private void jKeepLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jKeepLoginActionPerformed
         // TODO add your handling code here
-  
+
     }//GEN-LAST:event_jKeepLoginActionPerformed
 
     private void jEmailTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jEmailTFFocusGained
         // TODO add your handling code here:
-        if(jEmailTF.getText().compareTo("") == 0 || jEmailTF.getText().compareTo("Enter your email") == 0)
+        if (jEmailTF.getText().compareTo("") == 0 || jEmailTF.getText().compareTo("Enter your email") == 0)
             jEmailTF.setText("");
     }//GEN-LAST:event_jEmailTFFocusGained
 
     private void jEmailTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jEmailTFFocusLost
         // TODO add your handling code here:
-        if(jEmailTF.getText().compareTo("") == 0)
+        if (jEmailTF.getText().compareTo("") == 0)
             jEmailTF.setText("Enter your email");
     }//GEN-LAST:event_jEmailTFFocusLost
 
     private void jPasswordShowbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPasswordShowbtnMouseReleased
         // TODO add your handling code here:
-        if(jPasswordTF.getEchoChar() == '*')
-        {
-            jPasswordTF.setEchoChar((char)0);
+        if (jPasswordTF.getEchoChar() == '*') {
+            jPasswordTF.setEchoChar((char) 0);
             jPasswordShowbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/icons8_eye_20px.png")));
-        }
-        else
-        {
+        } else {
             jPasswordTF.setEchoChar('*');
             jPasswordShowbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/icons8_invisible_20px.png")));
 
@@ -460,13 +476,10 @@ public class Register extends javax.swing.JFrame {
 
     private void jConfirmPasswordShowbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jConfirmPasswordShowbtnMouseReleased
         // TODO add your handling code here:
-        if(jConfirmPasswordTF.getEchoChar() == '*')
-        {
-            jConfirmPasswordTF.setEchoChar((char)0);
+        if (jConfirmPasswordTF.getEchoChar() == '*') {
+            jConfirmPasswordTF.setEchoChar((char) 0);
             jConfirmPasswordShowbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/icons8_eye_20px.png")));
-        }
-        else
-        {
+        } else {
             jConfirmPasswordTF.setEchoChar('*');
             jConfirmPasswordShowbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/icons8_invisible_20px.png")));
 
@@ -477,6 +490,45 @@ public class Register extends javax.swing.JFrame {
         // TODO add your handling code here:
         setVisible(false);
     }//GEN-LAST:event_jExitbtnMouseReleased
+
+    private void jRegisterbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRegisterbtnMouseReleased
+        // TODO add your handling code here:
+        if (AccountDao.getAccountByUserName(jUsernameTF.getText()) != null) 
+        {
+            JOptionPane.showMessageDialog(this, "User name already exits");
+            return;
+        }
+            
+        if(jPasswordTF.getText().compareTo(jConfirmPasswordTF.getText()) != 0)
+        {
+            JOptionPane.showMessageDialog(this, "Password does not match");
+            return;
+        }
+        
+        if(jEmailTF.getText().matches("[A-Za-z].*?@gmail\\.com") == false)
+        {
+            JOptionPane.showMessageDialog(this, "Invalid email");
+            return;
+        }
+            
+        
+        if(jKeepLogin.isSelected() == false)
+        {
+            JOptionPane.showMessageDialog(this, "You need to agree with Terms of User");
+            return;
+        }
+            
+        String accountID = AccountBus.insertNewAccount(jUsernameTF.getText(), jPasswordTF.getText());
+        User user = new User(AccountBus.getAccountInformation(accountID), jNameTF.getText(), jEmailTF.getText());
+        String result = UserBus.insertNewUser(new User(AccountBus.getAccountInformation(accountID), jNameTF.getText(), jEmailTF.getText()));
+
+        if (result != null) {
+            JOptionPane.showMessageDialog(this, "Success");
+        } else {
+            JOptionPane.showMessageDialog(this, "false");
+        }
+
+    }//GEN-LAST:event_jRegisterbtnMouseReleased
 
     /**
      * @param args the command line arguments
@@ -511,6 +563,7 @@ public class Register extends javax.swing.JFrame {
                 new Register().setVisible(true);
             }
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

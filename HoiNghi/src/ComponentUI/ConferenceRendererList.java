@@ -5,15 +5,15 @@
  */
 package ComponentUI;
 
+import UserUI.Register_DetailConference;
 import MainScreenUI.*;
 import Class.Conference11;
+import POJO.Conference;
+import POJO.User;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.ListCellRenderer;
 
 /**
  *
@@ -25,22 +25,25 @@ public class ConferenceRendererList extends javax.swing.JPanel {
      * Creates new form ConferenceRender
      */
 //    implements ListCellRenderer<Conference>
-    private final Color moveColor = new Color(220,220,255);
-    private final Color defaultColor = new Color(238,238,255);
-    
-    Conference11 conference;
+    private final Color moveColor = new Color(220, 220, 255);
+    private final Color defaultColor = new Color(238, 238, 255);
+
+    Conference conference;
+    User user;
 
     public ConferenceRendererList() {
         initComponents();
-        
+
     }
-    public ConferenceRendererList(Conference11 con){
+
+    public ConferenceRendererList(Conference conference, User user) {
         initComponents();
-        conference = con;
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/Picture/hoi-nghi-truyen-hinh.jpg"));
+        this.conference = conference;
+        this.user = user;
+        ImageIcon imageIcon = new ImageIcon(conference.getImage());
         Image image = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         jIcon.setIcon(new ImageIcon(image));
-        jName.setText(conference.getNameConference());
+        jName.setText(conference.getName());
         jDescription.setText(conference.getBriefDescription());
     }
 
@@ -109,17 +112,16 @@ public class ConferenceRendererList extends javax.swing.JPanel {
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
         // TODO add your handling code here:
-        int respone = JOptionPane.showConfirmDialog(this, conference.getNameConference(), conference.getBriefDescription(), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+       
+            new Register_DetailConference(conference, user).setVisible(true);
 
-        if (respone == JOptionPane.YES_OPTION)
-            System.exit(0);
 
     }//GEN-LAST:event_formMousePressed
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
         // TODO add your handling code here:
         setBackground(moveColor);
-        
+
 
     }//GEN-LAST:event_formMouseMoved
 
@@ -138,5 +140,8 @@ public class ConferenceRendererList extends javax.swing.JPanel {
     private javax.swing.JLabel jName;
     // End of variables declaration//GEN-END:variables
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 }

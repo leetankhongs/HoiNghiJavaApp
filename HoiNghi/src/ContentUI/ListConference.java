@@ -5,10 +5,15 @@
  */
 package ContentUI;
 
+import Business.ConferenceBus;
 import Class.Conference11;
 import ComponentUI.ConferenceRendererCard;
 import ComponentUI.ConferenceRendererList;
+import POJO.Conference;
+import POJO.User;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 
 /**
@@ -20,14 +25,18 @@ public class ListConference extends javax.swing.JPanel {
     /**
      * Creates new form ListConference
      */
-    
-    final static private Color deufault = new Color(224,224,250);
+    final static private Color deufault = new Color(224, 224, 250);
     final static private Color colorCliked = new Color(84, 3, 156);
-    final static private Color colorMoved = new Color(153,153,255);
-    final static private Color colorMoved_2 = new Color(220,220,255);
-    
-    public ListConference() {
+    final static private Color colorMoved = new Color(153, 153, 255);
+    final static private Color colorMoved_2 = new Color(220, 220, 255);
+
+    private User user;
+    private List<ConferenceRendererList> conferenceRendererLists;
+    private List<ConferenceRendererCard> conferenceRendererCards;
+
+    public ListConference(User user) {
         initComponents();
+        this.user = user;
         createViewList();
         createViewCard();
     }
@@ -354,14 +363,14 @@ public class ListConference extends javax.swing.JPanel {
 
     private void jListViewbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListViewbtnMouseMoved
         // TODO add your handling code here:
-        if(jListViewbtn.getBackground().equals(colorCliked) == false)
-        jListViewbtn.setBackground(colorMoved_2);
+        if (jListViewbtn.getBackground().equals(colorCliked) == false)
+            jListViewbtn.setBackground(colorMoved_2);
     }//GEN-LAST:event_jListViewbtnMouseMoved
 
     private void jListViewbtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListViewbtnMouseExited
         // TODO add your handling code here:
-        if(jListViewbtn.getBackground().equals(colorCliked) == false)
-        jListViewbtn.setBackground(Color.WHITE);
+        if (jListViewbtn.getBackground().equals(colorCliked) == false)
+            jListViewbtn.setBackground(Color.WHITE);
     }//GEN-LAST:event_jListViewbtnMouseExited
 
     private void jListViewbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListViewbtnMouseReleased
@@ -382,14 +391,15 @@ public class ListConference extends javax.swing.JPanel {
 
     private void jCardViewbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCardViewbtnMouseMoved
         // TODO add your handling code here:
-        if(jCardViewbtn.getBackground().equals(colorCliked) == false)
-        jCardViewbtn.setBackground(colorMoved_2);
+        if (jCardViewbtn.getBackground().equals(colorCliked) == false)
+            jCardViewbtn.setBackground(colorMoved_2);
     }//GEN-LAST:event_jCardViewbtnMouseMoved
 
     private void jCardViewbtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCardViewbtnMouseExited
         // TODO add your handling code here:
-        if(jCardViewbtn.getBackground().equals(colorCliked) == false)
-        jCardViewbtn.setBackground(Color.WHITE);
+        if (jCardViewbtn.getBackground().equals(colorCliked) == false) {
+            jCardViewbtn.setBackground(Color.WHITE);
+        }
 
     }//GEN-LAST:event_jCardViewbtnMouseExited
 
@@ -439,8 +449,8 @@ public class ListConference extends javax.swing.JPanel {
 
     private void jSearchTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchTextFocusLost
         // TODO add your handling code here:
-        if(jSearchText.getText().compareTo("") == 0)
-        jSearchText.setText("Search conference name ");
+        if (jSearchText.getText().compareTo("") == 0)
+            jSearchText.setText("Search conference name ");
     }//GEN-LAST:event_jSearchTextFocusLost
 
     private void jFirstbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFirstbtnMouseMoved
@@ -500,39 +510,31 @@ public class ListConference extends javax.swing.JPanel {
     }//GEN-LAST:event_jLastbtnMouseReleased
 
     private void createViewList() {
-        jListConferenceView.add(new ConferenceRendererList(new Conference11("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference11("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference11("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference11("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference11("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference11("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference11("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference11("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference11("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference11("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference11("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference11("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference11("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference11("IOS Programming", "VLưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
-        jListConferenceView.add(new ConferenceRendererList(new Conference11("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+        List<Conference> listConference = ConferenceBus.getAllConference();
+        conferenceRendererLists = new ArrayList<>();
+
+        for (int i = 0; i < listConference.size(); i++) {
+            conferenceRendererLists.add(new ConferenceRendererList(listConference.get(i), user));
+        }
+
+        for (int i = 0; i < conferenceRendererLists.size(); i++) {
+            jListConferenceView.add(conferenceRendererLists.get(i));
+        }
+
     }
-    
-    private void createViewCard(){
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("IOS Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("C/C++ Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.A")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("Java Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.B")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("C# Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.C")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("IOS Programming", "VLưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.D")));
-        jCardConferenceView.add(new ConferenceRendererCard(new Conference11("Windows Phone Programming", "Lưu ý tham số cuối cùng: nó báo cho bộ thực thi thuật toán bạn muốn sử dụng để thay đổi kích thước.E")));
+
+    private void createViewCard() {
+        List<Conference> listConference = ConferenceBus.getAllConference();
+
+        conferenceRendererCards = new ArrayList<>();
+
+        for (int i = 0; i < listConference.size(); i++) {
+            conferenceRendererCards.add(new ConferenceRendererCard(listConference.get(i), user));
+        }
+
+        for (int i = 0; i < conferenceRendererLists.size(); i++) {
+            jCardConferenceView.add(conferenceRendererCards.get(i));
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -565,4 +567,14 @@ public class ListConference extends javax.swing.JPanel {
     private javax.swing.JLabel jSearchbtn;
     private javax.swing.JPanel jSpace;
     // End of variables declaration//GEN-END:variables
+
+    public void setUser(User user) {
+        this.user = user;
+        
+        for (int i = 0; i < conferenceRendererLists.size(); i++) {
+            conferenceRendererLists.get(i).setUser(user);
+            conferenceRendererCards.get(i).setUser(user);
+        }
+        
+    }
 }

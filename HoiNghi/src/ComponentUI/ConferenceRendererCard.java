@@ -1,8 +1,11 @@
 package ComponentUI;
 
 
+import UserUI.Register_DetailConference;
 import MainScreenUI.*;
 import Class.Conference11;
+import POJO.Conference;
+import POJO.User;
 import java.awt.Color;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -25,11 +28,14 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
      */
     private final Color moveColor = new Color(220,220,255);
     private final Color defaultColor = new Color(238,238,255);
-    private Conference11 conference;
     
-    public ConferenceRendererCard(Conference11 con) {
+    private Conference conference;
+    private User user;
+    
+    public ConferenceRendererCard(Conference conference, User user) {
         initComponents();
-        conference = con;
+        this.conference = conference;
+        this.user = user;
         initData();
     }
 
@@ -144,10 +150,7 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
 
     private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
         // TODO add your handling code here:
-        int respone = JOptionPane.showConfirmDialog(this, conference.getNameConference(), conference.getBriefDescription(), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-        if (respone == JOptionPane.YES_OPTION)
-            System.exit(0);
+        new Register_DetailConference(conference, user).setVisible(true);
     }//GEN-LAST:event_formMouseReleased
 
     private void jScrollDescriptionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollDescriptionMouseExited
@@ -162,10 +165,7 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
 
     private void jScrollDescriptionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollDescriptionMouseReleased
         // TODO add your handling code here:
-        int respone = JOptionPane.showConfirmDialog(this, conference.getNameConference(), conference.getBriefDescription(), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-        if (respone == JOptionPane.YES_OPTION)
-            System.exit(0);
+        new Register_DetailConference(conference, user).setVisible(true);
     }//GEN-LAST:event_jScrollDescriptionMouseReleased
 
     private void jDescriptionMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jDescriptionMouseMoved
@@ -182,19 +182,16 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
 
     private void jDescriptionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jDescriptionMouseReleased
         // TODO add your handling code here:
-        int respone = JOptionPane.showConfirmDialog(this, conference.getNameConference(), conference.getBriefDescription(), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-        if (respone == JOptionPane.YES_OPTION)
-            System.exit(0);
+        new Register_DetailConference(conference, user).setVisible(true);
     }//GEN-LAST:event_jDescriptionMouseReleased
 
     void initData(){
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/Picture/hoi-nghi-truyen-hinh.jpg"));
+        ImageIcon imageIcon = new ImageIcon(conference.getImage());
         Image image = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
         jIcon.setIcon(new ImageIcon(image));
-        jName.setText(conference.getNameConference());
+        jName.setText(conference.getName());
         jDescription.setText(conference.getBriefDescription());
-        jDate.setText("17/7/1999");
+        jDate.setText(conference.getStartTime().toString());
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -204,4 +201,8 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
     private javax.swing.JLabel jName;
     private javax.swing.JScrollPane jScrollDescription;
     // End of variables declaration//GEN-END:variables
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

@@ -5,44 +5,45 @@
  */
 package MainScreenUI;
 
+import Business.AccountBus;
+import POJO.Account;
+import POJO.User;
 import java.awt.Image;
 import java.awt.color.ColorSpace;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author ADM    @Override
-    public int getWidth(ImageObserver observer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getHeight(ImageObserver observer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public ImageProducer getSource() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Graphics getGraphics() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object getProperty(String name, ImageObserver observer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-IN
+ * @author ADM @Override public int getWidth(ImageObserver observer) { throw new
+ * UnsupportedOperationException("Not supported yet."); //To change body of
+ * generated methods, choose Tools | Templates. }
+ *
+ * @Override public int getHeight(ImageObserver observer) { throw new
+ * UnsupportedOperationException("Not supported yet."); //To change body of
+ * generated methods, choose Tools | Templates. }
+ *
+ * @Override public ImageProducer getSource() { throw new
+ * UnsupportedOperationException("Not supported yet."); //To change body of
+ * generated methods, choose Tools | Templates. }
+ *
+ * @Override public Graphics getGraphics() { throw new
+ * UnsupportedOperationException("Not supported yet."); //To change body of
+ * generated methods, choose Tools | Templates. }
+ *
+ * @Override public Object getProperty(String name, ImageObserver observer) {
+ * throw new UnsupportedOperationException("Not supported yet."); //To change
+ * body of generated methods, choose Tools | Templates. } IN
  */
 public class Login extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
      */
-    public Login() {
+    private MainScreen mainScreen = null;
+    public Login(MainScreen mainScreen) {
         initComponents();
+        this.mainScreen = mainScreen;
     }
 
     /**
@@ -340,25 +341,25 @@ public class Login extends javax.swing.JFrame {
 
     private void jUsernameTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jUsernameTFFocusGained
         // TODO add your handling code here:
-        if(jUsernameTF.getText().compareTo("") == 0 || jUsernameTF.getText().compareTo("Enter your username") == 0)
+        if (jUsernameTF.getText().compareTo("") == 0 || jUsernameTF.getText().compareTo("Enter your username") == 0)
             jUsernameTF.setText("");
     }//GEN-LAST:event_jUsernameTFFocusGained
 
     private void jPasswordTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordTFFocusGained
         // TODO add your handling code here:
-        if(jPasswordTF.getText().compareTo("") == 0 || jPasswordTF.getText().compareTo("123456789") == 0)
+        if (jPasswordTF.getText().compareTo("") == 0 || jPasswordTF.getText().compareTo("123456789") == 0)
             jPasswordTF.setText("");
     }//GEN-LAST:event_jPasswordTFFocusGained
 
     private void jUsernameTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jUsernameTFFocusLost
         // TODO add your handling code here:
-        if(jUsernameTF.getText().compareTo("") == 0)
+        if (jUsernameTF.getText().compareTo("") == 0)
             jUsernameTF.setText("Enter your username");
     }//GEN-LAST:event_jUsernameTFFocusLost
 
     private void jPasswordTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordTFFocusLost
         // TODO add your handling code here:
-        if(jPasswordTF.getText().compareTo("") == 0)
+        if (jPasswordTF.getText().compareTo("") == 0)
             jPasswordTF.setText("123456789");
     }//GEN-LAST:event_jPasswordTFFocusLost
 
@@ -374,22 +375,36 @@ public class Login extends javax.swing.JFrame {
 
     private void jLoginbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLoginbtnMouseReleased
         // TODO add your handling code here:
+        switch (AccountBus.checkAccount(jUsernameTF.getText(), jPasswordTF.getText())) {
+            case -1:
+                JOptionPane.showMessageDialog(this, "User name does not already exits");
+                break;
+            case 0:
+                JOptionPane.showMessageDialog(this, "Password is wrong");
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(this, "Success");
+                Account account = AccountBus.getAccountByUserName(jUsernameTF.getText());
+                Object[] users = (account.getUsers().toArray());
+                User user = (User) users[0];
+                mainScreen.setUser(user);
+                setVisible(false);
+                break;   
+        }
+
 
     }//GEN-LAST:event_jLoginbtnMouseReleased
 
     private void jShowPasswordbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jShowPasswordbtnMouseReleased
         // TODO add your handling code here:
-        if(jPasswordTF.getEchoChar() == '*')
-        {
-            jPasswordTF.setEchoChar((char)0);
+        if (jPasswordTF.getEchoChar() == '*') {
+            jPasswordTF.setEchoChar((char) 0);
             jShowPasswordbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/icons8_eye_20px.png")));
-        }
-        else
-        {
+        } else {
             jShowPasswordbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/icons8_invisible_20px.png")));
             jPasswordTF.setEchoChar('*');
         }
-            
+
     }//GEN-LAST:event_jShowPasswordbtnMouseReleased
 
     private void jExitbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jExitbtnMouseReleased
@@ -400,37 +415,7 @@ public class Login extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel informationLoginPanel;

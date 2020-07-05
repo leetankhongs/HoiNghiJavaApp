@@ -1,13 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Jul 2, 2020, 12:09:00 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Jul 5, 2020, 9:32:47 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="POJO.Conference" table="conference" catalog="conferencemanagement" optimistic-lock="version">
         <id name="id" type="string">
             <column name="ID" length="4" />
             <generator class="assigned" />
         </id>
+        <many-to-one name="place" class="POJO.Place" fetch="join" lazy="false">
+            <column name="IDPlace" length="4" />
+        </many-to-one>
         <property name="name" type="string">
             <column name="Name" length="64" />
         </property>
@@ -26,16 +29,10 @@
         <property name="endTime" type="timestamp">
             <column name="EndTime" length="19" />
         </property>
-        <property name="limitedQuantity" type="java.lang.Integer">
-            <column name="LimitedQuantity" />
+        <property name="isDelete" type="java.lang.Byte">
+            <column name="IsDelete" />
         </property>
-        <set name="places" table="place" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="IDConference" length="4" />
-            </key>
-            <one-to-many class="POJO.Place" />
-        </set>
-        <set name="userConferences" table="user_conference" inverse="true" lazy="true" fetch="select">
+        <set name="userConferences" table="user_conference" inverse="true" lazy="false" fetch="join">
             <key>
                 <column name="IDConference" length="4" not-null="true" />
             </key>

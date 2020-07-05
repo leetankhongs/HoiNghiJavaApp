@@ -1,13 +1,24 @@
 
+import Business.AccountBus;
+import Business.ConferenceBus;
+import Business.PlaceBus;
 import Class.Conference11;
+import DAO.AccountDao;
+import MainScreenUI.MainScreen;
+import POJO.Account;
 import POJO.Conference;
+import POJO.Place;
+import POJO.User;
 import Util.NewHibernateUtil;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 /*
@@ -15,52 +26,47 @@ import org.hibernate.Session;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author ADMIN
  */
 public class MainClass {
-        private static List<Conference> listSinhVien;
+
+    private static List<Conference> listSinhVien;
 
     public static void main(String[] args) {
 
-        org.hibernate.SessionFactory sessionFactory = NewHibernateUtil.getSessionFactory();
-        Session session = sessionFactory.openSession();
-
-        try {
-            session.beginTransaction();
-
-            listSinhVien = session.createQuery("select sv from Conference sv").list();
-
-            for (int i = 0; i < listSinhVien.size(); i++) {
-                System.out.println(listSinhVien.get(i).toString());
-            }
-                session.getTransaction().commit();
-            
-        } finally {
-            session.close();
-            sessionFactory.close();
-        }
+       
         
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//
-//        
-//            public void run() {
-//                try {
-//                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-//                    
-//                    
-//                    
-//                    Date date1 = sdf.parse("11-11-2020");
-//                    Date date2 = sdf.parse("11-11-2020");
-//                    Date date3 = sdf.parse("13-11-2020");
-//                    Date date4 = sdf.parse("14-11-2020");
-//                    System.out.println(date2.compareTo(date1));
-//                } catch (ParseException ex) {
-//                    Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        });
-    }   
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainScreen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MainScreen().setVisible(true);
+            }
+        });
+    }
+
+    
 }

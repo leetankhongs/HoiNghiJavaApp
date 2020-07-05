@@ -5,10 +5,30 @@
  */
 package MainScreenUI;
 
+import Business.ConferenceBus;
+import Business.PlaceBus;
+import Class.ImageTextRenderer;
+import ContentUI.Home;
+import POJO.Conference;
+import POJO.Place;
+import com.toedter.calendar.JDateChooser;
+import java.awt.Dialog;
+import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,8 +39,29 @@ public class NewConference extends javax.swing.JFrame {
     /**
      * Creates new form NewConference
      */
+    boolean edit;
+    Conference conference;
+
     public NewConference() {
         initComponents();
+        edit = false;
+        conference = null;
+    }
+
+    public NewConference(Conference conference) {
+        initComponents();
+        this.conference = conference;
+        this.edit = true;
+
+        jNameText.setText(conference.getName());
+        jImageText.setText(conference.getImage());
+        reset(conference.getPlace().getId());
+        jDateChooser.setDate(conference.getStartTime());
+        jStartTime.setValue(conference.getStartTime());
+        jEndTime.setValue(conference.getEndTime());
+        jBriefText.setText(conference.getBriefDescription());
+        jDetailText.setText(conference.getDetailDescription());
+
     }
 
     /**
@@ -57,16 +98,15 @@ public class NewConference extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jDetail = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jDetailText = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        jBriefText = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jFooter = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jOKBtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(650, 650));
-        setPreferredSize(new java.awt.Dimension(650, 700));
 
         jInformationConference.setPreferredSize(new java.awt.Dimension(600, 600));
         jInformationConference.setLayout(new java.awt.GridBagLayout());
@@ -77,9 +117,13 @@ public class NewConference extends javax.swing.JFrame {
         jInformationConference.add(jName, new java.awt.GridBagConstraints());
 
         jNameText.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jNameText.setText("Name Text");
         jNameText.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         jNameText.setPreferredSize(new java.awt.Dimension(400, 40));
+        jNameText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jNameTextActionPerformed(evt);
+            }
+        });
         jInformationConference.add(jNameText, new java.awt.GridBagConstraints());
 
         jImage.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
@@ -90,7 +134,6 @@ public class NewConference extends javax.swing.JFrame {
         jInformationConference.add(jImage, gridBagConstraints);
 
         jImageText.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jImageText.setText("LinkImage");
         jImageText.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         jImageText.setPreferredSize(new java.awt.Dimension(400, 40));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -100,6 +143,11 @@ public class NewConference extends javax.swing.JFrame {
         jAddImagebtn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jAddImagebtn.setText("ADD");
         jAddImagebtn.setPreferredSize(new java.awt.Dimension(80, 40));
+        jAddImagebtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jAddImagebtnMousePressed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 1;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 10);
@@ -112,9 +160,31 @@ public class NewConference extends javax.swing.JFrame {
         gridBagConstraints.gridy = 2;
         jInformationConference.add(jPlace, gridBagConstraints);
 
-        jPlaceChooser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        List<Place> listPlace = PlaceBus.getAllPlace();
+        Collections.sort(listPlace);
+        Place[] listPlaceString;
+        if(listPlace != null)
+        {
+            listPlaceString = new Place[listPlace.size()];
+            for(int i = 0; i < listPlace.size(); i++)
+            listPlaceString[i] = listPlace.get(i);
+        }
+        else
+        {
+            listPlaceString = new Place[]{};
+        }
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        jPlaceChooser.setModel(model);
+        for(int i = 0; i < listPlace.size(); i++)
+        model.addElement(listPlace.get(i));
+        jPlaceChooser.setRenderer(new ImageTextRenderer());
         jPlaceChooser.setBorder(null);
         jPlaceChooser.setPreferredSize(new java.awt.Dimension(400, 40));
+        jPlaceChooser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jPlaceChooserMouseReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 2;
         jInformationConference.add(jPlaceChooser, gridBagConstraints);
@@ -122,6 +192,11 @@ public class NewConference extends javax.swing.JFrame {
         jAddNewPlace.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jAddNewPlace.setText("ADD");
         jAddNewPlace.setPreferredSize(new java.awt.Dimension(80, 40));
+        jAddNewPlace.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jAddNewPlaceMouseReleased(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 2;
         jInformationConference.add(jAddNewPlace, gridBagConstraints);
@@ -133,6 +208,7 @@ public class NewConference extends javax.swing.JFrame {
         gridBagConstraints.gridy = 3;
         jInformationConference.add(jDate, gridBagConstraints);
 
+        jDateChooser.setDateFormatString("dd/MM/yyyy");
         jDateChooser.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jDateChooser.setPreferredSize(new java.awt.Dimension(400, 40));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -194,26 +270,29 @@ public class NewConference extends javax.swing.JFrame {
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(400, 150));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setWrapStyleWord(true);
-        jTextArea1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
-        jScrollPane1.setViewportView(jTextArea1);
+        jDetailText.setColumns(20);
+        jDetailText.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jDetailText.setLineWrap(true);
+        jDetailText.setRows(5);
+        jDetailText.setWrapStyleWord(true);
+        jDetailText.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
+        jScrollPane1.setViewportView(jDetailText);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 6;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
         jInformationConference.add(jScrollPane1, gridBagConstraints);
 
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setPreferredSize(new java.awt.Dimension(400, 100));
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jTextArea2.setRows(5);
-        jTextArea2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
-        jScrollPane2.setViewportView(jTextArea2);
+        jBriefText.setColumns(20);
+        jBriefText.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jBriefText.setLineWrap(true);
+        jBriefText.setRows(5);
+        jBriefText.setWrapStyleWord(true);
+        jBriefText.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
+        jScrollPane2.setViewportView(jBriefText);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 5;
@@ -232,15 +311,127 @@ public class NewConference extends javax.swing.JFrame {
         jFooter.setPreferredSize(new java.awt.Dimension(600, 50));
         jFooter.setLayout(new java.awt.BorderLayout());
 
-        jButton1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jButton1.setText("OK");
-        jFooter.add(jButton1, java.awt.BorderLayout.LINE_END);
+        jOKBtn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jOKBtn.setText("OK");
+        jOKBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jOKBtnMouseReleased(evt);
+            }
+        });
+        jFooter.add(jOKBtn, java.awt.BorderLayout.LINE_END);
 
         getContentPane().add(jFooter, java.awt.BorderLayout.SOUTH);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jNameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNameTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jNameTextActionPerformed
+
+    private void jAddNewPlaceMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jAddNewPlaceMouseReleased
+        // TODO add your handling code here:
+
+        new NewPlace(this).setVisible(true);
+
+    }//GEN-LAST:event_jAddNewPlaceMouseReleased
+
+    private void jOKBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jOKBtnMouseReleased
+        // TODO add your handling code here:
+        if (edit == false) {
+            Place choicePlace = (Place) jPlaceChooser.getSelectedItem();
+
+            String result = ConferenceBus.insertNewConference(new Conference(choicePlace, jNameText.getText(), jBriefText.getText(), jDetailText.getText(), jImageText.getText(), convert(jDateChooser, jStartTime), convert(jDateChooser, jEndTime)));
+            
+            if (result != null) {
+                JOptionPane.showMessageDialog(this, "Success");
+            } else {
+                JOptionPane.showMessageDialog(this, "Fail");
+            }
+        }
+        else{
+            Place choicePlace = (Place) jPlaceChooser.getSelectedItem();
+            
+            Conference editConference = ConferenceBus.getConferenceInformation(conference.getId());
+            editConference.setPlace(choicePlace);
+            editConference.setName(jNameText.getText());
+            editConference.setBriefDescription(jBriefText.getText());
+            editConference.setDetailDescription(jDetailText.getText());
+            editConference.setImage(jImageText.getText());
+            editConference.setStartTime(convert(jDateChooser, jStartTime));
+            editConference.setEndTime(convert(jDateChooser, jEndTime));
+            
+            boolean result = ConferenceBus.updateConfereneInformation(editConference);
+            
+            if (result) {
+                JOptionPane.showMessageDialog(this, "Successful Update");
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed Update");
+            }
+        }
+
+    }//GEN-LAST:event_jOKBtnMouseReleased
+    private static Date convert(JDateChooser date, JSpinner time) {
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        Date getDate = null;
+
+        try {
+            getDate = formatter.parse(formatter.format(date.getDate()));
+        } catch (ParseException ex) {
+            Logger.getLogger(NewConference.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Date getTime = (Date) time.getValue();
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        String timeString = format.format(getTime);
+        Long totalTime = (Long.valueOf(timeString.substring(0, 2)) * 3600 + Long.valueOf(timeString.substring(3, 5)) * 60 + Long.valueOf(timeString.substring(6))) * 1000;
+
+        return new Date(totalTime + getDate.getTime());
+    }
+    private void jPlaceChooserMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPlaceChooserMouseReleased
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_jPlaceChooserMouseReleased
+
+    private void jAddImagebtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jAddImagebtnMousePressed
+        // TODO add your handling code here:
+        JFileChooser file = new JFileChooser();
+        file.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "png");
+        file.addChoosableFileFilter(filter);
+
+        int result = file.showSaveDialog(null);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File seleFile = file.getSelectedFile();
+            String path = seleFile.getPath();
+            jImageText.setText(path);
+        }
+
+    }//GEN-LAST:event_jAddImagebtnMousePressed
+
+    public void reset(String position) {
+        List<Place> listPlace = PlaceBus.getAllPlace();
+        Collections.sort(listPlace);
+        jPlaceChooser.removeAllItems();
+        DefaultComboBoxModel oldModel = (DefaultComboBoxModel) jPlaceChooser.getModel();
+        if (listPlace != null) {
+            for (int i = 0; i < listPlace.size(); i++) {
+                oldModel.addElement(listPlace.get(i));
+            }
+        }
+
+        for (int i = 0; i < listPlace.size(); i++) {
+            if (listPlace.get(i).getId().compareTo(position) == 0) {
+                jPlaceChooser.setSelectedIndex(i);
+                return;
+            }
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -280,10 +471,11 @@ public class NewConference extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jAddImagebtn;
     private javax.swing.JButton jAddNewPlace;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextArea jBriefText;
     private javax.swing.JLabel jDate;
     private com.toedter.calendar.JDateChooser jDateChooser;
     private javax.swing.JLabel jDetail;
+    private javax.swing.JTextArea jDetailText;
     private javax.swing.JLabel jEnd;
     private javax.swing.JSpinner jEndTime;
     private javax.swing.JPanel jFooter;
@@ -294,13 +486,12 @@ public class NewConference extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jName;
     private javax.swing.JTextField jNameText;
+    private javax.swing.JButton jOKBtn;
     private javax.swing.JLabel jPlace;
     private javax.swing.JComboBox<String> jPlaceChooser;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel jStart;
     private javax.swing.JSpinner jStartTime;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
 }

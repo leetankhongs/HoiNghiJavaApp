@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Class;
+package UserUI;
 
+import UserUI.Register_DetailConference;
 import MainScreenUI.Login;
+import POJO.Conference;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -20,19 +22,16 @@ import javax.swing.JTextField;
  *
  * @author ADMIN
  */
-public class ButtonEditor extends DefaultCellEditor{
+public class UserButtonEditor extends DefaultCellEditor{
     private JButton button;
     private String lbl;
     private Boolean clicked;
-    private Conference11 con;
+    private Conference conference;
     
-    public ButtonEditor(JTextField txt){
+    public UserButtonEditor(JTextField txt){
         super(txt);
-        
         setClickCountToStart(1);
-        
-        button = new JButton();
-        
+        button = new JButton();     
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -44,10 +43,11 @@ public class ButtonEditor extends DefaultCellEditor{
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object object, boolean isSelected, int row, int column) {
-        Conference11 conference = (Conference11)object;
-        con = conference;
-        lbl = conference.getNameConference();
-        button.setText(lbl);
+        Conference conference = (Conference)object;
+        this.conference = conference;
+        lbl = conference.getName();
+        button.setBackground(new Color(220,220,255));
+        button.setText("Detail");
         clicked = true;
         return button;
     }
@@ -55,12 +55,10 @@ public class ButtonEditor extends DefaultCellEditor{
     @Override
     public Object getCellEditorValue() {
         if(clicked)
-        {
-            JOptionPane.showMessageDialog(button, con.getNameConference());
-        }
+            new Register_DetailConference(conference).setVisible(true);
         
         clicked = false;
-        return con;
+        return conference;
     }
 
     @Override
@@ -73,9 +71,5 @@ public class ButtonEditor extends DefaultCellEditor{
     protected void fireEditingStopped() {
         super.fireEditingStopped(); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-    
-    
     
 }

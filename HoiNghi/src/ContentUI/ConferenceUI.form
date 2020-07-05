@@ -263,6 +263,7 @@
                     </Property>
                   </Properties>
                   <Events>
+                    <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jAddNewConferenceMousePressed"/>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jAddNewConferenceActionPerformed"/>
                   </Events>
                   <Constraints>
@@ -701,7 +702,7 @@
           <SubComponents>
             <Component class="javax.swing.JTable" name="jTable">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{&quot;STT&quot;, &quot;Conference Name&quot;, &quot;Organized Date&quot;, &quot;Status&quot;, &quot;Detail&quot;, &quot;New Request&quot;}) {&#xa;            @Override&#xa;public Class&#xa;&#xa;&lt;?&gt; getColumnClass(int col) {&#xa;                //here it really returns the right column class (Integer.class)&#xa;                Class retVal = Object.class  &#xa;&#xa;    ;&#xa;&#xa;    if(getRowCount()&#xa;&#xa;    == 2 || getRowCount() == 3)&#xa;                return Date.class  &#xa;&#xa;        ;&#xa;&#xa;        if (getRowCount() &#xa;            &gt; 0) {&#xa;                    retVal = getValueAt(0, col).getClass();&#xa;        }&#xa;&#xa;        return retVal ;&#xa;    }&#xa;&#xa;};">
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{&quot;STT&quot;, &quot;Conference Name&quot;, &quot;Organized Date&quot;, &quot;Status&quot;, &quot;Detail&quot;, &quot;New Request&quot;}) {&#xa;@Override&#xa;public Class&lt;?&gt; getColumnClass(int col) {&#xa;                //here it really returns the right column class (Integer.class)&#xa;    Class retVal = Object.class  ;&#xa;&#xa;    if(getRowCount()== 2 )&#xa;                return Date.class;&#xa;&#xa;        if (getRowCount() &gt; 0) {&#xa;                    retVal = getValueAt(0, col).getClass();&#xa;        }&#xa;        return retVal ;&#xa;    }&#xa;};&#xa;&#xa;&#xa;jTable.getTableHeader().setOpaque(true);&#xa;jTable.getTableHeader().setBackground(Color.red);&#xa;jTable.getTableHeader().setFont(new Font(&quot;Times New Roman&quot;, Font.BOLD, 20));&#xa;&#xa;jTable.setAutoCreateRowSorter(true);">
                   <Font name="Times New Roman" size="18" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">

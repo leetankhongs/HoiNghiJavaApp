@@ -5,14 +5,22 @@
  */
 package ContentUI;
 
-import Class.ButtonEditor;
-import Class.ButtonRenderer;
+import AdminUI.AdminButtonEditor;
+import AdminUI.AdminButtonRenderer;
+import AdminUI.RequestButtonEditor;
+import AdminUI.RequestButtonRenderer;
+import Business.ConferenceBus;
+import UserUI.UserButtonEditor;
+import UserUI.UserButtonRenderer;
 import Class.Conference11;
+import MainScreenUI.NewConference;
+import POJO.Conference;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextField;
@@ -31,29 +39,25 @@ public class ConferenceUI extends javax.swing.JPanel {
     final static private Color colorCliked = new Color(84, 3, 156);
     final static private Color colorMoved = new Color(153, 153, 255);
     final static private Color colorMoved_2 = new Color(220, 220, 255);
-    
+
     public ConferenceUI() {
-        try {
+ 
             initComponents();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            jTable.getTableHeader().setOpaque(true);
-            jTable.getTableHeader().setBackground(Color.red);
-            jTable.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 20));
-            
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
+
+            List<Conference> listConference = ConferenceBus.getAllConference();
             
-            tm.addRow(new Object[]{1, "A", sdf.parse("11-11-2020"), sdf.parse("11-11-2020"), "Column 4", new Conference11("C#", "1")});
-            tm.addRow(new Object[]{2, "C", sdf.parse("12-11-2020"), sdf.parse("11-11-2020"), "Column 4", new Conference11("JAVA", "2")});
-            tm.addRow(new Object[]{3, "E", sdf.parse("11-11-2020"), sdf.parse("13-11-2016"), "Column 4", new Conference11("PTHON", "3")});
-            tm.addRow(new Object[]{4, "B", sdf.parse("11-11-2020"), sdf.parse("14-11-2015"), "Column 4", new Conference11("TEMP", "4")});
-            
-            jTable.setModel(tm);
-            jTable.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
-            jTable.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new JTextField()));
-            jTable.setAutoCreateRowSorter(true);
-        } catch (ParseException ex) {
-            Logger.getLogger(Statistic.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            for (int i = 0; i < listConference.size(); i++) {
+                tm.addRow(new Object[]{i + 1, listConference.get(i).getName(), listConference.get(i).getStartTime(), "Not take place", listConference.get(i),listConference.get(i)});
+            }
+
+           
+            jTable.getColumnModel().getColumn(4).setCellRenderer(new AdminButtonRenderer());
+            jTable.getColumnModel().getColumn(4).setCellEditor(new AdminButtonEditor(new JTextField()));
+            jTable.getColumnModel().getColumn(5).setCellRenderer(new RequestButtonRenderer());
+            jTable.getColumnModel().getColumn(5).setCellEditor(new RequestButtonEditor(new JTextField()));
     }
 
     /**
@@ -139,7 +143,7 @@ public class ConferenceUI extends javax.swing.JPanel {
 
         jFilter.setBackground(new java.awt.Color(224, 224, 250));
         jFilter.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
-        jFilter.setLayout(new java.awt.GridLayout());
+        jFilter.setLayout(new java.awt.GridLayout(1, 0));
 
         jRegisterdDate.setBackground(new java.awt.Color(224, 224, 250));
         jRegisterdDate.setMinimumSize(new java.awt.Dimension(125, 27));
@@ -190,6 +194,11 @@ public class ConferenceUI extends javax.swing.JPanel {
         jAddNewConference.setText("Add New Conference");
         jAddNewConference.setBorderPainted(false);
         jAddNewConference.setPreferredSize(new java.awt.Dimension(230, 21));
+        jAddNewConference.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jAddNewConferenceMousePressed(evt);
+            }
+        });
         jAddNewConference.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jAddNewConferenceActionPerformed(evt);
@@ -406,30 +415,25 @@ public class ConferenceUI extends javax.swing.JPanel {
         jTable.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Conference Name", "Organized Date", "Status", "Detail", "New Request"}) {
             @Override
-            public Class
-
-            <?> getColumnClass(int col) {
+            public Class<?> getColumnClass(int col) {
                 //here it really returns the right column class (Integer.class)
-                Class retVal = Object.class
+                Class retVal = Object.class  ;
 
-                ;
+                if(getRowCount()== 2 )
+                return Date.class;
 
-                if(getRowCount()
-
-                    == 2 || getRowCount() == 3)
-                return Date.class
-
-                ;
-
-                if (getRowCount()
-                    > 0) {
+                if (getRowCount() > 0) {
                     retVal = getValueAt(0, col).getClass();
                 }
-
                 return retVal ;
             }
-
         };
+
+        jTable.getTableHeader().setOpaque(true);
+        jTable.getTableHeader().setBackground(Color.red);
+        jTable.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 20));
+
+        jTable.setAutoCreateRowSorter(true);
         jTable.setModel(tm);
         jTable.setFocusable(false);
         jTable.setGridColor(new java.awt.Color(153, 153, 255));
@@ -478,7 +482,7 @@ public class ConferenceUI extends javax.swing.JPanel {
     private void jSearchTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchTextFocusLost
         // TODO add your handling code here:
         if (jSearchText.getText().compareTo("") == 0)
-        jSearchText.setText("Search conference name ");
+            jSearchText.setText("Search conference name ");
     }//GEN-LAST:event_jSearchTextFocusLost
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -548,6 +552,11 @@ public class ConferenceUI extends javax.swing.JPanel {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jAddNewConferenceMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jAddNewConferenceMousePressed
+        // TODO add your handling code here:
+        new NewConference().setVisible(true);
+    }//GEN-LAST:event_jAddNewConferenceMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
