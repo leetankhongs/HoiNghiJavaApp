@@ -84,7 +84,5 @@ public class UserDao {
         return true;
     }
     
-//    public static User getUserByAccount(String userName){
-//        
-//    }
+    
 }

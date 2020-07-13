@@ -10,21 +10,25 @@ import AdminUI.AdminButtonRenderer;
 import AdminUI.RequestButtonEditor;
 import AdminUI.RequestButtonRenderer;
 import Business.ConferenceBus;
-import UserUI.UserButtonEditor;
-import UserUI.UserButtonRenderer;
-import Class.Conference11;
+import Business.UserConferenceBus;
 import MainScreenUI.NewConference;
 import POJO.Conference;
+import POJO.UserConference;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import org.hibernate.jpa.criteria.expression.function.AggregationFunction;
 
 /**
  *
@@ -36,28 +40,175 @@ public class ConferenceUI extends javax.swing.JPanel {
      * Creates new form Conference
      */
     final static private Color deufault = new Color(224, 224, 250);
-    final static private Color colorCliked = new Color(84, 3, 156);
     final static private Color colorMoved = new Color(153, 153, 255);
-    final static private Color colorMoved_2 = new Color(220, 220, 255);
 
-    public ConferenceUI() {
- 
-            initComponents();
+    List<Conference> listConference;
+    private int maxPag;
+    private int minPag = 1;
 
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
+    private void filter() {
+        statusFilter();
+        requestFilter();
+        organizedDateFilter();
+        ConferenceNameFilter();
+        paginationFilter();
+    }
 
-            List<Conference> listConference = ConferenceBus.getAllConference();
-            
-            for (int i = 0; i < listConference.size(); i++) {
-                tm.addRow(new Object[]{i + 1, listConference.get(i).getName(), listConference.get(i).getStartTime(), "Not take place", listConference.get(i),listConference.get(i)});
+    private void paginationFilter() {
+        calculatePag();
+        List<Conference> temp = new ArrayList<>();
+        int start = (Integer.valueOf(jPosition.getText()) - 1) * (Integer.valueOf(jComboBox1.getSelectedItem().toString()));
+        int end = Integer.valueOf(jPosition.getText()) * (Integer.valueOf(jComboBox1.getSelectedItem().toString())) - 1;
+
+        if (end > listConference.size() - 1) {
+            end = listConference.size() - 1;
+        }
+
+        for (int i = start; i <= end; i++) {
+            temp.add(listConference.get(i));
+        }
+
+        jDescriptionPag.setText("Page " + jPosition.getText() + " for " + (start + 1) + "-" + (end + 1) + "/" + listConference.size());
+
+        listConference.clear();
+
+        for (int i = 0; i < temp.size(); i++) {
+            listConference.add(temp.get(i));
+        }
+
+    }
+
+    private void statusFilter() {
+        int takePlace = jTakePlace.getSelectedIndex();
+        Date date = new Date();
+
+        switch (takePlace) {
+            case 1:
+                for (int i = listConference.size() - 1; i >= 0; i--) {
+                    if (listConference.get(i).getStartTime().compareTo(date) >= 0 || listConference.get(i).getIsDelete() == 1) {
+                        listConference.remove(i);
+                    }
+                }
+                break;
+            case 2:
+                for (int i = listConference.size() - 1; i >= 0; i--) {
+                    if (listConference.get(i).getStartTime().compareTo(date) < 0 || listConference.get(i).getIsDelete() == 1) {
+                        System.out.println(listConference.get(i).getStartTime().compareTo(date));
+                        listConference.remove(i);
+                    }
+                }
+                break;
+            case 3:
+                for (int i = listConference.size() - 1; i >= 0; i--) {
+                    if (listConference.get(i).getIsDelete() != 1) {
+                        listConference.remove(i);
+                    }
+                }
+                break;
+        }
+    }
+
+    private void requestFilter() {
+        int requestIndex = jNewRequest.getSelectedIndex();
+
+        switch (requestIndex) {
+            case 1:
+                for (int i = listConference.size() - 1; i >= 0; i--) {
+                    List<UserConference> userConferences = UserConferenceBus.getNewRequests(listConference.get(i));
+                    if (userConferences.size() != 0) {
+                        listConference.remove(i);
+                    }
+                }
+                break;
+            case 2:
+                for (int i = listConference.size() - 1; i >= 0; i--) {
+                    List<UserConference> userConferences = UserConferenceBus.getNewRequests(listConference.get(i));
+                    if (userConferences.size() == 0) {
+                        listConference.remove(i);
+                    }
+                }
+                break;
+
+        }
+    }
+
+    private void organizedDateFilter() {
+        if (jDateChooser.getDate() == null) {
+            return;
+        }
+
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        Date getDate = null;
+
+        try {
+            getDate = formatter.parse(formatter.format(jDateChooser.getDate()));
+        } catch (ParseException ex) {
+            Logger.getLogger(NewConference.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        for (int i = listConference.size() - 1; i >= 0; i--) {
+            try {
+                if (formatter.parse(formatter.format(listConference.get(i).getStartTime())).compareTo(getDate) != 0) {
+                    listConference.remove(i);
+                }
+            } catch (ParseException ex) {
+                Logger.getLogger(ConferenceUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+
+    private void ConferenceNameFilter() {
+        if (jSearchText.getText().compareTo("Search conference name") == 0) {
+            return;
+        }
+
+        for (int i = listConference.size() - 1; i >= 0; i--) {
+            if (listConference.get(i).getName().toLowerCase().indexOf(jSearchText.getText().toLowerCase()) == -1) {
+                listConference.remove(i);
             }
 
-           
-            jTable.getColumnModel().getColumn(4).setCellRenderer(new AdminButtonRenderer());
-            jTable.getColumnModel().getColumn(4).setCellEditor(new AdminButtonEditor(new JTextField()));
-            jTable.getColumnModel().getColumn(5).setCellRenderer(new RequestButtonRenderer());
-            jTable.getColumnModel().getColumn(5).setCellEditor(new RequestButtonEditor(new JTextField()));
+        }
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public ConferenceUI() {
+
+        initComponents();
+
+        resetData();
+        jTable.getColumnModel().getColumn(4).setCellRenderer(new AdminButtonRenderer());
+        jTable.getColumnModel().getColumn(4).setCellEditor(new AdminButtonEditor(new JTextField()));
+        jTable.getColumnModel().getColumn(5).setCellRenderer(new RequestButtonRenderer());
+        RequestButtonEditor requestButtonEditor = new RequestButtonEditor(new JTextField());
+        requestButtonEditor.setConferenceUI(this);
+        jTable.getColumnModel().getColumn(5).setCellEditor(requestButtonEditor);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(500);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+
+    }
+
+    private void calculatePag() {
+        int countRow = listConference.size();
+
+        if (countRow % (Integer.valueOf(jComboBox1.getSelectedItem().toString())) == 0) {
+            maxPag = countRow / Integer.valueOf(jComboBox1.getSelectedItem().toString());
+        } else {
+            maxPag = (int) (countRow / Integer.valueOf(jComboBox1.getSelectedItem().toString())) + 1;
+        }
+        
+        if(maxPag == 0)
+            maxPag = 1;
+
     }
 
     /**
@@ -76,10 +227,10 @@ public class ConferenceUI extends javax.swing.JPanel {
         jFilter = new javax.swing.JPanel();
         jRegisterdDate = new javax.swing.JPanel();
         jRegisteredDateText1 = new javax.swing.JLabel();
-        jNewRequest = new javax.swing.JComboBox<>();
+        jTakePlace = new javax.swing.JComboBox<>();
         jOrganizedDate1 = new javax.swing.JPanel();
         jOrganizedDateText1 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jNewRequest = new javax.swing.JComboBox<>();
         jAddNewConference = new javax.swing.JButton();
         jOption2 = new javax.swing.JPanel();
         jSearchPnl = new javax.swing.JPanel();
@@ -157,10 +308,15 @@ public class ConferenceUI extends javax.swing.JPanel {
         jRegisteredDateText1.setPreferredSize(new java.awt.Dimension(125, 50));
         jRegisterdDate.add(jRegisteredDateText1, java.awt.BorderLayout.WEST);
 
-        jNewRequest.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jNewRequest.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Took place", "Not take place" }));
-        jNewRequest.setPreferredSize(new java.awt.Dimension(100, 23));
-        jRegisterdDate.add(jNewRequest, java.awt.BorderLayout.CENTER);
+        jTakePlace.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jTakePlace.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Took place", "Not take place", "IsDeleted" }));
+        jTakePlace.setPreferredSize(new java.awt.Dimension(100, 23));
+        jTakePlace.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTakePlaceActionPerformed(evt);
+            }
+        });
+        jRegisterdDate.add(jTakePlace, java.awt.BorderLayout.CENTER);
 
         jFilter.add(jRegisterdDate);
 
@@ -176,14 +332,14 @@ public class ConferenceUI extends javax.swing.JPanel {
         jOrganizedDateText1.setPreferredSize(new java.awt.Dimension(150, 50));
         jOrganizedDate1.add(jOrganizedDateText1, java.awt.BorderLayout.WEST);
 
-        jComboBox2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Default", "New request" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        jNewRequest.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jNewRequest.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Non Request", "New Request" }));
+        jNewRequest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                jNewRequestActionPerformed(evt);
             }
         });
-        jOrganizedDate1.add(jComboBox2, java.awt.BorderLayout.CENTER);
+        jOrganizedDate1.add(jNewRequest, java.awt.BorderLayout.CENTER);
 
         jFilter.add(jOrganizedDate1);
 
@@ -218,9 +374,10 @@ public class ConferenceUI extends javax.swing.JPanel {
         jSearchPnl.setLayout(new java.awt.BorderLayout());
 
         jSearchbtn.setBackground(new java.awt.Color(224, 224, 250));
-        jSearchbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Search-icon.png"))); // NOI18N
+        jSearchbtn.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jSearchbtn.setText("Name");
         jSearchbtn.setOpaque(true);
-        jSearchbtn.setPreferredSize(new java.awt.Dimension(50, 13));
+        jSearchbtn.setPreferredSize(new java.awt.Dimension(80, 13));
         jSearchbtn.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 jSearchbtnMouseMoved(evt);
@@ -243,8 +400,21 @@ public class ConferenceUI extends javax.swing.JPanel {
         jSearchText.setMargin(new java.awt.Insets(5, 5, 5, 5));
         jSearchText.setPreferredSize(new java.awt.Dimension(200, 27));
         jSearchText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jSearchTextFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jSearchTextFocusLost(evt);
+            }
+        });
+        jSearchText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jSearchTextActionPerformed(evt);
+            }
+        });
+        jSearchText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jSearchTextKeyTyped(evt);
             }
         });
         jSearchPnl.add(jSearchText, java.awt.BorderLayout.CENTER);
@@ -260,7 +430,7 @@ public class ConferenceUI extends javax.swing.JPanel {
 
         jComboBox1.setEditable(true);
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(70, 50));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -285,6 +455,11 @@ public class ConferenceUI extends javax.swing.JPanel {
         jDateChooser.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jDateChooser.setOpaque(false);
         jDateChooser.setPreferredSize(new java.awt.Dimension(75, 50));
+        jDateChooser.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooserPropertyChange(evt);
+            }
+        });
         jOrganizedDate.add(jDateChooser, java.awt.BorderLayout.CENTER);
 
         jOrganizedDateText.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -365,7 +540,10 @@ public class ConferenceUI extends javax.swing.JPanel {
         });
         jPaginationButton.add(jPrebtn);
 
+        jPosition.setEditable(false);
+        jPosition.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
         jPosition.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPosition.setText("1");
         jPaginationButton.add(jPosition);
 
         jNextbtn.setBackground(new java.awt.Color(224, 224, 250));
@@ -419,9 +597,6 @@ public class ConferenceUI extends javax.swing.JPanel {
                 //here it really returns the right column class (Integer.class)
                 Class retVal = Object.class  ;
 
-                if(getRowCount()== 2 )
-                return Date.class;
-
                 if (getRowCount() > 0) {
                     retVal = getValueAt(0, col).getClass();
                 }
@@ -451,6 +626,36 @@ public class ConferenceUI extends javax.swing.JPanel {
         add(jData, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void resetData() {
+        listConference = ConferenceBus.getAllConference();
+        filter();
+        DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
+
+        for (int i = tm.getRowCount() - 1; i >= 0; i--) {
+            tm.removeRow(i);
+        }
+
+        for (int i = 0; i < listConference.size(); i++) {
+            String status = "";
+            Date nowDate = new Date();
+
+            if (listConference.get(i).getStartTime().compareTo(nowDate) <= 0) {
+                status = "Took place";
+            } else {
+                status = "Not take place";
+            }
+
+            if (listConference.get(i).getIsDelete() == 1) {
+                status = "is Deleted";
+            }
+            tm.addRow(new Object[]{i + 1, listConference.get(i).getName(), listConference.get(i).getStartTime(), status, listConference.get(i), listConference.get(i)});
+        }
+
+        jTable.getColumnModel().getColumn(4).setCellRenderer(new AdminButtonRenderer());
+        jTable.getColumnModel().getColumn(4).setCellEditor(new AdminButtonEditor(new JTextField()));
+        jTable.getColumnModel().getColumn(5).setCellRenderer(new RequestButtonRenderer());
+        jTable.getColumnModel().getColumn(5).setCellEditor(new RequestButtonEditor(new JTextField()));
+    }
     private void jResetbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jResetbtnMouseMoved
         // TODO add your handling code here:
         jResetbtn.setBackground(colorMoved);
@@ -463,6 +668,12 @@ public class ConferenceUI extends javax.swing.JPanel {
 
     private void jResetbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jResetbtnMouseReleased
         // TODO add your handling code here:
+        jTakePlace.setSelectedIndex(0);
+        jNewRequest.setSelectedIndex(0);
+        jDateChooser.setDate(null);
+        jSearchText.setText("Search conference name");
+        jPosition.setText("1");
+        resetData();
     }//GEN-LAST:event_jResetbtnMouseReleased
 
     private void jSearchbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchbtnMouseMoved
@@ -479,14 +690,12 @@ public class ConferenceUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jSearchbtnMouseReleased
 
-    private void jSearchTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchTextFocusLost
-        // TODO add your handling code here:
-        if (jSearchText.getText().compareTo("") == 0)
-            jSearchText.setText("Search conference name ");
-    }//GEN-LAST:event_jSearchTextFocusLost
-
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        calculatePag();
+        jPosition.setText("1");
+        resetData();
+
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jFirstbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFirstbtnMouseMoved
@@ -501,6 +710,8 @@ public class ConferenceUI extends javax.swing.JPanel {
 
     private void jFirstbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFirstbtnMouseReleased
         // TODO add your handling code here:
+        jPosition.setText("1");
+        resetData();
     }//GEN-LAST:event_jFirstbtnMouseReleased
 
     private void jPrebtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPrebtnMouseMoved
@@ -515,6 +726,10 @@ public class ConferenceUI extends javax.swing.JPanel {
 
     private void jPrebtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPrebtnMouseReleased
         // TODO add your handling code here:
+        int currentPosition = Integer.valueOf(jPosition.getText());
+        currentPosition = currentPosition == 1 ? 1 : --currentPosition;
+        jPosition.setText(String.valueOf(currentPosition));
+        resetData();
     }//GEN-LAST:event_jPrebtnMouseReleased
 
     private void jNextbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jNextbtnMouseMoved
@@ -528,7 +743,12 @@ public class ConferenceUI extends javax.swing.JPanel {
     }//GEN-LAST:event_jNextbtnMouseExited
 
     private void jNextbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jNextbtnMouseReleased
-        // TODO add your handling code here:
+        // TODO add your handling code here:        
+        int currentPosition = Integer.valueOf(jPosition.getText());
+        System.out.println(maxPag);
+        currentPosition = currentPosition == maxPag ? maxPag : ++currentPosition;
+        jPosition.setText(String.valueOf(currentPosition));
+        resetData();
     }//GEN-LAST:event_jNextbtnMouseReleased
 
     private void jLastbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLastbtnMouseMoved
@@ -543,27 +763,67 @@ public class ConferenceUI extends javax.swing.JPanel {
 
     private void jLastbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLastbtnMouseReleased
         // TODO add your handling code here:
+        jPosition.setText(String.valueOf(maxPag));
+        resetData();
     }//GEN-LAST:event_jLastbtnMouseReleased
 
     private void jAddNewConferenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAddNewConferenceActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jAddNewConferenceActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void jNewRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNewRequestActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+        jPosition.setText("1");
+        resetData();
+    }//GEN-LAST:event_jNewRequestActionPerformed
 
     private void jAddNewConferenceMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jAddNewConferenceMousePressed
         // TODO add your handling code here:
         new NewConference().setVisible(true);
     }//GEN-LAST:event_jAddNewConferenceMousePressed
 
+    private void jTakePlaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTakePlaceActionPerformed
+        // TODO add your handling code here:
+        jPosition.setText("1");
+        resetData();
+    }//GEN-LAST:event_jTakePlaceActionPerformed
+
+    private void jDateChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserPropertyChange
+        // TODO add your handling code here:
+        if ("date".equals(evt.getPropertyName())) {
+            jPosition.setText("1");
+            resetData();
+        }
+    }//GEN-LAST:event_jDateChooserPropertyChange
+
+    private void jSearchTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSearchTextActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jSearchTextActionPerformed
+
+    private void jSearchTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSearchTextKeyTyped
+        // TODO add your handling code here:
+        jPosition.setText("1");
+        resetData();
+    }//GEN-LAST:event_jSearchTextKeyTyped
+
+    private void jSearchTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchTextFocusGained
+        // TODO add your handling code here:
+        if (jSearchText.getText().compareTo("Search conference name") == 0)
+            jSearchText.setText("");
+    }//GEN-LAST:event_jSearchTextFocusGained
+
+    private void jSearchTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchTextFocusLost
+        // TODO add your handling code here:
+        if (jSearchText.getText().compareTo("") == 0)
+            jSearchText.setText("Search conference name");
+    }//GEN-LAST:event_jSearchTextFocusLost
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jAddNewConference;
     private javax.swing.JLabel jBrief;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JPanel jCount;
     private javax.swing.JPanel jData;
     private com.toedter.calendar.JDateChooser jDateChooser;
@@ -595,5 +855,6 @@ public class ConferenceUI extends javax.swing.JPanel {
     private javax.swing.JTextField jSearchText;
     private javax.swing.JLabel jSearchbtn;
     private javax.swing.JTable jTable;
+    private javax.swing.JComboBox<String> jTakePlace;
     // End of variables declaration//GEN-END:variables
 }

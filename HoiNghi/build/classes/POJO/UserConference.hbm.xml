@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Jul 5, 2020, 9:32:47 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Jul 9, 2020, 5:02:17 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="POJO.UserConference" table="user_conference" catalog="conferencemanagement" optimistic-lock="version">
         <composite-id name="id" class="POJO.UserConferenceId">
@@ -12,16 +12,16 @@
                 <column name="IDUser" length="10" />
             </key-property>
         </composite-id>
-        <many-to-one name="conference" class="POJO.Conference" update="false" insert="false" fetch="join" lazy="false">
+        <many-to-one name="conference" class="POJO.Conference" update="false" insert="false" lazy="false" fetch="join">
             <column name="IDConference" length="4" not-null="true" />
         </many-to-one>
-        <many-to-one name="user" class="POJO.User" update="false" insert="false" fetch="join" lazy="false">
+        <many-to-one name="user" class="POJO.User" update="false" insert="false" lazy="false" fetch="join">
             <column name="IDUser" length="10" not-null="true" />
         </many-to-one>
         <property name="registationTime" type="timestamp">
             <column name="RegistationTime" length="19" />
         </property>
-        <property name="isAccepted" type="java.lang.Byte">
+        <property name="isAccepted" type="java.lang.Integer">
             <column name="IsAccepted" />
         </property>
     </class>

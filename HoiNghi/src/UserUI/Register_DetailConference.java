@@ -10,6 +10,7 @@ import POJO.Conference;
 import POJO.Place;
 import POJO.User;
 import POJO.UserConference;
+import POJO.UserConferenceId;
 import java.awt.Image;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,11 +29,13 @@ public class Register_DetailConference extends javax.swing.JFrame {
      */
     Conference conference;
     User user;
+    boolean isRegistered;
 
-    public Register_DetailConference(Conference conference, User user) {
+    public Register_DetailConference(Conference conference, User user, boolean isRegistered) {
         initComponents();
         this.conference = conference;
         this.user = user;
+        this.isRegistered = isRegistered;
 
         ImageIcon imageIcon = new ImageIcon(conference.getImage());
         Image image = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
@@ -51,32 +54,14 @@ public class Register_DetailConference extends javax.swing.JFrame {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         jStartTF.setText(timeFormat.format(conference.getStartTime()));
         jEndTF.setText(timeFormat.format(conference.getEndTime()));
-    }
 
-    public Register_DetailConference(Conference conference) {
-        initComponents();
-        this.conference = conference;
+        if (isRegistered == true) {
+            jRegisterbtn.setText("Cancel registration");
+        }
         
-
-        ImageIcon imageIcon = new ImageIcon(conference.getImage());
-        Image image = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-        jImage.setIcon(new ImageIcon(image));
-        jNameConference.setText(conference.getName());
-        jBriefDescription.setText(conference.getBriefDescription());
-        jDetailDescription.setText(conference.getDetailDescription());
-
-        Place place = conference.getPlace();
-        jPlaceNameTF.setText(place.getName());
-        jAddressTF.setText(place.getAddress());
-        jCapacityTF.setText(place.getCapacity().toString());
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        jDateTF.setText(dateFormat.format(conference.getStartTime()));
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-        jStartTF.setText(timeFormat.format(conference.getStartTime()));
-        jEndTF.setText(timeFormat.format(conference.getEndTime()));
     }
-    
+
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -290,14 +275,30 @@ public class Register_DetailConference extends javax.swing.JFrame {
 
     private void jRegisterbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRegisterbtnMouseReleased
         // TODO add your handling code here:
-        if(user == null)
-        {
+        if (user == null) {
             JOptionPane.showMessageDialog(this, "You need to log in");
-        }
-        else{
-            UserConferenceBus.insertNewUserConference(new UserConference(conference, user, new Date()));
-            JOptionPane.showConfirmDialog(this, "Registation Success");
-            setVisible(false);
+        } else {
+            if (isRegistered == false) {
+                UserConference userConference = new UserConference(conference, user);
+                
+                if(UserConferenceBus.getUserConferenceInformation(userConference.getId()) != null)
+                    JOptionPane.showMessageDialog(this, "Bạn đã đăng kí rồi");
+                else
+                {
+                    UserConferenceBus.insertNewUserConference(new UserConference(conference, user));
+                JOptionPane.showConfirmDialog(this, "Registation Success");
+                setVisible(false);
+                }
+                
+            }
+            else
+            {
+                int result = UserConferenceBus.deleteRegistration(new UserConferenceId(conference.getId(), user.getId()));
+                if(result == 1)
+                    JOptionPane.showConfirmDialog(this, "Cancel Registration Success");
+                setVisible(false);
+            }
+
         }
 
     }//GEN-LAST:event_jRegisterbtnMouseReleased

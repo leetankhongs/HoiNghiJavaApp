@@ -6,13 +6,8 @@
 package Business;
 
 import DAO.ConferenceDao;
-import DAO.PlaceDao;
 import POJO.Conference;
-import POJO.Place;
-import Util.NewHibernateUtil;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 /**
  *
@@ -35,6 +30,11 @@ public class ConferenceBus {
     }
     
     public static boolean updateConfereneInformation(Conference conference){ 
+        return ConferenceDao.updateConferenceformation(conference);
+    }
+    
+    public static boolean deleteConference(Conference conference){
+        conference.setIsDelete(Byte.valueOf("1"));
         return ConferenceDao.updateConferenceformation(conference);
     }
 }

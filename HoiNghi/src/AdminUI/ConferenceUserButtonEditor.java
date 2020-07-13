@@ -4,9 +4,10 @@
  * and open the template in the editor.
  */
 package AdminUI;
-
 import ContentUI.ConferenceUI;
 import POJO.Conference;
+import POJO.User;
+import POJO.UserConference;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -15,55 +16,50 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-
 /**
  *
  * @author ADMIN
  */
-public class RequestButtonEditor extends DefaultCellEditor{
+public class ConferenceUserButtonEditor extends DefaultCellEditor {
+
     private JButton button;
     private Boolean clicked;
-    private Conference conference;
-    private ConferenceUI conferenceUI;
-    
-    public RequestButtonEditor(JTextField txt){
+    private User user;
+
+    public ConferenceUserButtonEditor(JTextField txt) {
         super(txt);
         setClickCountToStart(1);
-        button = new JButton();     
+        button = new JButton();
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 fireEditingStopped();
             }
         });
-        
+
     }
-    
-    public void setConferenceUI(ConferenceUI conferenceUI){
-        this.conferenceUI = conferenceUI;
-    }
+
+
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object object, boolean isSelected, int row, int column) {
-        Conference conference = (Conference)object;
-        this.conference = conference;
-        button.setBackground(new Color(220,220,255));
+        User user = (User) object;
+        this.user = user;
+        button.setBackground(new Color(220, 220, 255));
         button.setText("New Request");
-        
+
         clicked = true;
         return button;
     }
 
     @Override
     public Object getCellEditorValue() {
-        if(clicked)
-        {
-                       new NewRequest(conference, conferenceUI).setVisible(true);
-            System.out.println(conferenceUI);
+        if (clicked) {
+            new ConferenceUserList(user).setVisible(true);
         }
-        
+
         clicked = false;
-        return conference;
+        return user;
     }
 
     @Override
@@ -76,5 +72,4 @@ public class RequestButtonEditor extends DefaultCellEditor{
     protected void fireEditingStopped() {
         super.fireEditingStopped(); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

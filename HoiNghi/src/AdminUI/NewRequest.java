@@ -5,7 +5,18 @@
  */
 package AdminUI;
 
+import Business.UserConferenceBus;
+import ContentUI.ConferenceUI;
 import POJO.Conference;
+import POJO.UserConference;
+import UserUI.UserButtonEditor;
+import UserUI.UserButtonRenderer;
+import com.mchange.v1.db.sql.DriverManagerDataSource;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,12 +28,28 @@ public class NewRequest extends javax.swing.JFrame {
      * Creates new form NewRequest
      */
     Conference conference;
-    public NewRequest(Conference conference) {
+    List<UserConference> list;
+    ConferenceUI conferenceUI;
+
+    public NewRequest(Conference conference, ConferenceUI conferenceUI) {
         initComponents();
         this.conference = conference;
-        
+        this.conferenceUI = conferenceUI;
+
         jNameTF.setText(conference.getName());
         jCapacityTF.setText(conference.getPlace().getCapacity().toString());
+
+        list = UserConferenceBus.getNewRequests(conference);
+
+        DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
+
+        for (int i = 0; i < list.size(); i++) {
+            tm.addRow(new Object[]{i + 1, list.get(i).getUser().getName(), list.get(i).getUser().getEmail(), false});
+        }
+
+        jTable.setModel(tm);
+        jTable.setAutoCreateRowSorter(true);
+        System.out.println(conferenceUI);
     }
 
     /**
@@ -44,12 +71,12 @@ public class NewRequest extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jAcceptbtn = new javax.swing.JButton();
+        jDecline = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
@@ -101,22 +128,32 @@ public class NewRequest extends javax.swing.JFrame {
         jPanel4.setPreferredSize(new java.awt.Dimension(600, 50));
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 10, 5));
 
-        jButton2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jButton2.setText("Accept");
-        jButton2.setPreferredSize(new java.awt.Dimension(73, 40));
-        jPanel4.add(jButton2);
+        jAcceptbtn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jAcceptbtn.setText("Accept");
+        jAcceptbtn.setPreferredSize(new java.awt.Dimension(73, 40));
+        jAcceptbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jAcceptbtnMouseReleased(evt);
+            }
+        });
+        jPanel4.add(jAcceptbtn);
 
-        jButton3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jButton3.setText("Decline");
-        jButton3.setPreferredSize(new java.awt.Dimension(75, 40));
-        jPanel4.add(jButton3);
+        jDecline.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jDecline.setText("Decline");
+        jDecline.setPreferredSize(new java.awt.Dimension(75, 40));
+        jDecline.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jDeclineMousePressed(evt);
+            }
+        });
+        jPanel4.add(jDecline);
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.NORTH);
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        jTable1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -128,7 +165,7 @@ public class NewRequest extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -139,8 +176,8 @@ public class NewRequest extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowHeight(20);
-        jScrollPane1.setViewportView(jTable1);
+        jTable.setRowHeight(20);
+        jScrollPane1.setViewportView(jTable);
 
         jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -154,12 +191,75 @@ public class NewRequest extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jAcceptbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jAcceptbtnMouseReleased
+        // TODO add your handling code here:
+        DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
+        List<Integer> checkedPositions = new ArrayList<>();
 
+        for (int i = 0; i < tm.getRowCount(); i++) {
+            boolean checked = (boolean) tm.getValueAt(i, 3);
+
+            if (checked == true) {
+                checkedPositions.add((Integer) tm.getValueAt(i, 0));
+            }
+        }
+
+        if (UserConferenceBus.getTheNumberOfUserIsAccepted(conference) + checkedPositions.size() > conference.getParticipants())
+            JOptionPane.showMessageDialog(this, "The number of people has exceeded the limit");
+        else {
+            for (int i = 0; i < checkedPositions.size(); i++) {
+                UserConferenceBus.acceptRequest(list.get(checkedPositions.get(i) - 1).getId());
+            }
+
+            JOptionPane.showMessageDialog(this, "Success");
+            resetNewRequests();
+            conferenceUI.resetData();
+        }
+    }//GEN-LAST:event_jAcceptbtnMouseReleased
+
+    private void jDeclineMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jDeclineMousePressed
+        // TODO add your handling code here:
+        DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
+        List<Integer> checkedPositions = new ArrayList<>();
+
+        for (int i = 0; i < tm.getRowCount(); i++) {
+            boolean checked = (boolean) tm.getValueAt(i, 3);
+
+            if (checked == true) {
+                checkedPositions.add((Integer) tm.getValueAt(i, 0));
+            }
+        }
+
+        for (int i = 0; i < checkedPositions.size(); i++) {
+            UserConferenceBus.declineRequest(list.get(checkedPositions.get(i) - 1).getId());
+        }
+
+        JOptionPane.showMessageDialog(this, "Success");
+        resetNewRequests();
+        conferenceUI.resetData();
+
+    }//GEN-LAST:event_jDeclineMousePressed
+
+    private void resetNewRequests() {
+        list = UserConferenceBus.getNewRequests(conference);
+        DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
+
+        for (int i = tm.getRowCount() - 1; i >= 0; i--) {
+            tm.removeRow(i);
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            tm.addRow(new Object[]{i + 1, list.get(i).getUser().getName(), list.get(i).getUser().getEmail(), false});
+        }
+
+        jTable.setModel(tm);
+        jTable.setAutoCreateRowSorter(true);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jAcceptbtn;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JTextField jCapacityTF;
+    private javax.swing.JButton jDecline;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jNameTF;
@@ -168,6 +268,6 @@ public class NewRequest extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable;
     // End of variables declaration//GEN-END:variables
 }

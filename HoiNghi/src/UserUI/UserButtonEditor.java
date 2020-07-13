@@ -8,6 +8,7 @@ package UserUI;
 import UserUI.Register_DetailConference;
 import MainScreenUI.Login;
 import POJO.Conference;
+import POJO.UserConference;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -24,9 +25,8 @@ import javax.swing.JTextField;
  */
 public class UserButtonEditor extends DefaultCellEditor{
     private JButton button;
-    private String lbl;
     private Boolean clicked;
-    private Conference conference;
+    private UserConference userConference;
     
     public UserButtonEditor(JTextField txt){
         super(txt);
@@ -43,9 +43,8 @@ public class UserButtonEditor extends DefaultCellEditor{
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object object, boolean isSelected, int row, int column) {
-        Conference conference = (Conference)object;
-        this.conference = conference;
-        lbl = conference.getName();
+        UserConference userConference = (UserConference)object;
+        this.userConference = userConference;
         button.setBackground(new Color(220,220,255));
         button.setText("Detail");
         clicked = true;
@@ -55,10 +54,10 @@ public class UserButtonEditor extends DefaultCellEditor{
     @Override
     public Object getCellEditorValue() {
         if(clicked)
-            new Register_DetailConference(conference).setVisible(true);
+            new Register_DetailConference(userConference.getConference(),userConference.getUser(), true).setVisible(true);
         
         clicked = false;
-        return conference;
+        return userConference;
     }
 
     @Override

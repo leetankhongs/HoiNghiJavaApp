@@ -1,5 +1,5 @@
 package POJO;
-// Generated Jul 5, 2020, 9:32:46 PM by Hibernate Tools 4.3.1
+// Generated Jul 9, 2020, 5:02:16 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -29,18 +29,13 @@ public class UserConference  implements java.io.Serializable {
      private Conference conference;
      private User user;
      private Date registationTime;
-     private Byte isAccepted;
+     private Integer isAccepted;
 
     public UserConference() {
     }
 
 	
-    public UserConference(UserConferenceId id, Conference conference, User user) {
-        this.id = id;
-        this.conference = conference;
-        this.user = user;
-    }
-    public UserConference(Conference conference, User user, Date registationTime) {
+    public UserConference(Conference conference, User user) {
        this.id = new UserConferenceId(conference.getId(), user.getId());
        this.conference = conference;
        this.user = user;
@@ -94,11 +89,11 @@ public class UserConference  implements java.io.Serializable {
 
     
     @Column(name="IsAccepted")
-    public Byte getIsAccepted() {
+    public Integer getIsAccepted() {
         return this.isAccepted;
     }
     
-    public void setIsAccepted(Byte isAccepted) {
+    public void setIsAccepted(Integer isAccepted) {
         this.isAccepted = isAccepted;
     }
 

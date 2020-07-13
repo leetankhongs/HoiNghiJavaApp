@@ -11,7 +11,7 @@
       </Border>
     </Property>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[571, 100]"/>
+      <Dimension value="[1000, 100]"/>
     </Property>
   </Properties>
   <Events>

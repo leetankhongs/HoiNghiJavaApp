@@ -9,7 +9,9 @@ import ContentUI.ConferenceUI;
 import ContentUI.Home;
 import ContentUI.ListConference;
 import ContentUI.Statistic;
+import ContentUI.UsersUI;
 import POJO.User;
+import UserUI.UserInformation;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
@@ -33,7 +35,7 @@ public class MainScreen extends javax.swing.JFrame {
     private User user = null;
 
     private Home mainHome = new Home();
-    private Statistic mainStatistic = new Statistic();
+    private Statistic mainStatistic = new Statistic(user);
     private ListConference mainListConference = new ListConference(user);
     private ConferenceUI mainConference = new ConferenceUI();
 
@@ -43,23 +45,35 @@ public class MainScreen extends javax.swing.JFrame {
 
     public void setUser(User user) {
         this.user = user;
-        jName.setText("Hello " + user.getName());
-        jStatisticPnl.setVisible(true);
-        jLogin.setText("Log out");
-        mainListConference.setUser(user);
+        if (user != null) {
+            jName.setText("Hello " + user.getName());
+            jStatisticPnl.setVisible(true);
+            jLogin.setText("Log out");
+            mainListConference.setUser(user);
 
-        if (user.getIsAdmin() == 1) {
-            jConferencesPnl.setVisible(true);
-            jUsersPnl.setVisible(true);
+            if (user.getIsAdmin() == 1) {
+                jConferencesPnl.setVisible(true);
+                jUsersPnl.setVisible(true);
+            }
+        } else {
+            setColorClicked(jHomePnl);
+            resetColorUnClicked(jListConferencePnl);
+            resetColorUnClicked(jStatisticPnl);
+            resetColorUnClicked(jConferencesPnl);
+            resetColorUnClicked(jUsersPnl);
+
+            jCardLayout.removeAll();
+            jCardLayout.add(mainHome);
+            jCardLayout.repaint();
+            jCardLayout.revalidate();
         }
-
     }
 
     public MainScreen() {
         initComponents();
-        jStatisticPnl.setVisible(false);
-        jConferencesPnl.setVisible(false);
-        jUsersPnl.setVisible(false);
+//        jUsersPnl.setVisible(false);
+//        jConferencesPnl.setVisible(false);
+//        jStatisticPnl.setVisible(false);
     }
 
     /**
@@ -88,6 +102,9 @@ public class MainScreen extends javax.swing.JFrame {
         jStatisticPnl = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jInformationPnl = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jConferencesPnl = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -142,7 +159,7 @@ public class MainScreen extends javax.swing.JFrame {
         jMenu.setLayout(new java.awt.BorderLayout());
 
         jOptionMenu.setBackground(new java.awt.Color(58, 1, 108));
-        jOptionMenu.setPreferredSize(new java.awt.Dimension(200, 350));
+        jOptionMenu.setPreferredSize(new java.awt.Dimension(200, 400));
         jOptionMenu.setLayout(new java.awt.GridLayout(0, 1));
 
         jMenubtn.setBackground(new java.awt.Color(58, 1, 108));
@@ -258,6 +275,34 @@ public class MainScreen extends javax.swing.JFrame {
         jStatisticPnl.add(jLabel5, java.awt.BorderLayout.CENTER);
 
         jOptionMenu.add(jStatisticPnl);
+
+        jInformationPnl.setBackground(new java.awt.Color(58, 1, 108));
+        jInformationPnl.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jInformationPnlMouseMoved(evt);
+            }
+        });
+        jInformationPnl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jInformationPnlMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jInformationPnlMouseReleased(evt);
+            }
+        });
+        jInformationPnl.setLayout(new java.awt.BorderLayout());
+
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Call-Statistics-icon.png"))); // NOI18N
+        jLabel14.setPreferredSize(new java.awt.Dimension(50, 24));
+        jInformationPnl.add(jLabel14, java.awt.BorderLayout.WEST);
+
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Information");
+        jInformationPnl.add(jLabel6, java.awt.BorderLayout.CENTER);
+
+        jOptionMenu.add(jInformationPnl);
 
         jConferencesPnl.setBackground(new java.awt.Color(58, 1, 108));
         jConferencesPnl.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -468,6 +513,7 @@ public class MainScreen extends javax.swing.JFrame {
         setColorClicked(jHomePnl);
         resetColorUnClicked(jListConferencePnl);
         resetColorUnClicked(jStatisticPnl);
+        resetColorUnClicked(jInformationPnl);
         resetColorUnClicked(jConferencesPnl);
         resetColorUnClicked(jUsersPnl);
 
@@ -482,11 +528,12 @@ public class MainScreen extends javax.swing.JFrame {
         setColorClicked(jStatisticPnl);
         resetColorUnClicked(jHomePnl);
         resetColorUnClicked(jListConferencePnl);
+        resetColorUnClicked(jInformationPnl);
         resetColorUnClicked(jConferencesPnl);
         resetColorUnClicked(jUsersPnl);
 
         jCardLayout.removeAll();
-        jCardLayout.add(mainStatistic);
+        jCardLayout.add(new Statistic(user));
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }//GEN-LAST:event_jStatisticPnlMouseReleased
@@ -497,10 +544,11 @@ public class MainScreen extends javax.swing.JFrame {
         resetColorUnClicked(jHomePnl);
         resetColorUnClicked(jListConferencePnl);
         resetColorUnClicked(jStatisticPnl);
+        resetColorUnClicked(jInformationPnl);
         resetColorUnClicked(jUsersPnl);
 
         jCardLayout.removeAll();
-        jCardLayout.add(mainConference);
+        jCardLayout.add(new ConferenceUI());
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }//GEN-LAST:event_jConferencesPnlMouseReleased
@@ -511,10 +559,11 @@ public class MainScreen extends javax.swing.JFrame {
         resetColorUnClicked(jHomePnl);
         resetColorUnClicked(jListConferencePnl);
         resetColorUnClicked(jStatisticPnl);
+        resetColorUnClicked(jInformationPnl);
         resetColorUnClicked(jConferencesPnl);
 
         jCardLayout.removeAll();
-        jCardLayout.add(jUsers);
+        jCardLayout.add(new UsersUI());
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }//GEN-LAST:event_jUsersPnlMouseReleased
@@ -656,7 +705,7 @@ public class MainScreen extends javax.swing.JFrame {
         if (jLogin.getText().compareTo("Log in") == 0)
             new Login(this).setVisible(true);
         else {
-            user = null;
+            setUser(null);
             jLogin.setText("Log in");
             jName.setText("");
             jStatisticPnl.setVisible(false);
@@ -683,14 +732,44 @@ public class MainScreen extends javax.swing.JFrame {
         setColorClicked(jListConferencePnl);
         resetColorUnClicked(jHomePnl);
         resetColorUnClicked(jStatisticPnl);
+        resetColorUnClicked(jInformationPnl);
         resetColorUnClicked(jConferencesPnl);
         resetColorUnClicked(jUsersPnl);
 
         jCardLayout.removeAll();
-        jCardLayout.add(mainListConference);
+        jCardLayout.add(new ListConference(user));
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }//GEN-LAST:event_jListConferencePnlMouseReleased
+
+    private void jInformationPnlMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jInformationPnlMouseMoved
+        // TODO add your handling code here:
+        if (jInformationPnl.getBackground() != colorCliked)
+            setColorMoved(jInformationPnl);
+    }//GEN-LAST:event_jInformationPnlMouseMoved
+
+    private void jInformationPnlMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jInformationPnlMouseExited
+        // TODO add your handling code here:
+        if (jInformationPnl.getBackground() != colorCliked)
+            resetColorUnClicked(jInformationPnl);
+    }//GEN-LAST:event_jInformationPnlMouseExited
+
+    private void jInformationPnlMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jInformationPnlMouseReleased
+        // TODO add your handling code here:
+
+        setColorClicked(jInformationPnl);
+        resetColorUnClicked(jHomePnl);
+        resetColorUnClicked(jListConferencePnl);
+        resetColorUnClicked(jStatisticPnl);
+        resetColorUnClicked(jConferencesPnl);
+        resetColorUnClicked(jUsersPnl);
+
+        jCardLayout.removeAll();
+        jCardLayout.add(new UserInformation(user));
+        jCardLayout.repaint();
+        jCardLayout.revalidate();
+
+    }//GEN-LAST:event_jInformationPnlMouseReleased
 
     void setColorClicked(JPanel jp) {
         jp.setBackground(colorCliked);
@@ -719,16 +798,19 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jFooter;
     private javax.swing.JPanel jHeader;
     private javax.swing.JPanel jHomePnl;
+    private javax.swing.JPanel jInformationPnl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

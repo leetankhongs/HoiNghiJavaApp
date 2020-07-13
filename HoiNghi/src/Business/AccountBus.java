@@ -77,4 +77,10 @@ public class AccountBus {
         return 1;
         
     }
+    
+    public static boolean changePassword(String userName, String password){
+        Account account = AccountDao.getAccountByUserName(userName);
+        account.setPassword(cryptWithMD5(password));
+        return AccountDao.updateAccountInformation(account);
+    }
 }

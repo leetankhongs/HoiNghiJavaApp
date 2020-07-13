@@ -519,7 +519,6 @@ public class Register extends javax.swing.JFrame {
         }
             
         String accountID = AccountBus.insertNewAccount(jUsernameTF.getText(), jPasswordTF.getText());
-        User user = new User(AccountBus.getAccountInformation(accountID), jNameTF.getText(), jEmailTF.getText());
         String result = UserBus.insertNewUser(new User(AccountBus.getAccountInformation(accountID), jNameTF.getText(), jEmailTF.getText()));
 
         if (result != null) {

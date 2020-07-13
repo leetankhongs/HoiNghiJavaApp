@@ -1,5 +1,5 @@
 package POJO;
-// Generated Jul 5, 2020, 9:32:46 PM by Hibernate Tools 4.3.1
+// Generated Jul 9, 2020, 5:02:16 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -34,6 +34,7 @@ public class Conference  implements java.io.Serializable {
      private String image;
      private Date startTime;
      private Date endTime;
+     private Integer participants;
      private Byte isDelete;
      private Set<UserConference> userConferences = new HashSet<UserConference>(0);
 
@@ -44,7 +45,7 @@ public class Conference  implements java.io.Serializable {
     public Conference(String id) {
         this.id = id;
     }
-    public Conference(Place place, String name, String briefDescription, String detailDescription, String image, Date startTime, Date endTime) {
+    public Conference(Place place, String name, String briefDescription, String detailDescription, String image, Date startTime, Date endTime, Integer participants) {
        this.place = place;
        this.name = name;
        this.briefDescription = briefDescription;
@@ -52,6 +53,7 @@ public class Conference  implements java.io.Serializable {
        this.image = image;
        this.startTime = startTime;
        this.endTime = endTime;
+       this.participants = participants;
        this.isDelete = 0;
     }
    
@@ -135,6 +137,16 @@ public class Conference  implements java.io.Serializable {
     
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    
+    @Column(name="Participants")
+    public Integer getParticipants() {
+        return this.participants;
+    }
+    
+    public void setParticipants(Integer participants) {
+        this.participants = participants;
     }
 
     

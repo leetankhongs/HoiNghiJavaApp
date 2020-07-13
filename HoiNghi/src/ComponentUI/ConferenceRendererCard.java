@@ -2,14 +2,12 @@ package ComponentUI;
 
 
 import UserUI.Register_DetailConference;
-import MainScreenUI.*;
-import Class.Conference11;
 import POJO.Conference;
 import POJO.User;
 import java.awt.Color;
 import java.awt.Image;
+import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -56,7 +54,7 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(238, 238, 255));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        setPreferredSize(new java.awt.Dimension(300, 200));
+        setPreferredSize(new java.awt.Dimension(300, 300));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 formMouseMoved(evt);
@@ -150,7 +148,7 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
 
     private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
         // TODO add your handling code here:
-        new Register_DetailConference(conference, user).setVisible(true);
+        new Register_DetailConference(conference, user, false).setVisible(true);
     }//GEN-LAST:event_formMouseReleased
 
     private void jScrollDescriptionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollDescriptionMouseExited
@@ -165,7 +163,7 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
 
     private void jScrollDescriptionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollDescriptionMouseReleased
         // TODO add your handling code here:
-        new Register_DetailConference(conference, user).setVisible(true);
+        new Register_DetailConference(conference, user, false).setVisible(true);
     }//GEN-LAST:event_jScrollDescriptionMouseReleased
 
     private void jDescriptionMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jDescriptionMouseMoved
@@ -182,7 +180,7 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
 
     private void jDescriptionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jDescriptionMouseReleased
         // TODO add your handling code here:
-        new Register_DetailConference(conference, user).setVisible(true);
+        new Register_DetailConference(conference, user, false).setVisible(true);
     }//GEN-LAST:event_jDescriptionMouseReleased
 
     void initData(){
@@ -192,6 +190,8 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
         jName.setText(conference.getName());
         jDescription.setText(conference.getBriefDescription());
         jDate.setText(conference.getStartTime().toString());
+        SimpleDateFormat sdf=new SimpleDateFormat("hh:mm:ss dd/MM/YYYY ");
+        jDate.setText(sdf.format(conference.getStartTime())+ " - " + sdf.format(conference.getEndTime()));
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

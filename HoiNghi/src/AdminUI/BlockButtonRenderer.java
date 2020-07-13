@@ -5,13 +5,8 @@
  */
 package AdminUI;
 
-import Business.UserConferenceBus;
-import UserUI.*;
-import POJO.Conference;
-import POJO.UserConference;
-import java.awt.Color;
+import POJO.User;
 import java.awt.Component;
-import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
@@ -20,26 +15,20 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author ADMIN
  */
-public class RequestButtonRenderer extends JButton implements TableCellRenderer{
-
-    public RequestButtonRenderer(){
+public class BlockButtonRenderer extends JButton implements TableCellRenderer{
+    public BlockButtonRenderer(){
         setOpaque(true);
     }
     
     @Override
     public Component getTableCellRendererComponent(JTable table, Object object, boolean isSelected, boolean hasFocus, int row, int column) {
-        Conference conference = (Conference)object;
-        List<UserConference> list = UserConferenceBus.getNewRequests(conference);
+        User user = (User)object;
         
-        String bonus ="";
-        if(list.size() != 0)
-        {
-            bonus = "(" +list.size() + ")";
-        }
+        if(user.getIsDelete() == 1)
+            setText("UNLOCK");
+        else
+            setText("BLOCK");
         
-        setText("New Request" + bonus);            
         return this;
     }
-    
 }
-

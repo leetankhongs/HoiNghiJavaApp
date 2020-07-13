@@ -5,217 +5,56 @@
  */
 package ContentUI;
 
-import Business.ConferenceBus;
+import AdminUI.BlockButtonEditor;
+import AdminUI.BlockButtonRenderer;
+import AdminUI.ConferenceUserButtonEditor;
+import AdminUI.ConferenceUserRenderer;
 import Business.UserBus;
 import Business.UserConferenceBus;
-import MainScreenUI.NewConference;
-import POJO.Conference;
+import POJO.User;
 import UserUI.UserButtonEditor;
 import UserUI.UserButtonRenderer;
-import POJO.UserConference;
-import POJO.User;
 import java.awt.Color;
-import java.awt.Font;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
  * @author ADMIN
  */
-public class Statistic extends javax.swing.JPanel {
+public class UsersUI extends javax.swing.JPanel {
 
     /**
-     * Creates new form Statictic
+     * Creates new form UsersUI
      */
+    
     final static private Color deufault = new Color(224, 224, 250);
     final static private Color colorCliked = new Color(84, 3, 156);
     final static private Color colorMoved = new Color(153, 153, 255);
     final static private Color colorMoved_2 = new Color(220, 220, 255);
-
-    private User user;
-    List<UserConference> list = new ArrayList<>();
-    private int maxPag;
-    private int minPag = 1;
-
-    private void filter() {
-        organizedDateFilter();
-        registeredDateFilter();
-        ConferenceNameFilter();
-        paginationFilter();
-    }
-
-    private void paginationFilter() {
-        calculatePag();
-        List<UserConference> temp = new ArrayList<>();
-        int start = (Integer.valueOf(jPosition.getText()) - 1) * (Integer.valueOf(jComboBox1.getSelectedItem().toString()));
-        int end = Integer.valueOf(jPosition.getText()) * (Integer.valueOf(jComboBox1.getSelectedItem().toString())) - 1;
-
-        if (end > list.size() - 1) {
-            end = list.size() - 1;
-        }
-
-        for (int i = start; i <= end; i++) {
-            temp.add(list.get(i));
-        }
-
-        jDescriptionPag.setText("Page " + jPosition.getText() + " for " + (start + 1) + "-" + (end + 1) + "/" + list.size());
-
-        list.clear();
-
-        for (int i = 0; i < temp.size(); i++) {
-            list.add(temp.get(i));
-        }
-
-    }
-
-    private void ConferenceNameFilter() {
-        if (jSearchText.getText().compareTo("Search conference name") == 0) {
-            return;
-        }
-
-        for (int i = list.size() - 1; i >= 0; i--) {
-            if (list.get(i).getConference().getName().toLowerCase().indexOf(jSearchText.getText().toLowerCase()) == -1) {
-                list.remove(i);
-            }
-
-        }
-    }
-
-    private void organizedDateFilter() {
-        if (jDateChooser.getDate() == null) {
-            return;
-        }
-
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
-        Date getDate = null;
-
-        try {
-            getDate = formatter.parse(formatter.format(jDateChooser.getDate()));
-        } catch (ParseException ex) {
-            Logger.getLogger(NewConference.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        for (int i = list.size() - 1; i >= 0; i--) {
-            try {
-                if (formatter.parse(formatter.format(list.get(i).getConference().getStartTime())).compareTo(getDate) != 0) {
-                    list.remove(i);
-                }
-            } catch (ParseException ex) {
-                Logger.getLogger(ConferenceUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-    }
-
-    private void registeredDateFilter() {
-        if (jDateChooser1.getDate() == null) {
-            return;
-        }
-
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
-        Date getDate = null;
-
-        try {
-            getDate = formatter.parse(formatter.format(jDateChooser1.getDate()));
-        } catch (ParseException ex) {
-            Logger.getLogger(NewConference.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        for (int i = list.size() - 1; i >= 0; i--) {
-            try {
-                if (formatter.parse(formatter.format(list.get(i).getRegistationTime())).compareTo(getDate) != 0) {
-                    list.remove(i);
-                }
-            } catch (ParseException ex) {
-                Logger.getLogger(ConferenceUI.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-    }
-
-    private void calculatePag() {
-        int countRow = list.size();
-
-        if (countRow % (Integer.valueOf(jComboBox1.getSelectedItem().toString())) == 0) {
-            maxPag = countRow / Integer.valueOf(jComboBox1.getSelectedItem().toString());
-        } else {
-            maxPag = (int) (countRow / Integer.valueOf(jComboBox1.getSelectedItem().toString())) + 1;
-        }
-
-        if (maxPag == 0) {
-            maxPag = 1;
-        }
-
-    }
-
-    public Statistic(User user) {
-
+    
+    List<User> list;
+    public UsersUI() {
         initComponents();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        jTable.getTableHeader().setOpaque(true);
-        jTable.getTableHeader().setBackground(Color.red);
-        jTable.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 20));
-        this.user = user;
-        resetData();
+         DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
 
-        jTable.getColumnModel().getColumn(5).setCellRenderer(new UserButtonRenderer());
-        jTable.getColumnModel().getColumn(5).setCellEditor(new UserButtonEditor(new JTextField()));
-        jTable.setAutoCreateRowSorter(true);
-        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-        jTable.getColumnModel().getColumn(1).setPreferredWidth(400);
-        jTable.getColumnModel().getColumn(2).setPreferredWidth(150);
-        jTable.getColumnModel().getColumn(3).setPreferredWidth(150);
-        jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
-
-    }
-
-    public void resetData() {
-        list = UserConferenceBus.getListUserConferenceByUser(user);
-        filter();
-        DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
-
-        for (int i = tm.getRowCount() - 1; i >= 0; i--) {
-            tm.removeRow(i);
-        }
-
+        list = UserBus.getAllUser();
         for (int i = 0; i < list.size(); i++) {
 
-            String status = "";
-
-            switch (list.get(i).getIsAccepted()) {
-                case 0:
-                    status = "No Accepted yet";
-                    break;
-                case 1:
-                    status = "Accepted";
-                    break;
-                case 2:
-                    status = "Denied";
-                    break;
-
-            }
-
-            if (list.get(i).getConference().getIsDelete() == 1) {
-                status = "is Deleted";
-            }
-
-            tm.addRow(new Object[]{i + 1, list.get(i).getConference().getName(), list.get(i).getRegistationTime(), list.get(i).getConference().getStartTime(), status, list.get(i)});
+            String status;
+            
+            tm.addRow(new Object[]{i + 1, list.get(i).getName(), list.get(i).getEmail(), list.get(i), list.get(i)});
 
         }
 
         jTable.setModel(tm);
+        jTable.getColumnModel().getColumn(4).setCellRenderer(new BlockButtonRenderer());
+        jTable.getColumnModel().getColumn(4).setCellEditor(new BlockButtonEditor(new JTextField()));
+        jTable.getColumnModel().getColumn(3).setCellRenderer(new ConferenceUserRenderer());
+        jTable.getColumnModel().getColumn(3).setCellEditor(new ConferenceUserButtonEditor(new JTextField()));
+        jTable.setAutoCreateRowSorter(true);
     }
 
     /**
@@ -231,18 +70,11 @@ public class Statistic extends javax.swing.JPanel {
         jOption = new javax.swing.JPanel();
         jOption1 = new javax.swing.JPanel();
         jResetbtn = new javax.swing.JLabel();
-        jFilter = new javax.swing.JPanel();
+        jOption2 = new javax.swing.JPanel();
         jSearchPnl = new javax.swing.JPanel();
         jSearchbtn = new javax.swing.JLabel();
         jSearchText = new javax.swing.JTextField();
-        jDate = new javax.swing.JPanel();
-        jOrganizedDate = new javax.swing.JPanel();
-        jDateChooser = new com.toedter.calendar.JDateChooser();
-        jOrganizedDateText = new javax.swing.JLabel();
-        jRegisterdDate = new javax.swing.JPanel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jRegisteredDateText1 = new javax.swing.JLabel();
-        jOption2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         jCount = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
@@ -295,11 +127,14 @@ public class Statistic extends javax.swing.JPanel {
         });
         jOption1.add(jResetbtn, java.awt.BorderLayout.WEST);
 
-        jFilter.setBackground(new java.awt.Color(224, 224, 250));
-        jFilter.setLayout(new java.awt.BorderLayout());
+        jOption.add(jOption1, java.awt.BorderLayout.NORTH);
+
+        jOption2.setBackground(new java.awt.Color(224, 224, 250));
+        jOption2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jOption2.setLayout(new java.awt.BorderLayout());
 
         jSearchPnl.setBackground(new java.awt.Color(224, 224, 250));
-        jSearchPnl.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        jSearchPnl.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
         jSearchPnl.setPreferredSize(new java.awt.Dimension(250, 50));
         jSearchPnl.setLayout(new java.awt.BorderLayout());
 
@@ -333,76 +168,13 @@ public class Statistic extends javax.swing.JPanel {
                 jSearchTextFocusLost(evt);
             }
         });
-        jSearchText.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jSearchTextKeyTyped(evt);
-            }
-        });
         jSearchPnl.add(jSearchText, java.awt.BorderLayout.CENTER);
 
-        jFilter.add(jSearchPnl, java.awt.BorderLayout.CENTER);
+        jOption2.add(jSearchPnl, java.awt.BorderLayout.CENTER);
 
-        jDate.setPreferredSize(new java.awt.Dimension(650, 100));
-        jDate.setLayout(new java.awt.BorderLayout());
-
-        jOrganizedDate.setBackground(new java.awt.Color(224, 224, 250));
-        jOrganizedDate.setPreferredSize(new java.awt.Dimension(275, 50));
-        jOrganizedDate.setLayout(new java.awt.BorderLayout());
-
-        jDateChooser.setDateFormatString("dd/MM/yyyy");
-        jDateChooser.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jDateChooser.setOpaque(false);
-        jDateChooser.setPreferredSize(new java.awt.Dimension(75, 50));
-        jDateChooser.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jDateChooserPropertyChange(evt);
-            }
-        });
-        jOrganizedDate.add(jDateChooser, java.awt.BorderLayout.CENTER);
-
-        jOrganizedDateText.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jOrganizedDateText.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jOrganizedDateText.setText("Organized Date");
-        jOrganizedDateText.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
-        jOrganizedDateText.setPreferredSize(new java.awt.Dimension(150, 50));
-        jOrganizedDate.add(jOrganizedDateText, java.awt.BorderLayout.WEST);
-
-        jDate.add(jOrganizedDate, java.awt.BorderLayout.CENTER);
-
-        jRegisterdDate.setBackground(new java.awt.Color(224, 224, 250));
-        jRegisterdDate.setMinimumSize(new java.awt.Dimension(125, 27));
-        jRegisterdDate.setPreferredSize(new java.awt.Dimension(325, 50));
-        jRegisterdDate.setLayout(new java.awt.BorderLayout());
-
-        jDateChooser1.setDateFormatString("dd/MM/yyyy");
-        jDateChooser1.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jDateChooser1.setOpaque(false);
-        jDateChooser1.setPreferredSize(new java.awt.Dimension(75, 50));
-        jDateChooser1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jDateChooser1PropertyChange(evt);
-            }
-        });
-        jRegisterdDate.add(jDateChooser1, java.awt.BorderLayout.CENTER);
-
-        jRegisteredDateText1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jRegisteredDateText1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jRegisteredDateText1.setText("Registered Date");
-        jRegisteredDateText1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
-        jRegisteredDateText1.setPreferredSize(new java.awt.Dimension(150, 50));
-        jRegisterdDate.add(jRegisteredDateText1, java.awt.BorderLayout.WEST);
-
-        jDate.add(jRegisterdDate, java.awt.BorderLayout.WEST);
-
-        jFilter.add(jDate, java.awt.BorderLayout.WEST);
-
-        jOption1.add(jFilter, java.awt.BorderLayout.CENTER);
-
-        jOption.add(jOption1, java.awt.BorderLayout.NORTH);
-
-        jOption2.setBackground(new java.awt.Color(224, 224, 250));
-        jOption2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        jOption2.setLayout(new java.awt.BorderLayout());
+        jPanel1.setBackground(new java.awt.Color(224, 224, 250));
+        jPanel1.setPreferredSize(new java.awt.Dimension(600, 60));
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
         jCount.setPreferredSize(new java.awt.Dimension(220, 0));
         jCount.setLayout(new java.awt.BorderLayout());
@@ -424,7 +196,9 @@ public class Statistic extends javax.swing.JPanel {
         jLabel1.setOpaque(true);
         jCount.add(jLabel1, java.awt.BorderLayout.CENTER);
 
-        jOption2.add(jCount, java.awt.BorderLayout.WEST);
+        jPanel1.add(jCount, java.awt.BorderLayout.WEST);
+
+        jOption2.add(jPanel1, java.awt.BorderLayout.WEST);
 
         jOption.add(jOption2, java.awt.BorderLayout.CENTER);
 
@@ -432,7 +206,7 @@ public class Statistic extends javax.swing.JPanel {
 
         jBrief.setFont(new java.awt.Font("Times New Roman", 1, 28)); // NOI18N
         jBrief.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jBrief.setText("List of registered conferences");
+        jBrief.setText("User manager ");
         jBrief.setPreferredSize(new java.awt.Dimension(78, 55));
         jHeader.add(jBrief, java.awt.BorderLayout.NORTH);
 
@@ -493,10 +267,7 @@ public class Statistic extends javax.swing.JPanel {
         });
         jPaginationButton.add(jPrebtn);
 
-        jPosition.setEditable(false);
-        jPosition.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jPosition.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPosition.setText("1");
         jPaginationButton.add(jPosition);
 
         jNextbtn.setBackground(new java.awt.Color(224, 224, 250));
@@ -544,13 +315,18 @@ public class Statistic extends javax.swing.JPanel {
         jScrollPane1.setOpaque(false);
 
         jTable.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Conference Name", "Registered Date", "Organized Date", "Status", "Detail"}) {
+        DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Name", "Email", "Conferences", "Block"}) {
             @Override
-            public Class<?> getColumnClass(int col) {
-                //here it really returns the right column class (Integer.class)
-                Class retVal = Object.class  ;
+            public Class
 
-                if (getRowCount() > 0) {
+            <?> getColumnClass(int col) {
+                //here it really returns the right column class (Integer.class)
+                Class retVal = Object.class
+
+                ;
+
+                if (getRowCount()
+                    > 0) {
                     retVal = getValueAt(0, col).getClass();
                 }
                 return retVal ;
@@ -573,10 +349,6 @@ public class Statistic extends javax.swing.JPanel {
 
         add(jData, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jResetbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jResetbtnMouseMoved
         // TODO add your handling code here:
@@ -609,8 +381,12 @@ public class Statistic extends javax.swing.JPanel {
     private void jSearchTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchTextFocusLost
         // TODO add your handling code here:
         if (jSearchText.getText().compareTo("") == 0)
-            jSearchText.setText("Search conference name ");
+        jSearchText.setText("Search conference name ");
     }//GEN-LAST:event_jSearchTextFocusLost
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jFirstbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFirstbtnMouseMoved
         // TODO add your handling code here:
@@ -668,39 +444,13 @@ public class Statistic extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLastbtnMouseReleased
 
-    private void jDateChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserPropertyChange
-        // TODO add your handling code here:
-        if ("date".equals(evt.getPropertyName())) {
-            jPosition.setText("1");
-            resetData();
-        }
-    }//GEN-LAST:event_jDateChooserPropertyChange
-
-    private void jDateChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser1PropertyChange
-        // TODO add your handling code here:
-        if ("date".equals(evt.getPropertyName())) {
-            jPosition.setText("1");
-            resetData();
-        }
-    }//GEN-LAST:event_jDateChooser1PropertyChange
-
-    private void jSearchTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSearchTextKeyTyped
-        // TODO add your handling code here:
-        jPosition.setText("1");
-        resetData();
-    }//GEN-LAST:event_jSearchTextKeyTyped
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jBrief;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jCount;
     private javax.swing.JPanel jData;
-    private javax.swing.JPanel jDate;
-    private com.toedter.calendar.JDateChooser jDateChooser;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jDescriptionPag;
-    private javax.swing.JPanel jFilter;
     private javax.swing.JLabel jFirstbtn;
     private javax.swing.JPanel jHeader;
     private javax.swing.JLabel jLabel1;
@@ -709,14 +459,11 @@ public class Statistic extends javax.swing.JPanel {
     private javax.swing.JPanel jOption;
     private javax.swing.JPanel jOption1;
     private javax.swing.JPanel jOption2;
-    private javax.swing.JPanel jOrganizedDate;
-    private javax.swing.JLabel jOrganizedDateText;
     private javax.swing.JPanel jPagination;
     private javax.swing.JPanel jPaginationButton;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jPosition;
     private javax.swing.JLabel jPrebtn;
-    private javax.swing.JPanel jRegisterdDate;
-    private javax.swing.JLabel jRegisteredDateText1;
     private javax.swing.JLabel jResetbtn;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jSearchPnl;
@@ -724,14 +471,4 @@ public class Statistic extends javax.swing.JPanel {
     private javax.swing.JLabel jSearchbtn;
     private javax.swing.JTable jTable;
     // End of variables declaration//GEN-END:variables
-
-    public void setUser(User user) {
-        this.user = user;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-
-        list = UserConferenceBus.getListUserConferenceByUser(user);
-//
-        DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
-
-    }
 }

@@ -6,6 +6,7 @@
 package UserUI;
 
 import POJO.Conference;
+import POJO.UserConference;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JButton;
@@ -23,7 +24,7 @@ public class UserButtonRenderer extends JButton implements TableCellRenderer{
     }
     @Override
     public Component getTableCellRendererComponent(JTable table, Object object, boolean isSelected, boolean hasFocus, int row, int column) {
-        Conference conference = (Conference)object;
+        UserConference userConference = (UserConference)object;
         setText("Detail");            
         return this;
     }

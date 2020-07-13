@@ -6,14 +6,22 @@
 package ContentUI;
 
 import Business.ConferenceBus;
-import Class.Conference11;
 import ComponentUI.ConferenceRendererCard;
 import ComponentUI.ConferenceRendererList;
+import MainScreenUI.NewConference;
 import POJO.Conference;
 import POJO.User;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -33,12 +41,95 @@ public class ListConference extends javax.swing.JPanel {
     private User user;
     private List<ConferenceRendererList> conferenceRendererLists;
     private List<ConferenceRendererCard> conferenceRendererCards;
+    List<Conference> listConference;
+
+    private int maxPag;
+    private int minPag = 0;
+
+    private void filter() {
+        organizedDateFilter();
+        ConferenceNameFilter();
+
+        paginationFilter();
+    }
+
+    private void ConferenceNameFilter() {
+        if (jSearchText.getText().compareTo("Search conference name") == 0) {
+            return;
+        }
+
+        for (int i = listConference.size() - 1; i >= 0; i--) {
+            if (listConference.get(i).getName().toLowerCase().indexOf(jSearchText.getText().toLowerCase()) == -1) {
+                listConference.remove(i);
+            }
+
+        }
+    }
+
+    private void paginationFilter() {
+        calculatePag();
+        List<Conference> temp = new ArrayList<>();
+        int start = (Integer.valueOf(jPosition.getText()) - 1) * 1;
+        int end = Integer.valueOf(jPosition.getText()) * 1 - 1;
+
+        if (end > listConference.size() - 1) {
+            end = listConference.size() - 1;
+        }
+
+        for (int i = start; i <= end; i++) {
+            temp.add(listConference.get(i));
+        }
+
+        jDescriptionPag.setText("Page " + jPosition.getText() + " for " + (start + 1) + "-" + (end + 1) + "/" + listConference.size());
+
+        listConference.clear();
+
+        for (int i = 0; i < temp.size(); i++) {
+            listConference.add(temp.get(i));
+        }
+    }
+
+    private void calculatePag() {
+        int countRow = listConference.size();
+
+        if (countRow % 1 == 0) {
+            maxPag = countRow / Integer.valueOf(1);
+        } else {
+            maxPag = (int) (countRow / 1) + 1;
+        }
+
+    }
+
+    private void organizedDateFilter() {
+        if (jDateChooser.getDate() == null) {
+            return;
+        }
+
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        Date getDate = null;
+
+        try {
+            getDate = formatter.parse(formatter.format(jDateChooser.getDate()));
+        } catch (ParseException ex) {
+            Logger.getLogger(NewConference.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        for (int i = listConference.size() - 1; i >= 0; i--) {
+            try {
+                if (formatter.parse(formatter.format(listConference.get(i).getStartTime())).compareTo(getDate) != 0) {
+                    listConference.remove(i);
+                }
+            } catch (ParseException ex) {
+                Logger.getLogger(ConferenceUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
     public ListConference(User user) {
         initComponents();
         this.user = user;
-        createViewList();
-        createViewCard();
+        resetData();
     }
 
     /**
@@ -143,6 +234,11 @@ public class ListConference extends javax.swing.JPanel {
         jDateChooser.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jDateChooser.setOpaque(false);
         jDateChooser.setPreferredSize(new java.awt.Dimension(150, 20));
+        jDateChooser.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooserPropertyChange(evt);
+            }
+        });
         jResetAndDate.add(jDateChooser, java.awt.BorderLayout.CENTER);
 
         jSpace.setBackground(new java.awt.Color(224, 224, 250));
@@ -217,8 +313,16 @@ public class ListConference extends javax.swing.JPanel {
         jSearchText.setText("Search conference name");
         jSearchText.setToolTipText("");
         jSearchText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jSearchTextFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jSearchTextFocusLost(evt);
+            }
+        });
+        jSearchText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jSearchTextKeyTyped(evt);
             }
         });
         jSearchPnl.add(jSearchText, java.awt.BorderLayout.CENTER);
@@ -238,7 +342,7 @@ public class ListConference extends javax.swing.JPanel {
         jListView.setLayout(new java.awt.BorderLayout(0, 10));
 
         jListConferenceView.setBackground(new java.awt.Color(255, 255, 255));
-        jListConferenceView.setLayout(new java.awt.GridLayout(0, 1, 20, 20));
+        jListConferenceView.setLayout(new java.awt.GridLayout(6, 1, 0, 10));
         jScrollPane3.setViewportView(jListConferenceView);
 
         jListView.add(jScrollPane3, java.awt.BorderLayout.CENTER);
@@ -255,7 +359,7 @@ public class ListConference extends javax.swing.JPanel {
         jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jCardConferenceView.setBackground(new java.awt.Color(255, 255, 255));
-        jCardConferenceView.setLayout(new java.awt.GridLayout(0, 3, 20, 20));
+        jCardConferenceView.setLayout(new java.awt.GridBagLayout());
         jScrollPane4.setViewportView(jCardConferenceView);
 
         jCardView.add(jScrollPane4, java.awt.BorderLayout.CENTER);
@@ -315,7 +419,9 @@ public class ListConference extends javax.swing.JPanel {
         });
         jPaginationButton.add(jPrebtn);
 
+        jPosition.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jPosition.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPosition.setText("1");
         jPaginationButton.add(jPosition);
 
         jNextbtn.setBackground(new java.awt.Color(224, 224, 250));
@@ -431,6 +537,10 @@ public class ListConference extends javax.swing.JPanel {
 
     private void jResetbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jResetbtnMouseReleased
         // TODO add your handling code here:
+        jDateChooser.setDate(null);
+        jSearchText.setText("Search conference name");
+        jPosition.setText("1");
+        resetData();
     }//GEN-LAST:event_jResetbtnMouseReleased
 
     private void jSearchbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchbtnMouseMoved
@@ -450,7 +560,7 @@ public class ListConference extends javax.swing.JPanel {
     private void jSearchTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchTextFocusLost
         // TODO add your handling code here:
         if (jSearchText.getText().compareTo("") == 0)
-            jSearchText.setText("Search conference name ");
+            jSearchText.setText("Search conference name");
     }//GEN-LAST:event_jSearchTextFocusLost
 
     private void jFirstbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFirstbtnMouseMoved
@@ -465,6 +575,8 @@ public class ListConference extends javax.swing.JPanel {
 
     private void jFirstbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFirstbtnMouseReleased
         // TODO add your handling code here:
+        jPosition.setText("1");
+        resetData();
     }//GEN-LAST:event_jFirstbtnMouseReleased
 
     private void jPrebtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPrebtnMouseMoved
@@ -479,6 +591,10 @@ public class ListConference extends javax.swing.JPanel {
 
     private void jPrebtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPrebtnMouseReleased
         // TODO add your handling code here:
+        int currentPosition = Integer.valueOf(jPosition.getText());
+        currentPosition = currentPosition == 1 ? 1 : --currentPosition;
+        jPosition.setText(String.valueOf(currentPosition));
+        resetData();
     }//GEN-LAST:event_jPrebtnMouseReleased
 
     private void jNextbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jNextbtnMouseMoved
@@ -493,6 +609,10 @@ public class ListConference extends javax.swing.JPanel {
 
     private void jNextbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jNextbtnMouseReleased
         // TODO add your handling code here:
+        int currentPosition = Integer.valueOf(jPosition.getText());
+        currentPosition = currentPosition == maxPag ? maxPag : ++currentPosition;
+        jPosition.setText(String.valueOf(currentPosition));
+        resetData();
     }//GEN-LAST:event_jNextbtnMouseReleased
 
     private void jLastbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLastbtnMouseMoved
@@ -507,33 +627,61 @@ public class ListConference extends javax.swing.JPanel {
 
     private void jLastbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLastbtnMouseReleased
         // TODO add your handling code here:
+        jPosition.setText(String.valueOf(maxPag));
+        resetData();
     }//GEN-LAST:event_jLastbtnMouseReleased
 
-    private void createViewList() {
-        List<Conference> listConference = ConferenceBus.getAllConference();
-        conferenceRendererLists = new ArrayList<>();
-
-        for (int i = 0; i < listConference.size(); i++) {
-            conferenceRendererLists.add(new ConferenceRendererList(listConference.get(i), user));
+    private void jDateChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserPropertyChange
+        // TODO add your handling code here:
+        if ("date".equals(evt.getPropertyName())) {
+            jPosition.setText("1");
+            resetData();
         }
+    }//GEN-LAST:event_jDateChooserPropertyChange
 
-        for (int i = 0; i < conferenceRendererLists.size(); i++) {
-            jListConferenceView.add(conferenceRendererLists.get(i));
-        }
+    private void jSearchTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchTextFocusGained
+        // TODO add your handling code here:
+        if (jSearchText.getText().compareTo("Search conference name") == 0)
+            jSearchText.setText("");
+    }//GEN-LAST:event_jSearchTextFocusGained
 
-    }
+    private void jSearchTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSearchTextKeyTyped
+        // TODO add your handling code here:
+        jPosition.setText("1");
+        resetData();
+    }//GEN-LAST:event_jSearchTextKeyTyped
 
-    private void createViewCard() {
-        List<Conference> listConference = ConferenceBus.getAllConference();
-
+    private void resetData() {
+        listConference = ConferenceBus.getAllConference();
+        filter();
         conferenceRendererCards = new ArrayList<>();
 
         for (int i = 0; i < listConference.size(); i++) {
             conferenceRendererCards.add(new ConferenceRendererCard(listConference.get(i), user));
         }
 
+        jCardConferenceView.removeAll();
+        jCardConferenceView.repaint();
+        jCardConferenceView.revalidate();
+        for (int i = 0; i < conferenceRendererCards.size(); i++) {
+            GridBagConstraints c = new GridBagConstraints();
+            c.gridx = i % 3;
+            c.gridy = i / 3;
+            c.insets = new Insets(10, 20, 10, 20);
+            jCardConferenceView.add(conferenceRendererCards.get(i), c);
+        }
+
+        conferenceRendererLists = new ArrayList<>();
+
+        for (int i = 0; i < listConference.size(); i++) {
+            conferenceRendererLists.add(new ConferenceRendererList(listConference.get(i), user));
+        }
+
+        jListConferenceView.removeAll();
+        jListConferenceView.repaint();
+        jListConferenceView.revalidate();
         for (int i = 0; i < conferenceRendererLists.size(); i++) {
-            jCardConferenceView.add(conferenceRendererCards.get(i));
+            jListConferenceView.add(conferenceRendererLists.get(i));
         }
     }
 
@@ -570,11 +718,11 @@ public class ListConference extends javax.swing.JPanel {
 
     public void setUser(User user) {
         this.user = user;
-        
+
         for (int i = 0; i < conferenceRendererLists.size(); i++) {
             conferenceRendererLists.get(i).setUser(user);
             conferenceRendererCards.get(i).setUser(user);
         }
-        
+
     }
 }

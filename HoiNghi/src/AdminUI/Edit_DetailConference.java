@@ -5,12 +5,16 @@
  */
 package AdminUI;
 
+import Business.ConferenceBus;
+import Business.UserBus;
 import MainScreenUI.NewConference;
 import POJO.Conference;
 import POJO.Place;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,27 +26,28 @@ public class Edit_DetailConference extends javax.swing.JFrame {
      * Creates new form Edit_DetailConference
      */
     Conference conference;
+
     public Edit_DetailConference(Conference conference) {
         initComponents();
         this.conference = conference;
-        
+
         ImageIcon imageIcon = new ImageIcon(conference.getImage());
-       Image image = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-       jImage.setIcon(new ImageIcon(image));
-       jNameConference.setText(conference.getName());
-       jBriefDescription.setText(conference.getBriefDescription());
-       jDetailDescription.setText(conference.getDetailDescription());
-       
-       Place place = conference.getPlace();
-       jPlaceNameTF.setText(place.getName());
-       jAddressTF.setText(place.getAddress());
-       jCapacityTF.setText(place.getCapacity().toString());
-       
-       SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-       jDateTF.setText(dateFormat.format(conference.getStartTime()));
-       SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-       jStartTF.setText(timeFormat.format(conference.getStartTime()));
-       jEndTF.setText(timeFormat.format(conference.getEndTime()));
+        Image image = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        jImage.setIcon(new ImageIcon(image));
+        jNameConference.setText(conference.getName());
+        jBriefDescription.setText(conference.getBriefDescription());
+        jDetailDescription.setText(conference.getDetailDescription());
+
+        Place place = conference.getPlace();
+        jPlaceNameTF.setText(place.getName());
+        jAddressTF.setText(place.getAddress());
+        jCapacityTF.setText(place.getCapacity().toString());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        jDateTF.setText(dateFormat.format(conference.getStartTime()));
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        jStartTF.setText(timeFormat.format(conference.getStartTime()));
+        jEndTF.setText(timeFormat.format(conference.getEndTime()));
     }
 
     /**
@@ -82,7 +87,7 @@ public class Edit_DetailConference extends javax.swing.JFrame {
         jDeletebtn = new javax.swing.JButton();
         jCancelbtn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -254,6 +259,11 @@ public class Edit_DetailConference extends javax.swing.JFrame {
 
         jDeletebtn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jDeletebtn.setText("Delete");
+        jDeletebtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jDeletebtnMousePressed(evt);
+            }
+        });
         jPanel5.add(jDeletebtn);
 
         jCancelbtn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
@@ -275,10 +285,34 @@ public class Edit_DetailConference extends javax.swing.JFrame {
         new NewConference(conference).setVisible(true);
     }//GEN-LAST:event_jEditbtnMouseReleased
 
+    private void jDeletebtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jDeletebtnMousePressed
+        // TODO add your handling code here:
+        Date nowDate = new Date();
+        int reply = JOptionPane.showConfirmDialog(null, "Bạn có muốn thực hiện thao tác không?", "", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+
+            if (conference.getStartTime().compareTo(nowDate) <= 0) {
+                JOptionPane.showMessageDialog(this, "Hội nghị này đã diễn ra rồi");
+            } else {
+                boolean result = ConferenceBus.deleteConference(conference);
+
+                if (result == true) {
+                    JOptionPane.showMessageDialog(null, "Thành công");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Thất bại");
+                }
+                
+                
+            }
+
+        }
+
+
+    }//GEN-LAST:event_jDeletebtnMousePressed
+
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jAddress;

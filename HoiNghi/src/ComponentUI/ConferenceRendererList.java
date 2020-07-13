@@ -6,14 +6,12 @@
 package ComponentUI;
 
 import UserUI.Register_DetailConference;
-import MainScreenUI.*;
-import Class.Conference11;
 import POJO.Conference;
 import POJO.User;
 import java.awt.Color;
 import java.awt.Image;
+import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -45,6 +43,9 @@ public class ConferenceRendererList extends javax.swing.JPanel {
         jIcon.setIcon(new ImageIcon(image));
         jName.setText(conference.getName());
         jDescription.setText(conference.getBriefDescription());
+        SimpleDateFormat sdf=new SimpleDateFormat("hh:mm:ss dd/MM/YYYY ");
+        jDate.setText(sdf.format(conference.getStartTime())+ " - " + sdf.format(conference.getEndTime()));
+
     }
 
     /**
@@ -64,7 +65,7 @@ public class ConferenceRendererList extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(238, 238, 255));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        setPreferredSize(new java.awt.Dimension(571, 100));
+        setPreferredSize(new java.awt.Dimension(1000, 100));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 formMouseMoved(evt);
@@ -111,24 +112,18 @@ public class ConferenceRendererList extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        // TODO add your handling code here:
-       
-            new Register_DetailConference(conference, user).setVisible(true);
 
-
+            new Register_DetailConference(conference, user, false).setVisible(true);
     }//GEN-LAST:event_formMousePressed
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
         // TODO add your handling code here:
         setBackground(moveColor);
-
-
     }//GEN-LAST:event_formMouseMoved
 
     private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
         // TODO add your handling code here:
         setBackground(defaultColor);
-
     }//GEN-LAST:event_formMouseExited
 
 

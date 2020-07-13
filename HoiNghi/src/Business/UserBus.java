@@ -32,4 +32,15 @@ public class UserBus {
     public static boolean updateUserInformation(User user){
         return UserDao.updateUserInformation(user);
     }
+    
+    public static boolean blockUser(User user){
+        user.setIsDelete((Byte.valueOf("1")));
+        return UserDao.updateUserInformation(user);
+    }
+    
+    public static boolean unlockUser(User user){
+        user.setIsDelete((Byte.valueOf("0")));
+        return UserDao.updateUserInformation(user);
+    }
+        
 }

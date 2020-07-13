@@ -2,7 +2,6 @@
 import Business.AccountBus;
 import Business.ConferenceBus;
 import Business.PlaceBus;
-import Class.Conference11;
 import DAO.AccountDao;
 import MainScreenUI.MainScreen;
 import POJO.Account;

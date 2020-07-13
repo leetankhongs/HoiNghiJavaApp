@@ -41,9 +41,9 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="conferencemanagement"/>
-  <table-filter match-name="conference"/>
   <table-filter match-name="place"/>
+  <table-filter match-name="account"/>
+  <table-filter match-name="conference"/>
   <table-filter match-name="user"/>
   <table-filter match-name="user_conference"/>
-  <table-filter match-name="account"/>
 </hibernate-reverse-engineering>

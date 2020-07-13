@@ -5,14 +5,12 @@
  */
 package MainScreenUI;
 
+import AdminUI.ImageTextRenderer;
 import Business.ConferenceBus;
 import Business.PlaceBus;
-import Class.ImageTextRenderer;
-import ContentUI.Home;
 import POJO.Conference;
 import POJO.Place;
 import com.toedter.calendar.JDateChooser;
-import java.awt.Dialog;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -102,6 +100,8 @@ public class NewConference extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jBriefText = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jCapacityTF = new javax.swing.JTextField();
         jFooter = new javax.swing.JPanel();
         jOKBtn = new javax.swing.JButton();
 
@@ -254,7 +254,7 @@ public class NewConference extends javax.swing.JFrame {
         jLabel1.setText("Brief Description");
         jLabel1.setPreferredSize(new java.awt.Dimension(100, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         jInformationConference.add(jLabel1, gridBagConstraints);
@@ -263,7 +263,7 @@ public class NewConference extends javax.swing.JFrame {
         jDetail.setText("Detail Decription");
         jDetail.setPreferredSize(new java.awt.Dimension(100, 50));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
         jInformationConference.add(jDetail, gridBagConstraints);
@@ -279,7 +279,7 @@ public class NewConference extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jDetailText);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 0, 0);
         jInformationConference.add(jScrollPane1, gridBagConstraints);
 
@@ -295,7 +295,7 @@ public class NewConference extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jBriefText);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
         jInformationConference.add(jScrollPane2, gridBagConstraints);
 
@@ -304,6 +304,25 @@ public class NewConference extends javax.swing.JFrame {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
         jInformationConference.add(jLabel2, gridBagConstraints);
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel3.setText("Capacity");
+        jLabel3.setPreferredSize(new java.awt.Dimension(100, 50));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 5;
+        jInformationConference.add(jLabel3, gridBagConstraints);
+
+        jCapacityTF.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jCapacityTF.setPreferredSize(new java.awt.Dimension(400, 40));
+        jCapacityTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCapacityTFActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridy = 5;
+        jInformationConference.add(jCapacityTF, gridBagConstraints);
 
         getContentPane().add(jInformationConference, java.awt.BorderLayout.NORTH);
 
@@ -342,7 +361,7 @@ public class NewConference extends javax.swing.JFrame {
         if (edit == false) {
             Place choicePlace = (Place) jPlaceChooser.getSelectedItem();
 
-            String result = ConferenceBus.insertNewConference(new Conference(choicePlace, jNameText.getText(), jBriefText.getText(), jDetailText.getText(), jImageText.getText(), convert(jDateChooser, jStartTime), convert(jDateChooser, jEndTime)));
+            String result = ConferenceBus.insertNewConference(new Conference(choicePlace, jNameText.getText(), jBriefText.getText(), jDetailText.getText(), jImageText.getText(), convert(jDateChooser, jStartTime), convert(jDateChooser, jEndTime), Integer.valueOf(jCapacityTF.getText())));
             
             if (result != null) {
                 JOptionPane.showMessageDialog(this, "Success");
@@ -413,6 +432,10 @@ public class NewConference extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jAddImagebtnMousePressed
 
+    private void jCapacityTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCapacityTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCapacityTFActionPerformed
+
     public void reset(String position) {
         List<Place> listPlace = PlaceBus.getAllPlace();
         Collections.sort(listPlace);
@@ -472,6 +495,7 @@ public class NewConference extends javax.swing.JFrame {
     private javax.swing.JButton jAddImagebtn;
     private javax.swing.JButton jAddNewPlace;
     private javax.swing.JTextArea jBriefText;
+    private javax.swing.JTextField jCapacityTF;
     private javax.swing.JLabel jDate;
     private com.toedter.calendar.JDateChooser jDateChooser;
     private javax.swing.JLabel jDetail;
@@ -484,6 +508,7 @@ public class NewConference extends javax.swing.JFrame {
     private javax.swing.JPanel jInformationConference;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jName;
     private javax.swing.JTextField jNameText;
     private javax.swing.JButton jOKBtn;

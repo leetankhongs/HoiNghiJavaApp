@@ -5,6 +5,8 @@
  */
 package DAO;
 
+import POJO.Conference;
+import POJO.User;
 import POJO.UserConference;
 import POJO.UserConferenceId;
 import Util.NewHibernateUtil;
@@ -18,69 +20,140 @@ import org.hibernate.Transaction;
  * @author ADMIN
  */
 public class UserConferenceDao {
-    public static List<UserConference> getAllUserConference(){
+
+    public static List<UserConference> getAllUserConference() {
         List<UserConference> list = null;
         Session session = NewHibernateUtil.getSessionFactory().openSession();
-        
-        try{
+
+        try {
             String hql = "select UC from UserConference UC";
             Query query = session.createQuery(hql);
             list = query.list();
-        }finally{
+        } finally {
             session.close();
         }
-        
+
         return list;
     }
-    
-    public static UserConference getUserConferenceInformation(UserConferenceId idUserConference){
+
+    public static UserConference getUserConferenceInformation(UserConferenceId idUserConference) {
         UserConference userConference = null;
         Session session = NewHibernateUtil.getSessionFactory().openSession();
-        
-        try{
+
+        try {
             userConference = (UserConference) session.get(UserConference.class, idUserConference);
-        }finally{
+        } finally {
             session.close();
         }
-        
+
         return userConference;
     }
-    
-    public static String insertNewUserConference(UserConference userConference){
+
+    public static String insertNewUserConference(UserConference userConference) {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
-        
-        if(UserConferenceDao.getUserConferenceInformation(userConference.getId()) != null)
+
+        if (UserConferenceDao.getUserConferenceInformation(userConference.getId()) != null) {
             return null;
-        
+        }
+
         Transaction transaction = null;
-        
-        try{
+
+        try {
             transaction = session.beginTransaction();
             session.save(userConference);
             transaction.commit();
-        }finally{
+        } finally {
             session.close();
         }
-        
+
         return userConference.getId().toString();
     }
-    
-    public static boolean updateUserConferenceInformation(UserConference userConference){
+
+    public static boolean updateUserConferenceInformation(UserConference userConference) {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
-        
-        if(UserConferenceDao.getUserConferenceInformation(userConference.getId()) == null)
+
+        if (UserConferenceDao.getUserConferenceInformation(userConference.getId()) == null) {
             return false;
-        
+        }
+
         Transaction transaction = null;
-        
-        try{
+
+        try {
             transaction = session.beginTransaction();
             session.update(userConference);
             transaction.commit();
-        }finally{
+        } finally {
             session.close();
         }
-        
+
         return true;
+    }
+
+    public static List<UserConference> getListUserConferenceByUser(User user) {
+        List<UserConference> list = null;
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+
+        try {
+            String hql = "select UC from UserConference UC where UC.user = :user";
+            Query query = session.createQuery(hql);
+            query.setParameter("user", user);
+            list = query.list();
+
+        } finally {
+            session.close();
+        }
+
+        return list;
+    }
+
+    public static int deleteRegistration(UserConferenceId userConferenceId) {
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        int result = 0;
+        
+        try {
+            String hql = "delete  from UserConference UC where UC.id = :userConferenceId";
+            Query query = session.createQuery(hql);
+            query.setParameter("userConferenceId", userConferenceId);
+            result = query.executeUpdate();
+
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+    
+    public static List<UserConference> getNewRequests(Conference conference){
+        List<UserConference> list = null;
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+
+        try {
+            String hql = "select UC from UserConference UC where UC.isAccepted = 0 and UC.conference = :conference";
+            Query query = session.createQuery(hql);
+            query.setParameter("conference", conference);
+            list = query.list();
+
+        } finally {
+            session.close();
+        }
+
+        return list;
+    }
+
+    
+    public static int getTheNumberOfUserIsAccepted(Conference conference){
+        List<UserConference> list = null;
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+
+        try {
+            String hql = "select UC from UserConference UC where UC.isAccepted = 1 and UC.conference = :conference";
+            Query query = session.createQuery(hql);
+            query.setParameter("conference", conference);
+            list = query.list();
+
+        } finally {
+            session.close();
+        }
+
+        return list.size();
     }
 }
