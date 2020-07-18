@@ -8,6 +8,7 @@ package ContentUI;
 import Business.ConferenceBus;
 import ComponentUI.ConferenceRendererCard;
 import ComponentUI.ConferenceRendererList;
+import MainScreenUI.MainScreen;
 import MainScreenUI.NewConference;
 import POJO.Conference;
 import POJO.User;
@@ -18,6 +19,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -69,8 +71,8 @@ public class ListConference extends javax.swing.JPanel {
     private void paginationFilter() {
         calculatePag();
         List<Conference> temp = new ArrayList<>();
-        int start = (Integer.valueOf(jPosition.getText()) - 1) * 1;
-        int end = Integer.valueOf(jPosition.getText()) * 1 - 1;
+        int start = (Integer.valueOf(jPosition.getText()) - 1) * 6;
+        int end = Integer.valueOf(jPosition.getText()) * 6 - 1;
 
         if (end > listConference.size() - 1) {
             end = listConference.size() - 1;
@@ -92,10 +94,10 @@ public class ListConference extends javax.swing.JPanel {
     private void calculatePag() {
         int countRow = listConference.size();
 
-        if (countRow % 1 == 0) {
-            maxPag = countRow / Integer.valueOf(1);
+        if (countRow % 6 == 0) {
+            maxPag = countRow / Integer.valueOf(6);
         } else {
-            maxPag = (int) (countRow / 1) + 1;
+            maxPag = (int) (countRow / 6) + 1;
         }
 
     }
@@ -126,9 +128,8 @@ public class ListConference extends javax.swing.JPanel {
         }
     }
 
-    public ListConference(User user) {
+    public ListConference() {
         initComponents();
-        this.user = user;
         resetData();
     }
 
@@ -320,11 +321,6 @@ public class ListConference extends javax.swing.JPanel {
                 jSearchTextFocusLost(evt);
             }
         });
-        jSearchText.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jSearchTextKeyTyped(evt);
-            }
-        });
         jSearchPnl.add(jSearchText, java.awt.BorderLayout.CENTER);
 
         jAdditionOption.add(jSearchPnl, java.awt.BorderLayout.CENTER);
@@ -356,9 +352,12 @@ public class ListConference extends javax.swing.JPanel {
         jCardView.setLayout(new java.awt.BorderLayout());
 
         jScrollPane4.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane4.setBorder(null);
         jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jCardConferenceView.setBackground(new java.awt.Color(255, 255, 255));
+        jCardConferenceView.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        jCardConferenceView.setMaximumSize(new java.awt.Dimension(1000, 32767));
         jCardConferenceView.setLayout(new java.awt.GridBagLayout());
         jScrollPane4.setViewportView(jCardConferenceView);
 
@@ -555,6 +554,11 @@ public class ListConference extends javax.swing.JPanel {
 
     private void jSearchbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchbtnMouseReleased
         // TODO add your handling code here:
+        if (jSearchText.getText().compareTo("") == 0) {
+            jSearchText.setText("Search conference name");
+        }
+        jPosition.setText("1");
+        resetData();
     }//GEN-LAST:event_jSearchbtnMouseReleased
 
     private void jSearchTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchTextFocusLost
@@ -575,8 +579,14 @@ public class ListConference extends javax.swing.JPanel {
 
     private void jFirstbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFirstbtnMouseReleased
         // TODO add your handling code here:
-        jPosition.setText("1");
-        resetData();
+        int currentPosition = Integer.valueOf(jPosition.getText());
+        int oldValue = currentPosition;
+        currentPosition = 1;
+
+        if (oldValue != currentPosition) {
+            jPosition.setText(String.valueOf(currentPosition));
+            resetData();
+        }
     }//GEN-LAST:event_jFirstbtnMouseReleased
 
     private void jPrebtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPrebtnMouseMoved
@@ -592,9 +602,14 @@ public class ListConference extends javax.swing.JPanel {
     private void jPrebtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPrebtnMouseReleased
         // TODO add your handling code here:
         int currentPosition = Integer.valueOf(jPosition.getText());
+        int oldValue = currentPosition;
         currentPosition = currentPosition == 1 ? 1 : --currentPosition;
-        jPosition.setText(String.valueOf(currentPosition));
-        resetData();
+
+        if (oldValue != currentPosition) {
+            jPosition.setText(String.valueOf(currentPosition));
+            resetData();
+        }
+
     }//GEN-LAST:event_jPrebtnMouseReleased
 
     private void jNextbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jNextbtnMouseMoved
@@ -610,9 +625,12 @@ public class ListConference extends javax.swing.JPanel {
     private void jNextbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jNextbtnMouseReleased
         // TODO add your handling code here:
         int currentPosition = Integer.valueOf(jPosition.getText());
+        int oldValue = currentPosition;
         currentPosition = currentPosition == maxPag ? maxPag : ++currentPosition;
-        jPosition.setText(String.valueOf(currentPosition));
-        resetData();
+        if (oldValue != currentPosition) {
+            jPosition.setText(String.valueOf(currentPosition));
+            resetData();
+        }
     }//GEN-LAST:event_jNextbtnMouseReleased
 
     private void jLastbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLastbtnMouseMoved
@@ -627,8 +645,14 @@ public class ListConference extends javax.swing.JPanel {
 
     private void jLastbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLastbtnMouseReleased
         // TODO add your handling code here:
-        jPosition.setText(String.valueOf(maxPag));
-        resetData();
+        int currentPosition = Integer.valueOf(jPosition.getText());
+        int oldValue = currentPosition;
+        currentPosition = maxPag;
+
+        if (oldValue != currentPosition) {
+            jPosition.setText(String.valueOf(currentPosition));
+            resetData();
+        }
     }//GEN-LAST:event_jLastbtnMouseReleased
 
     private void jDateChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserPropertyChange
@@ -645,36 +669,33 @@ public class ListConference extends javax.swing.JPanel {
             jSearchText.setText("");
     }//GEN-LAST:event_jSearchTextFocusGained
 
-    private void jSearchTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSearchTextKeyTyped
-        // TODO add your handling code here:
-        jPosition.setText("1");
-        resetData();
-    }//GEN-LAST:event_jSearchTextKeyTyped
-
-    private void resetData() {
+    public void resetData() {
         listConference = ConferenceBus.getAllConference();
+        Collections.reverse(listConference);
         filter();
         conferenceRendererCards = new ArrayList<>();
 
         for (int i = 0; i < listConference.size(); i++) {
-            conferenceRendererCards.add(new ConferenceRendererCard(listConference.get(i), user));
+            conferenceRendererCards.add(new ConferenceRendererCard(listConference.get(i)));
         }
 
         jCardConferenceView.removeAll();
         jCardConferenceView.repaint();
         jCardConferenceView.revalidate();
+        GridBagConstraints c = new GridBagConstraints();
+
         for (int i = 0; i < conferenceRendererCards.size(); i++) {
-            GridBagConstraints c = new GridBagConstraints();
+            c.fill = GridBagConstraints.NONE;
             c.gridx = i % 3;
             c.gridy = i / 3;
-            c.insets = new Insets(10, 20, 10, 20);
+            c.insets = new Insets(10, 15, 10, 15);
             jCardConferenceView.add(conferenceRendererCards.get(i), c);
         }
 
         conferenceRendererLists = new ArrayList<>();
 
         for (int i = 0; i < listConference.size(); i++) {
-            conferenceRendererLists.add(new ConferenceRendererList(listConference.get(i), user));
+            conferenceRendererLists.add(new ConferenceRendererList(listConference.get(i)));
         }
 
         jListConferenceView.removeAll();

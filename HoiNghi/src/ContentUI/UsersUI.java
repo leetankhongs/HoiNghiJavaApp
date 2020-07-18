@@ -9,16 +9,18 @@ import AdminUI.BlockButtonEditor;
 import AdminUI.BlockButtonRenderer;
 import AdminUI.ConferenceUserButtonEditor;
 import AdminUI.ConferenceUserRenderer;
+import Business.ConferenceBus;
 import Business.UserBus;
 import Business.UserConferenceBus;
+import POJO.Conference;
 import POJO.User;
-import UserUI.UserButtonEditor;
-import UserUI.UserButtonRenderer;
+import POJO.UserConference;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 
 /**
  *
@@ -29,24 +31,113 @@ public class UsersUI extends javax.swing.JPanel {
     /**
      * Creates new form UsersUI
      */
-    
     final static private Color deufault = new Color(224, 224, 250);
     final static private Color colorCliked = new Color(84, 3, 156);
     final static private Color colorMoved = new Color(153, 153, 255);
     final static private Color colorMoved_2 = new Color(220, 220, 255);
-    
+
     List<User> list;
+    private int maxPag;
+
+    private void filter() {
+        UserNameFilter();
+        ConferenceNameFileter();
+        paginationFilter();
+        ConferenceNameFileter();
+    }
+
+    private void ConferenceNameFileter() {
+        int index = jConferenceCB.getSelectedIndex();
+        
+        if (index == 0 || index == -1) {
+            return;
+        }
+        
+        String conferenceName = jConferenceCB.getItemAt(index);
+
+        for (int i = list.size() - 1; i >= 0; i--) {
+            List<UserConference> userConferences = UserConferenceBus.getListUserConferenceIsAcceptedByUser(list.get(i));
+
+            boolean has = false;
+            for (int j = 0; j < userConferences.size(); j++) {
+                if (conferenceName.compareTo(userConferences.get(j).getConference().getName()) == 0) {
+                    has = true;
+                    break;
+                }
+            }
+            
+            if(!has)
+                list.remove(i);
+        }
+    }
+
+    private void paginationFilter() {
+        calculatePag();
+        List<User> temp = new ArrayList<>();
+        int start = (Integer.valueOf(jPosition.getText()) - 1) * (Integer.valueOf(jComboBox1.getSelectedItem().toString()));
+        int end = Integer.valueOf(jPosition.getText()) * (Integer.valueOf(jComboBox1.getSelectedItem().toString())) - 1;
+
+        if (end > list.size() - 1) {
+            end = list.size() - 1;
+        }
+
+        for (int i = start; i <= end; i++) {
+            temp.add(list.get(i));
+        }
+
+        jDescriptionPag.setText("Page " + jPosition.getText() + " for " + (start + 1) + "-" + (end + 1) + "/" + list.size());
+        list.clear();
+
+        for (int i = 0; i < temp.size(); i++) {
+            list.add(temp.get(i));
+        }
+
+    }
+
+    private void UserNameFilter() {
+        if (jUserNameTF.getText().compareTo("User Name") == 0) {
+            return;
+        }
+
+        for (int i = list.size() - 1; i >= 0; i--) {
+            if (list.get(i).getName().toLowerCase().indexOf(jUserNameTF.getText().toLowerCase()) == -1) {
+                list.remove(i);
+            }
+
+        }
+    }
+
+    private void calculatePag() {
+        int countRow = list.size();
+
+        if (countRow % (Integer.valueOf(jComboBox1.getSelectedItem().toString())) == 0) {
+            maxPag = countRow / Integer.valueOf(jComboBox1.getSelectedItem().toString());
+        } else {
+            maxPag = (int) (countRow / Integer.valueOf(jComboBox1.getSelectedItem().toString())) + 1;
+        }
+
+        if (maxPag == 0) {
+            maxPag = 1;
+        }
+
+    }
+
     public UsersUI() {
         initComponents();
-         DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
+        resetData();
+    }
 
+    public void resetData() {
         list = UserBus.getAllUser();
+        Collections.reverse(list);
+        filter();
+        DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
+        for (int i = tm.getRowCount() - 1; i >= 0; i--) {
+            tm.removeRow(i);
+        }
+
         for (int i = 0; i < list.size(); i++) {
-
-            String status;
-            
             tm.addRow(new Object[]{i + 1, list.get(i).getName(), list.get(i).getEmail(), list.get(i), list.get(i)});
-
         }
 
         jTable.setModel(tm);
@@ -55,6 +146,9 @@ public class UsersUI extends javax.swing.JPanel {
         jTable.getColumnModel().getColumn(3).setCellRenderer(new ConferenceUserRenderer());
         jTable.getColumnModel().getColumn(3).setCellEditor(new ConferenceUserButtonEditor(new JTextField()));
         jTable.setAutoCreateRowSorter(true);
+
+
+
     }
 
     /**
@@ -70,10 +164,10 @@ public class UsersUI extends javax.swing.JPanel {
         jOption = new javax.swing.JPanel();
         jOption1 = new javax.swing.JPanel();
         jResetbtn = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jConferenceCB = new javax.swing.JComboBox<>();
+        jUserNameTF = new javax.swing.JTextField();
         jOption2 = new javax.swing.JPanel();
-        jSearchPnl = new javax.swing.JPanel();
-        jSearchbtn = new javax.swing.JLabel();
-        jSearchText = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jCount = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -127,50 +221,50 @@ public class UsersUI extends javax.swing.JPanel {
         });
         jOption1.add(jResetbtn, java.awt.BorderLayout.WEST);
 
+        jPanel2.setOpaque(false);
+        jPanel2.setPreferredSize(new java.awt.Dimension(600, 29));
+        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 10, 0));
+
+        jConferenceCB.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jConferenceCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Conference Name" }));
+        jConferenceCB.setPreferredSize(new java.awt.Dimension(300, 50));
+        jConferenceCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jConferenceCBActionPerformed(evt);
+            }
+        });
+        List<Conference> conferenceList = ConferenceBus.getAllConference();
+        Collections.sort(conferenceList);
+        for (int i = 0; i < conferenceList.size(); i++) {
+            jConferenceCB.addItem(conferenceList.get(i).getName());
+        }
+        jPanel2.add(jConferenceCB);
+
+        jUserNameTF.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jUserNameTF.setText("User Name");
+        jUserNameTF.setPreferredSize(new java.awt.Dimension(250, 50));
+        jUserNameTF.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jUserNameTFFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jUserNameTFFocusLost(evt);
+            }
+        });
+        jUserNameTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jUserNameTFKeyTyped(evt);
+            }
+        });
+        jPanel2.add(jUserNameTF);
+
+        jOption1.add(jPanel2, java.awt.BorderLayout.EAST);
+
         jOption.add(jOption1, java.awt.BorderLayout.NORTH);
 
         jOption2.setBackground(new java.awt.Color(224, 224, 250));
         jOption2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jOption2.setLayout(new java.awt.BorderLayout());
-
-        jSearchPnl.setBackground(new java.awt.Color(224, 224, 250));
-        jSearchPnl.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 10));
-        jSearchPnl.setPreferredSize(new java.awt.Dimension(250, 50));
-        jSearchPnl.setLayout(new java.awt.BorderLayout());
-
-        jSearchbtn.setBackground(new java.awt.Color(224, 224, 250));
-        jSearchbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Search-icon.png"))); // NOI18N
-        jSearchbtn.setOpaque(true);
-        jSearchbtn.setPreferredSize(new java.awt.Dimension(50, 13));
-        jSearchbtn.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jSearchbtnMouseMoved(evt);
-            }
-        });
-        jSearchbtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jSearchbtnMouseExited(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jSearchbtnMouseReleased(evt);
-            }
-        });
-        jSearchPnl.add(jSearchbtn, java.awt.BorderLayout.WEST);
-
-        jSearchText.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jSearchText.setText("Search conference name");
-        jSearchText.setToolTipText("");
-        jSearchText.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        jSearchText.setMargin(new java.awt.Insets(5, 5, 5, 5));
-        jSearchText.setPreferredSize(new java.awt.Dimension(200, 27));
-        jSearchText.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jSearchTextFocusLost(evt);
-            }
-        });
-        jSearchPnl.add(jSearchText, java.awt.BorderLayout.CENTER);
-
-        jOption2.add(jSearchPnl, java.awt.BorderLayout.CENTER);
 
         jPanel1.setBackground(new java.awt.Color(224, 224, 250));
         jPanel1.setPreferredSize(new java.awt.Dimension(600, 60));
@@ -267,7 +361,10 @@ public class UsersUI extends javax.swing.JPanel {
         });
         jPaginationButton.add(jPrebtn);
 
+        jPosition.setEditable(false);
+        jPosition.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jPosition.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPosition.setText("1");
         jPaginationButton.add(jPosition);
 
         jNextbtn.setBackground(new java.awt.Color(224, 224, 250));
@@ -364,28 +461,11 @@ public class UsersUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jResetbtnMouseReleased
 
-    private void jSearchbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchbtnMouseMoved
-        // TODO add your handling code here:
-        jSearchbtn.setBackground(colorMoved);
-    }//GEN-LAST:event_jSearchbtnMouseMoved
-
-    private void jSearchbtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchbtnMouseExited
-        // TODO add your handling code here:
-        jSearchbtn.setBackground(deufault);
-    }//GEN-LAST:event_jSearchbtnMouseExited
-
-    private void jSearchbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchbtnMouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jSearchbtnMouseReleased
-
-    private void jSearchTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchTextFocusLost
-        // TODO add your handling code here:
-        if (jSearchText.getText().compareTo("") == 0)
-        jSearchText.setText("Search conference name ");
-    }//GEN-LAST:event_jSearchTextFocusLost
-
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        calculatePag();
+        jPosition.setText("1");
+        resetData();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jFirstbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFirstbtnMouseMoved
@@ -400,6 +480,8 @@ public class UsersUI extends javax.swing.JPanel {
 
     private void jFirstbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFirstbtnMouseReleased
         // TODO add your handling code here:
+        jPosition.setText("1");
+        resetData();
     }//GEN-LAST:event_jFirstbtnMouseReleased
 
     private void jPrebtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPrebtnMouseMoved
@@ -414,6 +496,10 @@ public class UsersUI extends javax.swing.JPanel {
 
     private void jPrebtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPrebtnMouseReleased
         // TODO add your handling code here:
+        int currentPosition = Integer.valueOf(jPosition.getText());
+        currentPosition = currentPosition == 1 ? 1 : --currentPosition;
+        jPosition.setText(String.valueOf(currentPosition));
+        resetData();
     }//GEN-LAST:event_jPrebtnMouseReleased
 
     private void jNextbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jNextbtnMouseMoved
@@ -428,6 +514,10 @@ public class UsersUI extends javax.swing.JPanel {
 
     private void jNextbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jNextbtnMouseReleased
         // TODO add your handling code here:
+        int currentPosition = Integer.valueOf(jPosition.getText());
+        currentPosition = currentPosition == maxPag ? maxPag : ++currentPosition;
+        jPosition.setText(String.valueOf(currentPosition));
+        resetData();
     }//GEN-LAST:event_jNextbtnMouseReleased
 
     private void jLastbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLastbtnMouseMoved
@@ -442,12 +532,39 @@ public class UsersUI extends javax.swing.JPanel {
 
     private void jLastbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLastbtnMouseReleased
         // TODO add your handling code here:
+        jPosition.setText(String.valueOf(maxPag));
+        resetData();
     }//GEN-LAST:event_jLastbtnMouseReleased
+
+    private void jConferenceCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jConferenceCBActionPerformed
+        // TODO add your handling code here:
+        jPosition.setText("1");
+        resetData();
+    }//GEN-LAST:event_jConferenceCBActionPerformed
+
+    private void jUserNameTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jUserNameTFFocusGained
+        // TODO add your handling code here:
+        if (jUserNameTF.getText().compareTo("User Name") == 0)
+            jUserNameTF.setText("");
+    }//GEN-LAST:event_jUserNameTFFocusGained
+
+    private void jUserNameTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jUserNameTFFocusLost
+        // TODO add your handling code here:
+        if (jUserNameTF.getText().compareTo("") == 0)
+            jUserNameTF.setText("User Name");
+    }//GEN-LAST:event_jUserNameTFFocusLost
+
+    private void jUserNameTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jUserNameTFKeyTyped
+        // TODO add your handling code here:
+        jPosition.setText("1");
+        resetData();
+    }//GEN-LAST:event_jUserNameTFKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jBrief;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jConferenceCB;
     private javax.swing.JPanel jCount;
     private javax.swing.JPanel jData;
     private javax.swing.JLabel jDescriptionPag;
@@ -462,13 +579,12 @@ public class UsersUI extends javax.swing.JPanel {
     private javax.swing.JPanel jPagination;
     private javax.swing.JPanel jPaginationButton;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jPosition;
     private javax.swing.JLabel jPrebtn;
     private javax.swing.JLabel jResetbtn;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel jSearchPnl;
-    private javax.swing.JTextField jSearchText;
-    private javax.swing.JLabel jSearchbtn;
     private javax.swing.JTable jTable;
+    private javax.swing.JTextField jUserNameTF;
     // End of variables declaration//GEN-END:variables
 }

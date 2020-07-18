@@ -25,7 +25,14 @@ public class UserBus {
     public static String insertNewUser(User user){
         List<User> list = UserDao.getAllUser();
         String format = "%1$010d";
-        user.setId(String.format(format, list.size()+1));
+        for(int i = 1 ; i < list.size() + 1; i++)
+            if(list.get(i - 1).getId().compareTo(String.format(format, i)) != 0)
+            {
+                user.setId(String.format(format, i));
+                break;
+            }
+                
+
         return UserDao.insertNewUser(user);
     }
     

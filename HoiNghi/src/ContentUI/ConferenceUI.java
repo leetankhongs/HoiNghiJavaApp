@@ -11,7 +11,9 @@ import AdminUI.RequestButtonEditor;
 import AdminUI.RequestButtonRenderer;
 import Business.ConferenceBus;
 import Business.UserConferenceBus;
+import MainScreenUI.MainScreen;
 import MainScreenUI.NewConference;
+import MainScreenUI.NewConferenceDialog;
 import POJO.Conference;
 import POJO.UserConference;
 import java.awt.Color;
@@ -21,6 +23,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -93,7 +96,6 @@ public class ConferenceUI extends javax.swing.JPanel {
             case 2:
                 for (int i = listConference.size() - 1; i >= 0; i--) {
                     if (listConference.get(i).getStartTime().compareTo(date) < 0 || listConference.get(i).getIsDelete() == 1) {
-                        System.out.println(listConference.get(i).getStartTime().compareTo(date));
                         listConference.remove(i);
                     }
                 }
@@ -181,10 +183,6 @@ public class ConferenceUI extends javax.swing.JPanel {
 
         initComponents();
 
-        resetData();
-        jTable.getColumnModel().getColumn(4).setCellRenderer(new AdminButtonRenderer());
-        jTable.getColumnModel().getColumn(4).setCellEditor(new AdminButtonEditor(new JTextField()));
-        jTable.getColumnModel().getColumn(5).setCellRenderer(new RequestButtonRenderer());
         RequestButtonEditor requestButtonEditor = new RequestButtonEditor(new JTextField());
         requestButtonEditor.setConferenceUI(this);
         jTable.getColumnModel().getColumn(5).setCellEditor(requestButtonEditor);
@@ -194,6 +192,10 @@ public class ConferenceUI extends javax.swing.JPanel {
         jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
         jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
         jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+        resetData();
+        jTable.getColumnModel().getColumn(4).setCellRenderer(new AdminButtonRenderer());
+        jTable.getColumnModel().getColumn(4).setCellEditor(new AdminButtonEditor(new JTextField()));
+        jTable.getColumnModel().getColumn(5).setCellRenderer(new RequestButtonRenderer());
 
     }
 
@@ -205,9 +207,10 @@ public class ConferenceUI extends javax.swing.JPanel {
         } else {
             maxPag = (int) (countRow / Integer.valueOf(jComboBox1.getSelectedItem().toString())) + 1;
         }
-        
-        if(maxPag == 0)
+
+        if (maxPag == 0) {
             maxPag = 1;
+        }
 
     }
 
@@ -430,7 +433,7 @@ public class ConferenceUI extends javax.swing.JPanel {
 
         jComboBox1.setEditable(true);
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(70, 50));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -626,14 +629,33 @@ public class ConferenceUI extends javax.swing.JPanel {
         add(jData, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    public void temp() {
+        DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
+
+        for (int i = tm.getRowCount() - 1; i >= 0; i--) {
+            tm.removeRow(i);
+        }
+    }
+
     public void resetData() {
         listConference = ConferenceBus.getAllConference();
+        Collections.reverse(listConference);
         filter();
         DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
 
         for (int i = tm.getRowCount() - 1; i >= 0; i--) {
             tm.removeRow(i);
         }
+
+        RequestButtonEditor requestButtonEditor = new RequestButtonEditor(new JTextField());
+        requestButtonEditor.setConferenceUI(this);
+        jTable.getColumnModel().getColumn(5).setCellEditor(requestButtonEditor);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(500);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
 
         for (int i = 0; i < listConference.size(); i++) {
             String status = "";
@@ -651,10 +673,6 @@ public class ConferenceUI extends javax.swing.JPanel {
             tm.addRow(new Object[]{i + 1, listConference.get(i).getName(), listConference.get(i).getStartTime(), status, listConference.get(i), listConference.get(i)});
         }
 
-        jTable.getColumnModel().getColumn(4).setCellRenderer(new AdminButtonRenderer());
-        jTable.getColumnModel().getColumn(4).setCellEditor(new AdminButtonEditor(new JTextField()));
-        jTable.getColumnModel().getColumn(5).setCellRenderer(new RequestButtonRenderer());
-        jTable.getColumnModel().getColumn(5).setCellEditor(new RequestButtonEditor(new JTextField()));
     }
     private void jResetbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jResetbtnMouseMoved
         // TODO add your handling code here:
@@ -745,7 +763,6 @@ public class ConferenceUI extends javax.swing.JPanel {
     private void jNextbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jNextbtnMouseReleased
         // TODO add your handling code here:        
         int currentPosition = Integer.valueOf(jPosition.getText());
-        System.out.println(maxPag);
         currentPosition = currentPosition == maxPag ? maxPag : ++currentPosition;
         jPosition.setText(String.valueOf(currentPosition));
         resetData();
@@ -779,7 +796,8 @@ public class ConferenceUI extends javax.swing.JPanel {
 
     private void jAddNewConferenceMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jAddNewConferenceMousePressed
         // TODO add your handling code here:
-        new NewConference().setVisible(true);
+
+        new NewConferenceDialog(MainScreen.getInstance(), true).setVisible(true);
     }//GEN-LAST:event_jAddNewConferenceMousePressed
 
     private void jTakePlaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTakePlaceActionPerformed
@@ -857,4 +875,31 @@ public class ConferenceUI extends javax.swing.JPanel {
     private javax.swing.JTable jTable;
     private javax.swing.JComboBox<String> jTakePlace;
     // End of variables declaration//GEN-END:variables
+
+    public void setFilter(int indexPlace, int indexRequest, int indexLine, int positionPag, Date organizeDate, String searchString) {
+        jTakePlace.setSelectedIndex(indexPlace);
+        jNewRequest.setSelectedIndex(indexRequest);
+        jComboBox1.setSelectedIndex(indexLine);
+        jPosition.setText(String.valueOf(positionPag));
+        jDateChooser.setDate(organizeDate);
+        jSearchText.setText(searchString);
+    }
+
+    public ConferenceUI cloneS() {
+        ConferenceUI conferenceUI = new ConferenceUI();
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        Date getDate = null;
+
+        if (jDateChooser.getDate() != null) {
+            try {
+                getDate = formatter.parse(formatter.format(jDateChooser.getDate()));
+            } catch (ParseException ex) {
+                Logger.getLogger(NewConference.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        conferenceUI.setFilter(jTakePlace.getSelectedIndex(), jNewRequest.getSelectedIndex(), jComboBox1.getSelectedIndex(), Integer.valueOf(jPosition.getText()), getDate, jSearchText.getText());
+        return conferenceUI;
+    }
 }

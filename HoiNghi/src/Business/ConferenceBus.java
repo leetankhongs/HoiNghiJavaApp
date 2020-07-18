@@ -25,7 +25,14 @@ public class ConferenceBus {
     public static String insertNewConference(Conference conference){
         List<Conference> list = ConferenceDao.getAllConference();
         String format = "%1$04d";
-        conference.setId(String.format(format, list.size()+1));
+        for(int i = 1 ; i < list.size() + 1; i++)
+            if(list.get(i - 1).getId().compareTo(String.format(format, i)) != 0)
+            {
+                conference.setId(String.format(format, i));
+                break;
+            }
+                
+        
         return ConferenceDao.insertNewConference(conference);
     }
     

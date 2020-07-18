@@ -106,23 +106,60 @@ public class UserConferenceDao {
         return list;
     }
 
+    public static List<UserConference> getListUserConferenceIsAcceptedByUser(User user) {
+        List<UserConference> list = null;
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+
+        try {
+            String hql = "select UC from UserConference UC where UC.user = :user and isAccepted = 1";
+            Query query = session.createQuery(hql);
+            query.setParameter("user", user);
+            list = query.list();
+
+        } finally {
+            session.close();
+        }
+
+        return list;
+    }
+
     public static int deleteRegistration(UserConferenceId userConferenceId) {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
         int result = 0;
-        
+        Transaction transaction = null;
+
         try {
+            transaction = session.beginTransaction();
             String hql = "delete  from UserConference UC where UC.id = :userConferenceId";
             Query query = session.createQuery(hql);
             query.setParameter("userConferenceId", userConferenceId);
             result = query.executeUpdate();
+            transaction.commit();
 
         } finally {
             session.close();
         }
         return result;
     }
-    
-    public static List<UserConference> getNewRequests(Conference conference){
+
+    public static UserConference getUserConference(Conference conference, User user) {
+        List<UserConference> list = null;
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+        try {
+            String hql = "select UC from UserConference UC where UC.user = :user and UC.conference = :conference";
+            Query query = session.createQuery(hql);
+            query.setParameter("user", user);
+            query.setParameter("conference", conference);
+            list = query.list();
+
+        } finally {
+            session.close();
+        }
+
+        return list.get(0);
+    }
+
+    public static List<UserConference> getNewRequests(Conference conference) {
         List<UserConference> list = null;
         Session session = NewHibernateUtil.getSessionFactory().openSession();
 
@@ -139,8 +176,7 @@ public class UserConferenceDao {
         return list;
     }
 
-    
-    public static int getTheNumberOfUserIsAccepted(Conference conference){
+    public static int getTheNumberOfUserIsAccepted(Conference conference) {
         List<UserConference> list = null;
         Session session = NewHibernateUtil.getSessionFactory().openSession();
 

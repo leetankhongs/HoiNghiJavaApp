@@ -26,7 +26,14 @@ public class PlaceBus {
     public static String insertNewPlace(Place place) {
         List<Place> list = PlaceDao.getAllPlace();
         String format = "%1$04d";
-        place.setId(String.format(format, list.size()+1));
+        
+        for(int i = 1 ; i < list.size() + 1; i++)
+            if(list.get(i - 1).getId().compareTo(String.format(format, i)) != 0)
+            {
+                place.setId(String.format(format, i));
+                break;
+            }
+        
         return PlaceDao.insertNewPlace(place);
     }
     

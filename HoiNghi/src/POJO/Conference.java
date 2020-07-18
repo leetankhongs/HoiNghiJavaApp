@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
 @Table(name="conference"
     ,catalog="conferencemanagement"
 )
-public class Conference  implements java.io.Serializable {
+public class Conference  implements java.io.Serializable, Comparable<Conference> {
 
 
      private String id;
@@ -166,6 +166,11 @@ public class Conference  implements java.io.Serializable {
     
     public void setUserConferences(Set<UserConference> userConferences) {
         this.userConferences = userConferences;
+    }
+
+    @Override
+    public int compareTo(Conference o) {
+        return getName().compareTo(o.getName());
     }
 
 

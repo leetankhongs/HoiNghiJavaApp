@@ -5,21 +5,19 @@
  */
 package ContentUI;
 
-import Business.ConferenceBus;
-import Business.UserBus;
 import Business.UserConferenceBus;
 import MainScreenUI.NewConference;
-import POJO.Conference;
+import MainScreenUI.MainScreen;
 import UserUI.UserButtonEditor;
 import UserUI.UserButtonRenderer;
 import POJO.UserConference;
-import POJO.User;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -41,7 +39,6 @@ public class Statistic extends javax.swing.JPanel {
     final static private Color colorMoved = new Color(153, 153, 255);
     final static private Color colorMoved_2 = new Color(220, 220, 255);
 
-    private User user;
     List<UserConference> list = new ArrayList<>();
     private int maxPag;
     private int minPag = 1;
@@ -159,15 +156,12 @@ public class Statistic extends javax.swing.JPanel {
 
     }
 
-    public Statistic(User user) {
+    public Statistic() {
 
         initComponents();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         jTable.getTableHeader().setOpaque(true);
         jTable.getTableHeader().setBackground(Color.red);
         jTable.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 20));
-        this.user = user;
-        resetData();
 
         jTable.getColumnModel().getColumn(5).setCellRenderer(new UserButtonRenderer());
         jTable.getColumnModel().getColumn(5).setCellEditor(new UserButtonEditor(new JTextField()));
@@ -182,10 +176,10 @@ public class Statistic extends javax.swing.JPanel {
     }
 
     public void resetData() {
-        list = UserConferenceBus.getListUserConferenceByUser(user);
+        list = UserConferenceBus.getListUserConferenceByUser(MainScreen.getInstance().getUser());
+        Collections.reverse(list);
         filter();
         DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
-
         for (int i = tm.getRowCount() - 1; i >= 0; i--) {
             tm.removeRow(i);
         }
@@ -214,8 +208,6 @@ public class Statistic extends javax.swing.JPanel {
             tm.addRow(new Object[]{i + 1, list.get(i).getConference().getName(), list.get(i).getRegistationTime(), list.get(i).getConference().getStartTime(), status, list.get(i)});
 
         }
-
-        jTable.setModel(tm);
     }
 
     /**
@@ -409,7 +401,7 @@ public class Statistic extends javax.swing.JPanel {
 
         jComboBox1.setEditable(true);
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(70, 50));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -546,14 +538,25 @@ public class Statistic extends javax.swing.JPanel {
         jTable.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Conference Name", "Registered Date", "Organized Date", "Status", "Detail"}) {
             @Override
-            public Class<?> getColumnClass(int col) {
-                //here it really returns the right column class (Integer.class)
-                Class retVal = Object.class  ;
+            public Class
 
-                if (getRowCount() > 0) {
+            <?> getColumnClass(int col) {
+                //here it really returns the right column class (Integer.class)
+                Class retVal = Object.class
+
+                ;
+
+                if (getRowCount()
+                    > 0) {
                     retVal = getValueAt(0, col).getClass();
                 }
+
                 return retVal ;
+            }
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                //all cells false
+                return column == 5;
             }
 
         };
@@ -576,6 +579,9 @@ public class Statistic extends javax.swing.JPanel {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        calculatePag();
+        jPosition.setText("1");
+        resetData();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jResetbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jResetbtnMouseMoved
@@ -590,6 +596,11 @@ public class Statistic extends javax.swing.JPanel {
 
     private void jResetbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jResetbtnMouseReleased
         // TODO add your handling code here:
+        jDateChooser1.setDate(null);
+        jDateChooser.setDate(null);
+        jSearchText.setText("Search conference name");
+        jPosition.setText("1");
+        resetData();
     }//GEN-LAST:event_jResetbtnMouseReleased
 
     private void jSearchbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchbtnMouseMoved
@@ -624,6 +635,8 @@ public class Statistic extends javax.swing.JPanel {
 
     private void jFirstbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFirstbtnMouseReleased
         // TODO add your handling code here:
+        jPosition.setText("1");
+        resetData();
     }//GEN-LAST:event_jFirstbtnMouseReleased
 
     private void jPrebtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPrebtnMouseMoved
@@ -638,6 +651,10 @@ public class Statistic extends javax.swing.JPanel {
 
     private void jPrebtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPrebtnMouseReleased
         // TODO add your handling code here:
+        int currentPosition = Integer.valueOf(jPosition.getText());
+        currentPosition = currentPosition == 1 ? 1 : --currentPosition;
+        jPosition.setText(String.valueOf(currentPosition));
+        resetData();
     }//GEN-LAST:event_jPrebtnMouseReleased
 
     private void jNextbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jNextbtnMouseMoved
@@ -652,6 +669,10 @@ public class Statistic extends javax.swing.JPanel {
 
     private void jNextbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jNextbtnMouseReleased
         // TODO add your handling code here:
+        int currentPosition = Integer.valueOf(jPosition.getText());
+        currentPosition = currentPosition == maxPag ? maxPag : ++currentPosition;
+        jPosition.setText(String.valueOf(currentPosition));
+        resetData();
     }//GEN-LAST:event_jNextbtnMouseReleased
 
     private void jLastbtnMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLastbtnMouseMoved
@@ -666,6 +687,8 @@ public class Statistic extends javax.swing.JPanel {
 
     private void jLastbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLastbtnMouseReleased
         // TODO add your handling code here:
+        jPosition.setText(String.valueOf(maxPag));
+        resetData();
     }//GEN-LAST:event_jLastbtnMouseReleased
 
     private void jDateChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserPropertyChange
@@ -725,13 +748,31 @@ public class Statistic extends javax.swing.JPanel {
     private javax.swing.JTable jTable;
     // End of variables declaration//GEN-END:variables
 
-    public void setUser(User user) {
-        this.user = user;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-
-        list = UserConferenceBus.getListUserConferenceByUser(user);
-//
-        DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
-
+    public void setFilter(Date registerDate, Date organizeDate, String searchString, int indexLine, int positionPag) {
+        jDateChooser1.setDate(registerDate);
+        jDateChooser.setDate(organizeDate);
+        jSearchText.setText(searchString);
+        jComboBox1.setSelectedIndex(indexLine);
+        jPosition.setText(String.valueOf(positionPag));
     }
+
+    public Statistic cloneS() {
+        Statistic statistic = new Statistic();
+        ConferenceUI conferenceUI = new ConferenceUI();
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+        Date getRegisterDate = jDateChooser1.getDate();
+        Date getOrganizeDate = jDateChooser.getDate();
+
+        try {
+            getRegisterDate = getRegisterDate == null ? null : formatter.parse(formatter.format(getRegisterDate));
+            getOrganizeDate = getOrganizeDate == null ? null : formatter.parse(formatter.format(getOrganizeDate));
+        } catch (ParseException ex) {
+            Logger.getLogger(NewConference.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        statistic.setFilter(getRegisterDate, getOrganizeDate, jSearchText.getText(), jComboBox1.getSelectedIndex(), Integer.valueOf(jPosition.getText()));
+        return statistic;
+    }
+
 }

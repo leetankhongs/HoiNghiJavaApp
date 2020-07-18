@@ -5,12 +5,15 @@
  */
 package ComponentUI;
 
+import MainScreenUI.MainScreen;
 import UserUI.Register_DetailConference;
 import POJO.Conference;
 import POJO.User;
 import java.awt.Color;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
 import javax.swing.ImageIcon;
 
 /**
@@ -34,17 +37,62 @@ public class ConferenceRendererList extends javax.swing.JPanel {
 
     }
 
-    public ConferenceRendererList(Conference conference, User user) {
+    MainScreen mainScreen;
+
+    public ConferenceRendererList(Conference conference) {
         initComponents();
         this.conference = conference;
-        this.user = user;
+        this.mainScreen = mainScreen;
         ImageIcon imageIcon = new ImageIcon(conference.getImage());
         Image image = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         jIcon.setIcon(new ImageIcon(image));
         jName.setText(conference.getName());
         jDescription.setText(conference.getBriefDescription());
-        SimpleDateFormat sdf=new SimpleDateFormat("hh:mm:ss dd/MM/YYYY ");
-        jDate.setText(sdf.format(conference.getStartTime())+ " - " + sdf.format(conference.getEndTime()));
+        
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
+        cal.setTime(conference.getStartTime());
+        String month = "";
+        switch (cal.get(Calendar.MONTH) + 1) {
+            case 1:
+                month = "January";
+                break;
+            case 2:
+                month = "February";
+                break;
+            case 3:
+                month = "March";
+                break;
+            case 4:
+                month = "April";
+                break;
+            case 5:
+                month = "May";
+                break;
+            case 6:
+                month = "June";
+                break;
+            case 7:
+                month = "July";
+                break;
+            case 8:
+                month = "August";
+                break;
+            case 9:
+                month = "September";
+                break;
+            case 10:
+                month = "October";
+                break;
+            case 11:
+                month = "November";
+                break;
+            case 12:
+                month = "December";
+                break;
+        }
+        jDate.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+        jMonth.setText(month);
+        jYear.setText(String.valueOf(cal.get(Calendar.YEAR)));
 
     }
 
@@ -60,8 +108,12 @@ public class ConferenceRendererList extends javax.swing.JPanel {
         jIcon = new javax.swing.JLabel();
         jContent = new javax.swing.JPanel();
         jName = new javax.swing.JLabel();
-        jDescription = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jDescription = new javax.swing.JTextArea();
+        jDatePnl = new javax.swing.JPanel();
         jDate = new javax.swing.JLabel();
+        jMonth = new javax.swing.JLabel();
+        jYear = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(238, 238, 255));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -92,47 +144,117 @@ public class ConferenceRendererList extends javax.swing.JPanel {
 
         jName.setBackground(new java.awt.Color(255, 255, 255));
         jName.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jName.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jName.setPreferredSize(new java.awt.Dimension(31, 40));
         jContent.add(jName, java.awt.BorderLayout.NORTH);
 
-        jDescription.setBackground(new java.awt.Color(255, 255, 255));
-        jDescription.setFont(new java.awt.Font("Times New Roman", 0, 20)); // NOI18N
-        jDescription.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jContent.add(jDescription, java.awt.BorderLayout.LINE_START);
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane1.setOpaque(false);
 
-        jDate.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jDate.setForeground(new java.awt.Color(255, 0, 51));
-        jDate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jDate.setText("17/07/1999");
-        jDate.setPreferredSize(new java.awt.Dimension(45, 20));
-        jContent.add(jDate, java.awt.BorderLayout.PAGE_END);
+        jDescription.setEditable(false);
+        jDescription.setBackground(new java.awt.Color(238, 238, 255));
+        jDescription.setColumns(20);
+        jDescription.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jDescription.setLineWrap(true);
+        jDescription.setRows(5);
+        jDescription.setWrapStyleWord(true);
+        jDescription.setBorder(null);
+        jDescription.setOpaque(false);
+        jDescription.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jDescriptionMouseMoved(evt);
+            }
+        });
+        jDescription.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jDescriptionMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jDescriptionMouseReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jDescription);
+
+        jContent.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         add(jContent, java.awt.BorderLayout.CENTER);
+
+        jDatePnl.setBackground(new java.awt.Color(255, 255, 255));
+        jDatePnl.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jDatePnl.setPreferredSize(new java.awt.Dimension(100, 40));
+        jDatePnl.setLayout(new java.awt.BorderLayout());
+
+        jDate.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jDate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jDate.setText("23");
+        jDate.setPreferredSize(new java.awt.Dimension(0, 30));
+        jDatePnl.add(jDate, java.awt.BorderLayout.CENTER);
+
+        jMonth.setBackground(new java.awt.Color(255, 51, 51));
+        jMonth.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jMonth.setForeground(new java.awt.Color(255, 255, 255));
+        jMonth.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMonth.setText("jLabel1");
+        jMonth.setOpaque(true);
+        jMonth.setPreferredSize(new java.awt.Dimension(31, 25));
+        jDatePnl.add(jMonth, java.awt.BorderLayout.NORTH);
+
+        jYear.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jYear.setForeground(new java.awt.Color(51, 51, 255));
+        jYear.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jYear.setText("jLabel2");
+        jYear.setPreferredSize(new java.awt.Dimension(31, 25));
+        jDatePnl.add(jYear, java.awt.BorderLayout.SOUTH);
+
+        add(jDatePnl, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-
-            new Register_DetailConference(conference, user, false).setVisible(true);
+        MainScreen.getInstance().changeDetailConference(conference);
     }//GEN-LAST:event_formMousePressed
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
         // TODO add your handling code here:
         setBackground(moveColor);
+        jDescription.setBackground(moveColor);
     }//GEN-LAST:event_formMouseMoved
 
     private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
         // TODO add your handling code here:
         setBackground(defaultColor);
+        jDescription.setBackground(defaultColor);
     }//GEN-LAST:event_formMouseExited
+
+    private void jDescriptionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jDescriptionMouseExited
+        // TODO add your handling code here:
+        setBackground(defaultColor);
+        jDescription.setBackground(defaultColor);
+    }//GEN-LAST:event_jDescriptionMouseExited
+
+    private void jDescriptionMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jDescriptionMouseMoved
+        // TODO add your handling code here:
+        setBackground(moveColor);
+        jDescription.setBackground(moveColor);
+    }//GEN-LAST:event_jDescriptionMouseMoved
+
+    private void jDescriptionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jDescriptionMouseReleased
+        // TODO add your handling code here:
+        MainScreen.getInstance().changeDetailConference(conference);
+    }//GEN-LAST:event_jDescriptionMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jContent;
     private javax.swing.JLabel jDate;
-    private javax.swing.JLabel jDescription;
+    private javax.swing.JPanel jDatePnl;
+    private javax.swing.JTextArea jDescription;
     private javax.swing.JLabel jIcon;
+    private javax.swing.JLabel jMonth;
     private javax.swing.JLabel jName;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jYear;
     // End of variables declaration//GEN-END:variables
 
     public void setUser(User user) {

@@ -5,13 +5,20 @@
  */
 package MainScreenUI;
 
+import Business.AccountBus;
+import Business.UserBus;
 import ContentUI.ConferenceUI;
 import ContentUI.Home;
 import ContentUI.ListConference;
 import ContentUI.Statistic;
+import ContentUI.UserInformation;
 import ContentUI.UsersUI;
+import DAO.AccountDao;
+import Dialog.LoginDialog;
+import Dialog.RegisterDialog;
+import POJO.Account;
+import POJO.Conference;
 import POJO.User;
-import UserUI.UserInformation;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
@@ -34,10 +41,47 @@ public class MainScreen extends javax.swing.JFrame {
 
     private User user = null;
 
-    private Home mainHome = new Home();
-    private Statistic mainStatistic = new Statistic(user);
-    private ListConference mainListConference = new ListConference(user);
-    private ConferenceUI mainConference = new ConferenceUI();
+    private Home mainHome;
+    private ListConference listConference;
+    private ConferenceUI conferenceUI;
+    private UsersUI usersUI;
+    private Statistic statistic;
+    private UserInformation userInformation;
+
+    private static MainScreen mainScreen = null;
+
+    public Home getMainHome() {
+        return mainHome;
+    }
+
+    public ListConference getListConference() {
+        return listConference;
+    }
+
+    public Statistic getStatistic() {
+        return statistic;
+    }
+
+    public UserInformation getUserInformation() {
+        return userInformation;
+    }
+
+    public UsersUI getUsersUI() {
+        return usersUI;
+    }
+
+    public ConferenceUI getConferenceUI() {
+        return conferenceUI;
+    }
+
+    public static MainScreen getInstance() {
+        if (mainScreen == null) {
+            mainScreen = new MainScreen();
+            return mainScreen;
+        } else {
+            return mainScreen;
+        }
+    }
 
     public User getUser() {
         return user;
@@ -48,8 +92,8 @@ public class MainScreen extends javax.swing.JFrame {
         if (user != null) {
             jName.setText("Hello " + user.getName());
             jStatisticPnl.setVisible(true);
+            jInformationPnl.setVisible(true);
             jLogin.setText("Log out");
-            mainListConference.setUser(user);
 
             if (user.getIsAdmin() == 1) {
                 jConferencesPnl.setVisible(true);
@@ -61,6 +105,7 @@ public class MainScreen extends javax.swing.JFrame {
             resetColorUnClicked(jStatisticPnl);
             resetColorUnClicked(jConferencesPnl);
             resetColorUnClicked(jUsersPnl);
+            resetColorUnClicked(jInformationPnl);
 
             jCardLayout.removeAll();
             jCardLayout.add(mainHome);
@@ -71,9 +116,29 @@ public class MainScreen extends javax.swing.JFrame {
 
     public MainScreen() {
         initComponents();
-//        jUsersPnl.setVisible(false);
-//        jConferencesPnl.setVisible(false);
-//        jStatisticPnl.setVisible(false);
+        mainHome = new Home();
+        listConference = new ListConference();
+        conferenceUI = new ConferenceUI();
+        usersUI = new UsersUI();
+        statistic = new Statistic();
+        userInformation = new UserInformation();
+
+        jUsersPnl.setVisible(false);
+        jInformationPnl.setVisible(false);
+        jConferencesPnl.setVisible(false);
+        jStatisticPnl.setVisible(false);
+        
+        setColorClicked(jHomePnl);
+        resetColorUnClicked(jListConferencePnl);
+        resetColorUnClicked(jStatisticPnl);
+        resetColorUnClicked(jInformationPnl);
+        resetColorUnClicked(jConferencesPnl);
+        resetColorUnClicked(jUsersPnl);
+
+        jCardLayout.removeAll();
+        jCardLayout.add(mainHome);
+        jCardLayout.repaint();
+        jCardLayout.revalidate();
     }
 
     /**
@@ -509,7 +574,7 @@ public class MainScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jHomePnlMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jHomePnlMousePressed
-        // TODO add your handling code here:
+//         TODO add your handling code here:
         setColorClicked(jHomePnl);
         resetColorUnClicked(jListConferencePnl);
         resetColorUnClicked(jStatisticPnl);
@@ -525,6 +590,8 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void jStatisticPnlMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jStatisticPnlMouseReleased
         // TODO add your handling code here:
+        statistic.resetData();
+
         setColorClicked(jStatisticPnl);
         resetColorUnClicked(jHomePnl);
         resetColorUnClicked(jListConferencePnl);
@@ -533,13 +600,15 @@ public class MainScreen extends javax.swing.JFrame {
         resetColorUnClicked(jUsersPnl);
 
         jCardLayout.removeAll();
-        jCardLayout.add(new Statistic(user));
+        jCardLayout.add(statistic);
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }//GEN-LAST:event_jStatisticPnlMouseReleased
 
     private void jConferencesPnlMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jConferencesPnlMouseReleased
-        // TODO add your handling code here
+        //  TODO add your handling code here
+        conferenceUI.resetData();
+
         setColorClicked(jConferencesPnl);
         resetColorUnClicked(jHomePnl);
         resetColorUnClicked(jListConferencePnl);
@@ -548,13 +617,15 @@ public class MainScreen extends javax.swing.JFrame {
         resetColorUnClicked(jUsersPnl);
 
         jCardLayout.removeAll();
-        jCardLayout.add(new ConferenceUI());
+        jCardLayout.add(conferenceUI);
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }//GEN-LAST:event_jConferencesPnlMouseReleased
 
     private void jUsersPnlMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jUsersPnlMouseReleased
         // TODO add your handling code here:
+        usersUI.resetData();
+
         setColorClicked(jUsersPnl);
         resetColorUnClicked(jHomePnl);
         resetColorUnClicked(jListConferencePnl);
@@ -563,7 +634,7 @@ public class MainScreen extends javax.swing.JFrame {
         resetColorUnClicked(jConferencesPnl);
 
         jCardLayout.removeAll();
-        jCardLayout.add(new UsersUI());
+        jCardLayout.add(usersUI);
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }//GEN-LAST:event_jUsersPnlMouseReleased
@@ -703,12 +774,13 @@ public class MainScreen extends javax.swing.JFrame {
     private void jLoginbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLoginbtnMouseReleased
         // TODO add your handling code here:
         if (jLogin.getText().compareTo("Log in") == 0)
-            new Login(this).setVisible(true);
+            new LoginDialog(this, true).setVisible(true);
         else {
             setUser(null);
             jLogin.setText("Log in");
             jName.setText("");
             jStatisticPnl.setVisible(false);
+            jInformationPnl.setVisible(false);
             jConferencesPnl.setVisible(false);
             jUsersPnl.setVisible(false);
             JOptionPane.showMessageDialog(this, "Log out success");
@@ -729,6 +801,8 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void jListConferencePnlMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListConferencePnlMouseReleased
         // TODO add your handling code here:
+        listConference.resetData();
+
         setColorClicked(jListConferencePnl);
         resetColorUnClicked(jHomePnl);
         resetColorUnClicked(jStatisticPnl);
@@ -737,7 +811,7 @@ public class MainScreen extends javax.swing.JFrame {
         resetColorUnClicked(jUsersPnl);
 
         jCardLayout.removeAll();
-        jCardLayout.add(new ListConference(user));
+        jCardLayout.add(listConference);
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }//GEN-LAST:event_jListConferencePnlMouseReleased
@@ -765,9 +839,10 @@ public class MainScreen extends javax.swing.JFrame {
         resetColorUnClicked(jUsersPnl);
 
         jCardLayout.removeAll();
-        jCardLayout.add(new UserInformation(user));
+        jCardLayout.add(userInformation);
         jCardLayout.repaint();
         jCardLayout.revalidate();
+
 
     }//GEN-LAST:event_jInformationPnlMouseReleased
 
@@ -831,4 +906,44 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jUsers;
     private javax.swing.JPanel jUsersPnl;
     // End of variables declaration//GEN-END:variables
+
+    public void changeDetailConference(Conference conference) {
+        jCardLayout.removeAll();
+        jCardLayout.add(new DetailConference(conference, this));
+        jCardLayout.repaint();
+        jCardLayout.revalidate();
+    }
+
+    public void backToListConference() {
+        jCardLayout.removeAll();
+        jCardLayout.add(listConference);
+        jCardLayout.repaint();
+        jCardLayout.revalidate();
+    }
+
+    public void login() {
+        new LoginDialog(this, true).setVisible(true);
+    }
+
+    public void register() {
+        new RegisterDialog(this, true).setVisible(true);
+    }
+
+    public void resetStatistic() {
+        statistic = statistic.cloneS();
+        statistic.resetData();
+        jCardLayout.removeAll();
+        jCardLayout.add(statistic);
+        jCardLayout.repaint();
+        jCardLayout.revalidate();
+    }
+
+    public void resetConferenceUI() {
+        conferenceUI = conferenceUI.cloneS();
+        conferenceUI.resetData();
+        jCardLayout.removeAll();
+        jCardLayout.add(conferenceUI);
+        jCardLayout.repaint();
+        jCardLayout.revalidate();
+    }
 }

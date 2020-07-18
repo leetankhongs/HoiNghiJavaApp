@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UserUI;
+package ContentUI;
 
 import Business.AccountBus;
 import Business.UserBus;
 import POJO.Account;
 import POJO.User;
 import javax.swing.JOptionPane;
-
+import MainScreenUI.MainScreen;
 /**
  *
  * @author ADMIN
@@ -24,10 +24,13 @@ public class UserInformation extends javax.swing.JPanel {
     private boolean editInformation = false;
     private boolean changePassword = false;
 
-    public UserInformation(User user) {
+    public UserInformation() {
         initComponents();
-        this.user = user;
 
+        
+    }
+    
+    public void init(){
         jCancelbtn.setVisible(false);
         jNameTF.setText(user.getName());
         jEmailTF.setText(user.getEmail());

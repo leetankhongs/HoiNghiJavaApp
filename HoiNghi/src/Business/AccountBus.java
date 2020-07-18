@@ -37,7 +37,13 @@ public class AccountBus {
         List<Account> list = AccountDao.getAllAccount();
         String format = "%1$010d";
         Account account = new Account(userName, cryptWithMD5(password));
-        account.setId(String.format(format, list.size() + 1));
+        for (int i = 1; i < list.size() + 1; i++) {
+            if (list.get(i - 1).getId().compareTo(String.format(format, i)) != 0) {
+                account.setId(String.format(format, i));            
+                break;
+            }
+        }
+
         return AccountDao.insertNewAccount(account);
     }
 
@@ -60,25 +66,27 @@ public class AccountBus {
         }
         return null;
     }
-    
-    public static Account getAccountByUserName(String userName){
+
+    public static Account getAccountByUserName(String userName) {
         return AccountDao.getAccountByUserName(userName);
     }
-    
-    public static int checkAccount(String userName, String password){
-        Account account = AccountDao.getAccountByUserName(userName);
-        
-        if(account == null)
-            return -1;
 
-        if(account.getPassword().compareTo(cryptWithMD5(password)) != 0)
+    public static int checkAccount(String userName, String password) {
+        Account account = AccountDao.getAccountByUserName(userName);
+
+        if (account == null) {
+            return -1;
+        }
+
+        if (account.getPassword().compareTo(cryptWithMD5(password)) != 0) {
             return 0;
-        
+        }
+
         return 1;
-        
+
     }
-    
-    public static boolean changePassword(String userName, String password){
+
+    public static boolean changePassword(String userName, String password) {
         Account account = AccountDao.getAccountByUserName(userName);
         account.setPassword(cryptWithMD5(password));
         return AccountDao.updateAccountInformation(account);

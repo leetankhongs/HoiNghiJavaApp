@@ -5,6 +5,7 @@
  */
 package AdminUI;
 
+import MainScreenUI.MainScreen;
 import POJO.Conference;
 import java.awt.Color;
 import java.awt.Component;
@@ -53,7 +54,7 @@ public class AdminButtonEditor extends DefaultCellEditor{
     @Override
     public Object getCellEditorValue() {
         if(clicked)
-            new Edit_DetailConference(conference).setVisible(true);
+            new Edit_DetailConferenceDialog(MainScreen.getInstance(), true, conference).setVisible(true);
         
         clicked = false;
         return conference;

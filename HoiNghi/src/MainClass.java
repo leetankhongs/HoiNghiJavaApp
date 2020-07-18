@@ -62,7 +62,7 @@ public class MainClass {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainScreen().setVisible(true);
+                MainScreen.getInstance().setVisible(true);
             }
         });
     }

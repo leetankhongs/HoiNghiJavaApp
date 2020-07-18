@@ -6,13 +6,17 @@
 package AdminUI;
 
 import Business.UserBus;
+import Business.UserConferenceBus;
 import ContentUI.ConferenceUI;
 import POJO.Conference;
 import POJO.User;
+import POJO.UserConference;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -78,6 +82,13 @@ public class BlockButtonEditor extends DefaultCellEditor {
 
                 if (result == true) {
                     JOptionPane.showMessageDialog(null, "Thành công");
+                    List<UserConference> listUserConference = UserConferenceBus.getListUserConferenceByUser(user);
+                    
+                    for(int i = 0; i < listUserConference.size(); i++)
+                    {
+                        if(listUserConference.get(i).getConference().getStartTime().compareTo(new Date()) < 0)
+                            UserConferenceBus.deleteRegistration(listUserConference.get(i));
+                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "Thất bại");
                 }

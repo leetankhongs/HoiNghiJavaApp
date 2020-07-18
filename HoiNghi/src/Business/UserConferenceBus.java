@@ -37,9 +37,17 @@ public class UserConferenceBus {
     public static List<UserConference> getListUserConferenceByUser(User user) {
         return UserConferenceDao.getListUserConferenceByUser(user);
     }
+    
+    public static List<UserConference> getListUserConferenceIsAcceptedByUser(User user) {
+        return UserConferenceDao.getListUserConferenceIsAcceptedByUser(user);
+    }
 
-    public static int deleteRegistration(UserConferenceId userConferenceId) {
-        return UserConferenceDao.deleteRegistration(userConferenceId);
+    public static int deleteRegistration(Conference conference, User user) {
+        return UserConferenceDao.deleteRegistration(UserConferenceDao.getUserConference(conference, user).getId());
+    }
+    
+    public static int deleteRegistration(UserConference userConference) {
+        return UserConferenceDao.deleteRegistration(UserConferenceDao.getUserConference(userConference.getConference(), userConference.getUser()).getId());
     }
 
     public static List<UserConference> getNewRequests(Conference conference) {

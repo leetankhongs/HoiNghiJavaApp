@@ -5,6 +5,7 @@
  */
 package AdminUI;
 import ContentUI.ConferenceUI;
+import MainScreenUI.MainScreen;
 import POJO.Conference;
 import POJO.User;
 import POJO.UserConference;
@@ -55,7 +56,7 @@ public class ConferenceUserButtonEditor extends DefaultCellEditor {
     @Override
     public Object getCellEditorValue() {
         if (clicked) {
-            new ConferenceUserList(user).setVisible(true);
+            new ListConferenceUserDialog(MainScreen.getInstance(), true, user).setVisible(true);
         }
 
         clicked = false;

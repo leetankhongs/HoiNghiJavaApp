@@ -29,8 +29,6 @@ public class ConferenceDao {
             Query query = session.createQuery(hql);
             list = query.list();
             
-//            for(int i = 0; i < list.size(); i++)
-//                Hibernate.initialize(list.get(i).getPlace());
         }finally{
             session.close();
         }
