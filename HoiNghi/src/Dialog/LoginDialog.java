@@ -332,44 +332,47 @@ public class LoginDialog extends java.awt.Dialog {
     private void jUsernameTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jUsernameTFFocusGained
         // TODO add your handling code here:
         if (jUsernameTF.getText().compareTo("") == 0 || jUsernameTF.getText().compareTo("Enter your username") == 0)
-        jUsernameTF.setText("");
+            jUsernameTF.setText("");
     }//GEN-LAST:event_jUsernameTFFocusGained
 
     private void jUsernameTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jUsernameTFFocusLost
         // TODO add your handling code here:
         if (jUsernameTF.getText().compareTo("") == 0)
-        jUsernameTF.setText("Enter your username");
+            jUsernameTF.setText("Enter your username");
     }//GEN-LAST:event_jUsernameTFFocusLost
 
     private void jPasswordTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordTFFocusGained
         // TODO add your handling code here:
         if (jPasswordTF.getText().compareTo("") == 0 || jPasswordTF.getText().compareTo("123456789") == 0)
-        jPasswordTF.setText("");
+            jPasswordTF.setText("");
     }//GEN-LAST:event_jPasswordTFFocusGained
 
     private void jPasswordTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordTFFocusLost
         // TODO add your handling code here:
         if (jPasswordTF.getText().compareTo("") == 0)
-        jPasswordTF.setText("123456789");
+            jPasswordTF.setText("123456789");
     }//GEN-LAST:event_jPasswordTFFocusLost
 
     private void jLoginbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLoginbtnMouseReleased
         // TODO add your handling code here:
         switch (AccountBus.checkAccount(jUsernameTF.getText(), jPasswordTF.getText())) {
+            case -2:
+                JOptionPane.showMessageDialog(this, "Your account is blocked");
+                break;
             case -1:
-            JOptionPane.showMessageDialog(this, "User name does not already exits");
-            break;
+                JOptionPane.showMessageDialog(this, "User name does not already exits");
+                break;
             case 0:
-            JOptionPane.showMessageDialog(this, "Password is wrong");
-            break;
+                JOptionPane.showMessageDialog(this, "Password is wrong");
+                break;
             case 1:
-            JOptionPane.showMessageDialog(this, "Success");
-            Account account = AccountBus.getAccountByUserName(jUsernameTF.getText());
-            Object[] users = (account.getUsers().toArray());
-            User user = (User) users[0];
-            MainScreen.getInstance().setUser(user);
-            setVisible(false);
-            break;
+                JOptionPane.showMessageDialog(this, "Success");
+                Account account = AccountBus.getAccountByUserName(jUsernameTF.getText());
+                Object[] users = (account.getUsers().toArray());
+                User user = (User) users[0];
+                MainScreen.getInstance().setUser(user);
+                setVisible(false);
+                break;
         }
 
     }//GEN-LAST:event_jLoginbtnMouseReleased

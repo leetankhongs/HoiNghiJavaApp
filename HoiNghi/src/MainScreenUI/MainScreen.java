@@ -100,6 +100,13 @@ public class MainScreen extends javax.swing.JFrame {
                 jUsersPnl.setVisible(true);
             }
         } else {
+            mainHome = new Home();
+            listConference = new ListConference();
+            conferenceUI = new ConferenceUI();
+            usersUI = new UsersUI();
+            statistic = new Statistic();
+            userInformation = new UserInformation();
+
             setColorClicked(jHomePnl);
             resetColorUnClicked(jListConferencePnl);
             resetColorUnClicked(jStatisticPnl);
@@ -127,7 +134,7 @@ public class MainScreen extends javax.swing.JFrame {
         jInformationPnl.setVisible(false);
         jConferencesPnl.setVisible(false);
         jStatisticPnl.setVisible(false);
-        
+
         setColorClicked(jHomePnl);
         resetColorUnClicked(jListConferencePnl);
         resetColorUnClicked(jStatisticPnl);
@@ -830,6 +837,7 @@ public class MainScreen extends javax.swing.JFrame {
 
     private void jInformationPnlMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jInformationPnlMouseReleased
         // TODO add your handling code here:
+        userInformation.resetData();
 
         setColorClicked(jInformationPnl);
         resetColorUnClicked(jHomePnl);

@@ -349,7 +349,7 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
         jMonth.setText(month);
         jYear.setText(String.valueOf(cal.get(Calendar.YEAR)));
 
-        jCapacity.setText("Capacity: " + String.valueOf(UserConferenceBus.getTheNumberOfUserIsAccepted(conference)) + "/" + String.valueOf(conference.getParticipants()));
+        jCapacity.setText("Capacity: " + String.valueOf(UserConferenceBus.getTheNumberOfUserIsNotDeclined(conference)) + "/" + String.valueOf(conference.getParticipants()));
         jPlace.setText(conference.getPlace().getAddress());
     }
 

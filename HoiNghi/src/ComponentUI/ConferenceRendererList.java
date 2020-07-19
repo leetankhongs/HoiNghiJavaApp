@@ -5,6 +5,7 @@
  */
 package ComponentUI;
 
+import Business.UserConferenceBus;
 import MainScreenUI.MainScreen;
 import UserUI.Register_DetailConference;
 import POJO.Conference;
@@ -48,7 +49,7 @@ public class ConferenceRendererList extends javax.swing.JPanel {
         jIcon.setIcon(new ImageIcon(image));
         jName.setText(conference.getName());
         jDescription.setText(conference.getBriefDescription());
-        
+
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
         cal.setTime(conference.getStartTime());
         String month = "";
@@ -94,6 +95,8 @@ public class ConferenceRendererList extends javax.swing.JPanel {
         jMonth.setText(month);
         jYear.setText(String.valueOf(cal.get(Calendar.YEAR)));
 
+        jCapacity.setText("Capacity: " + String.valueOf(UserConferenceBus.getTheNumberOfUserIsNotDeclined(conference)) + "/" + String.valueOf(conference.getParticipants()));
+
     }
 
     /**
@@ -110,6 +113,7 @@ public class ConferenceRendererList extends javax.swing.JPanel {
         jName = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jDescription = new javax.swing.JTextArea();
+        jCapacity = new javax.swing.JLabel();
         jDatePnl = new javax.swing.JPanel();
         jDate = new javax.swing.JLabel();
         jMonth = new javax.swing.JLabel();
@@ -117,7 +121,7 @@ public class ConferenceRendererList extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(238, 238, 255));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        setPreferredSize(new java.awt.Dimension(1000, 100));
+        setPreferredSize(new java.awt.Dimension(1000, 120));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 formMouseMoved(evt);
@@ -178,6 +182,11 @@ public class ConferenceRendererList extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jDescription);
 
         jContent.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jCapacity.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jCapacity.setText("jLabel1");
+        jCapacity.setPreferredSize(new java.awt.Dimension(31, 20));
+        jContent.add(jCapacity, java.awt.BorderLayout.PAGE_END);
 
         add(jContent, java.awt.BorderLayout.CENTER);
 
@@ -246,6 +255,7 @@ public class ConferenceRendererList extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jCapacity;
     private javax.swing.JPanel jContent;
     private javax.swing.JLabel jDate;
     private javax.swing.JPanel jDatePnl;

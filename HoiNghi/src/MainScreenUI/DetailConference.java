@@ -327,8 +327,13 @@ public class DetailConference extends javax.swing.JPanel {
             } else {
                 int result = JOptionPane.showConfirmDialog(mainScreen, "Do you want to register this conference?");
                 if (result == JOptionPane.YES_OPTION) {
-                    UserConferenceBus.insertNewUserConference(new UserConference(conference, mainScreen.getUser()));
-                    JOptionPane.showMessageDialog(mainScreen, "Success");
+                    if (UserConferenceBus.getTheNumberOfUserIsNotDeclined(conference) >= conference.getParticipants()) {
+                        JOptionPane.showMessageDialog(mainScreen, "Number of subscribers exceeded limit");
+                    } else {
+                        UserConferenceBus.insertNewUserConference(new UserConference(conference, mainScreen.getUser()));
+                        JOptionPane.showMessageDialog(mainScreen, "Success");
+                    }
+
                 }
 
                 setVisible(false);
@@ -340,6 +345,7 @@ public class DetailConference extends javax.swing.JPanel {
     private void jBackbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBackbtnMouseReleased
         // TODO add your handling code here:
         mainScreen.backToListConference();
+        mainScreen.getListConference().resetData();
 
     }//GEN-LAST:event_jBackbtnMouseReleased
 

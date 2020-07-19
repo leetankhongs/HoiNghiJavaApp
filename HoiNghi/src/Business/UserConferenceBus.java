@@ -11,6 +11,9 @@ import DAO.UserConferenceDao;
 import POJO.Conference;
 import POJO.User;
 import POJO.UserConferenceId;
+import Util.NewHibernateUtil;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  *
@@ -65,8 +68,12 @@ public class UserConferenceBus {
         userConference.setIsAccepted(2);
         return UserConferenceDao.updateUserConferenceInformation(userConference);
     }
-
-    public static int getTheNumberOfUserIsAccepted(Conference conference) {
+    
+    public static int getTheNumberOfUserIsAccepted(Conference conference){
         return UserConferenceDao.getTheNumberOfUserIsAccepted(conference);
+    }
+
+    public static int getTheNumberOfUserIsNotDeclined(Conference conference) {
+        return UserConferenceDao.getTheNumberOfUserIsNotDeclined(conference);
     }
 }

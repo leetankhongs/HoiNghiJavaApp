@@ -26,11 +26,11 @@ public class UserInformation extends javax.swing.JPanel {
 
     public UserInformation() {
         initComponents();
-
         
     }
     
-    public void init(){
+    public void resetData(){
+        this.user = MainScreen.getInstance().getUser();
         jCancelbtn.setVisible(false);
         jNameTF.setText(user.getName());
         jEmailTF.setText(user.getEmail());

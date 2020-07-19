@@ -8,6 +8,7 @@ package Business;
 import DAO.AccountDao;
 import DAO.UserDao;
 import POJO.Account;
+import POJO.User;
 import Util.NewHibernateUtil;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -39,7 +40,7 @@ public class AccountBus {
         Account account = new Account(userName, cryptWithMD5(password));
         for (int i = 1; i < list.size() + 1; i++) {
             if (list.get(i - 1).getId().compareTo(String.format(format, i)) != 0) {
-                account.setId(String.format(format, i));            
+                account.setId(String.format(format, i));
                 break;
             }
         }
@@ -80,6 +81,14 @@ public class AccountBus {
 
         if (account.getPassword().compareTo(cryptWithMD5(password)) != 0) {
             return 0;
+        }
+
+        Object[] objects = account.getUsers().toArray();
+
+        User user = (User) objects[0];
+
+        if (user.getIsDelete() == 1) {
+            return -2;
         }
 
         return 1;

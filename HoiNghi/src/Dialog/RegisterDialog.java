@@ -8,6 +8,7 @@ package Dialog;
 import Business.AccountBus;
 import Business.UserBus;
 import DAO.AccountDao;
+import MainScreenUI.MainScreen;
 import POJO.User;
 import javax.swing.JOptionPane;
 
@@ -433,19 +434,29 @@ public class RegisterDialog extends java.awt.Dialog {
 
     private void jRegisterbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRegisterbtnMouseReleased
         // TODO add your handling code here:
+        if(jUsernameTF.getText().length() < 6){
+            JOptionPane.showMessageDialog(this, "Account name must be at least 6 characters");
+            return;
+        }
+        
         if (AccountBus.getAccountByUserName(jUsernameTF.getText()) != null)
         {
             JOptionPane.showMessageDialog(this, "User name already exits");
             return;
         }
 
+        if(jPasswordTF.getText().length() < 6){
+            JOptionPane.showMessageDialog(this, "Password must be at least 6 characters");
+            return;
+        }
+        
         if(jPasswordTF.getText().compareTo(jConfirmPasswordTF.getText()) != 0)
         {
             JOptionPane.showMessageDialog(this, "Password does not match");
             return;
         }
 
-        if(jEmailTF.getText().matches("[A-Za-z].*?@gmail\\.com") == false)
+        if(jEmailTF.getText().matches("[A-Za-z0-9].*?@gmail\\.com") == false)
         {
             JOptionPane.showMessageDialog(this, "Invalid email");
             return;
@@ -462,6 +473,7 @@ public class RegisterDialog extends java.awt.Dialog {
 
         if (result != null) {
             JOptionPane.showMessageDialog(this, "Success");
+            new LoginDialog(MainScreen.getInstance(), true);
         } else {
             JOptionPane.showMessageDialog(this, "false");
         }

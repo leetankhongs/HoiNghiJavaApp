@@ -192,4 +192,21 @@ public class UserConferenceDao {
 
         return list.size();
     }
+
+    public static int getTheNumberOfUserIsNotDeclined(Conference conference) {
+        List<UserConference> list = null;
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+
+        try {
+            String hql = "select UC from UserConference UC where UC.isAccepted != 2 and UC.conference = :conference";
+            Query query = session.createQuery(hql);
+            query.setParameter("conference", conference);
+            list = query.list();
+
+        } finally {
+            session.close();
+        }
+
+        return list.size();
+    }
 }

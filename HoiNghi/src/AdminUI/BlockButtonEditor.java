@@ -76,22 +76,29 @@ public class BlockButtonEditor extends DefaultCellEditor {
             if (reply == JOptionPane.YES_OPTION) {
                 if (user.getIsDelete() == 1) {
                     result = UserBus.unlockUser(user);
-                } else {
-                    result = UserBus.blockUser(user);
-                }
-
-                if (result == true) {
-                    JOptionPane.showMessageDialog(null, "Thành công");
-                    List<UserConference> listUserConference = UserConferenceBus.getListUserConferenceByUser(user);
-                    
-                    for(int i = 0; i < listUserConference.size(); i++)
-                    {
-                        if(listUserConference.get(i).getConference().getStartTime().compareTo(new Date()) < 0)
-                            UserConferenceBus.deleteRegistration(listUserConference.get(i));
+                    if (result == true) {
+                        JOptionPane.showMessageDialog(null, "Thành công");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Thất bại");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Thất bại");
+                    result = UserBus.blockUser(user);
+                    if (result == true) {
+                        JOptionPane.showMessageDialog(null, "Thành công");
+                        List<UserConference> listUserConference = UserConferenceBus.getListUserConferenceByUser(user);
+
+                        for (int i = 0; i < listUserConference.size(); i++) {
+                            System.out.println(String.valueOf(i) + " + " + new Date());
+                            System.out.println(String.valueOf(i) + " + " + listUserConference.get(i).getConference().getStartTime());
+                            if (listUserConference.get(i).getConference().getStartTime().compareTo(new Date()) > 0) {
+                                UserConferenceBus.deleteRegistration(listUserConference.get(i));
+                            }
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Thất bại");
+                    }
                 }
+
             }
         }
 
