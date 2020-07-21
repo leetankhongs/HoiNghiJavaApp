@@ -5,6 +5,7 @@
  */
 package MainScreenUI;
 
+import AdminUI.Edit_DetailConferenceDialog;
 import AdminUI.ImageTextRenderer;
 import Business.ConferenceBus;
 import Business.PlaceBus;
@@ -40,6 +41,7 @@ public class NewConferenceDialog extends java.awt.Dialog {
     boolean edit;
     Conference conference;
     MainScreen mainScreen;
+    Edit_DetailConferenceDialog editDetail = null;
 
     public NewConferenceDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -49,7 +51,7 @@ public class NewConferenceDialog extends java.awt.Dialog {
         Collections.sort(listPlace);
         jPlaceChooser.removeAllItems();
         DefaultComboBoxModel oldModel = (DefaultComboBoxModel) jPlaceChooser.getModel();
-        
+
         if (listPlace != null) {
             for (int i = 0; i < listPlace.size(); i++) {
                 oldModel.addElement(listPlace.get(i));
@@ -57,12 +59,13 @@ public class NewConferenceDialog extends java.awt.Dialog {
         }
     }
 
-    public NewConferenceDialog(java.awt.Frame parent, boolean modal, Conference conference) {
+    public NewConferenceDialog(java.awt.Frame parent, boolean modal, Conference conference, Edit_DetailConferenceDialog editDetail) {
         super(parent, modal);
         initComponents();
         this.conference = conference;
         this.edit = true;
         this.mainScreen = mainScreen;
+        this.editDetail = editDetail;
 
         jNameText.setText(conference.getName());
         jImageText.setText(conference.getImage());
@@ -72,6 +75,7 @@ public class NewConferenceDialog extends java.awt.Dialog {
         jEndTime.setValue(conference.getEndTime());
         jBriefText.setText(conference.getBriefDescription());
         jDetailText.setText(conference.getDetailDescription());
+        jCapacityTF.setText(String.valueOf(conference.getParticipants()));
     }
 
     /**
@@ -147,6 +151,7 @@ public class NewConferenceDialog extends java.awt.Dialog {
         gridBagConstraints.gridy = 1;
         jInformationConference.add(jImage, gridBagConstraints);
 
+        jImageText.setEditable(false);
         jImageText.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jImageText.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         jImageText.setPreferredSize(new java.awt.Dimension(400, 40));
@@ -364,6 +369,7 @@ public class NewConferenceDialog extends java.awt.Dialog {
      */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         setVisible(false);
+//        MainScreen.getInstance().resetConferenceUI();
         dispose();
     }//GEN-LAST:event_closeDialog
 
@@ -405,8 +411,15 @@ public class NewConferenceDialog extends java.awt.Dialog {
     private void jOKBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jOKBtnMouseReleased
         // TODO add your handling code here:
         if (edit == false) {
-            Place choicePlace = (Place) jPlaceChooser.getSelectedItem();
+            if (!fullInformation()) {
+                return;
+            }
 
+            if (!checkValid(edit)) {
+                return;
+            }
+
+            Place choicePlace = (Place) jPlaceChooser.getSelectedItem();
             String result = ConferenceBus.insertNewConference(new Conference(choicePlace, jNameText.getText(), jBriefText.getText(), jDetailText.getText(), jImageText.getText(), convert(jDateChooser, jStartTime), convert(jDateChooser, jEndTime), Integer.valueOf(jCapacityTF.getText())));
 
             if (result != null) {
@@ -417,6 +430,14 @@ public class NewConferenceDialog extends java.awt.Dialog {
             MainScreen.getInstance().getConferenceUI().resetData();
             setVisible(false);
         } else {
+            if (!fullInformation()) {
+                return;
+            }
+
+            if (!checkValid(edit)) {
+                return;
+            }
+
             Place choicePlace = (Place) jPlaceChooser.getSelectedItem();
 
             Conference editConference = ConferenceBus.getConferenceInformation(conference.getId());
@@ -427,6 +448,7 @@ public class NewConferenceDialog extends java.awt.Dialog {
             editConference.setImage(jImageText.getText());
             editConference.setStartTime(convert(jDateChooser, jStartTime));
             editConference.setEndTime(convert(jDateChooser, jEndTime));
+            editConference.setParticipants(Integer.valueOf(jCapacityTF.getText()));
 
             boolean result = ConferenceBus.updateConfereneInformation(editConference);
 
@@ -435,9 +457,104 @@ public class NewConferenceDialog extends java.awt.Dialog {
             } else {
                 JOptionPane.showMessageDialog(this, "Failed Update");
             }
+            
+            editDetail.resetData();
             setVisible(false);
         }
     }//GEN-LAST:event_jOKBtnMouseReleased
+
+    private boolean fullInformation() {
+        if (jNameText.getText().compareTo("") == 0) {
+            JOptionPane.showMessageDialog(this, "Conference Name is empty");
+            return false;
+        }
+
+        if (jImageText.getText().compareTo("") == 0) {
+            JOptionPane.showMessageDialog(this, "Image Path is empty");
+            return false;
+        }
+
+        if (jDateChooser.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Organized date is null");
+            return false;
+        }
+
+        if (jCapacityTF.getText().compareTo("") == 0) {
+            JOptionPane.showMessageDialog(this, "Capacity is empty");
+            return false;
+        }
+
+        if (jBriefText.getText().compareTo("") == 0) {
+            JOptionPane.showMessageDialog(this, "Brief description is empty");
+            return false;
+        }
+
+        if (jDetailText.getText().compareTo("") == 0) {
+            JOptionPane.showMessageDialog(this, "Detail description is empty");
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean checkValid(boolean isEdit) {
+        Place choicePlace = (Place) jPlaceChooser.getSelectedItem();
+
+        Date startTime = convert(jDateChooser, jStartTime);
+        Date endTime = convert(jDateChooser, jEndTime);
+
+        Object[] conferences = choicePlace.getConferences().toArray();
+
+        if (edit == true) {
+            for (int i = 0; i < conferences.length; i++) {
+                Conference temp = (Conference) conferences[i];
+
+                if (temp.getId().compareTo(conference.getId()) != 0) {
+                    if ((startTime.compareTo(temp.getStartTime()) >= 0 && startTime.compareTo(temp.getEndTime()) <= 0) || (endTime.compareTo(temp.getStartTime()) >= 0 && endTime.compareTo(temp.getEndTime()) <= 0)
+                            || (temp.getStartTime().compareTo(startTime) >= 0 && temp.getStartTime().compareTo(endTime) <= 0) || (temp.getEndTime().compareTo(startTime) >= 0 && temp.getEndTime().compareTo(endTime) <= 0)) {
+                        JOptionPane.showMessageDialog(this, "The place which you choose will host the  " + temp.getName() + " conference from " + temp.getStartTime().toString() + " to " + temp.getEndTime().toString());
+                        return false;
+                    }
+                }
+
+            }
+        } else {
+            for (int i = 0; i < conferences.length; i++) {
+                Conference temp = (Conference) conferences[i];
+                if ((startTime.compareTo(temp.getStartTime()) >= 0 && startTime.compareTo(temp.getEndTime()) <= 0) || (endTime.compareTo(temp.getStartTime()) >= 0 && endTime.compareTo(temp.getEndTime()) <= 0)
+                        || (temp.getStartTime().compareTo(startTime) >= 0 && temp.getStartTime().compareTo(endTime) <= 0) || (temp.getEndTime().compareTo(startTime) >= 0 && temp.getEndTime().compareTo(endTime) <= 0)) {
+                    JOptionPane.showMessageDialog(this, "The place which you choose will host the  " + temp.getName() + " conference from " + temp.getStartTime().toString() + " to " + temp.getEndTime().toString());
+                    return false;
+                }
+            }
+        }
+
+        int capacity = 0;
+
+        try {
+            capacity = Integer.valueOf(jCapacityTF.getText());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(MainScreen.getInstance(), "Capacity must be number");
+            return false;
+        }
+
+        if (capacity <= 0) {
+            JOptionPane.showMessageDialog(this, "Capacity needs to be greater than zero");
+            return false;
+        }
+
+        if (capacity > choicePlace.getCapacity()) {
+            JOptionPane.showMessageDialog(MainScreen.getInstance(), "Capacity of " + choicePlace.getName() + " is " + choicePlace.getCapacity());
+            return false;
+        }
+
+        if (startTime.compareTo(endTime) >= 0) {
+            JOptionPane.showMessageDialog(MainScreen.getInstance(), "Organization time is invalid");
+            return false;
+        }
+
+        return true;
+    }
 
     private static Date convert(JDateChooser date, JSpinner time) {
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -447,7 +564,6 @@ public class NewConferenceDialog extends java.awt.Dialog {
         try {
             getDate = formatter.parse(formatter.format(date.getDate()));
         } catch (ParseException ex) {
-            Logger.getLogger(NewConference.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         Date getTime = (Date) time.getValue();

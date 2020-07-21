@@ -7,7 +7,6 @@ package AdminUI;
 
 import Business.ConferenceBus;
 import MainScreenUI.MainScreen;
-import MainScreenUI.NewConference;
 import MainScreenUI.NewConferenceDialog;
 import POJO.Conference;
 import POJO.Place;
@@ -31,29 +30,12 @@ public class Edit_DetailConferenceDialog extends java.awt.Dialog {
      */
     Conference conference;
 
-    public Edit_DetailConferenceDialog(java.awt.Frame parent, boolean modal, Conference conference) {
+    public Edit_DetailConferenceDialog(java.awt.Frame parent, boolean modal, String conferenceID) {
         super(parent, modal);
         initComponents();
-        setLocationRelativeTo((Frame)parent);
-        this.conference = conference;
-
-        ImageIcon imageIcon = new ImageIcon(conference.getImage());
-        Image image = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-        jImage.setIcon(new ImageIcon(image));
-        jNameConference.setText(conference.getName());
-        jBriefDescription.setText(conference.getBriefDescription());
-        jDetailDescription.setText(conference.getDetailDescription());
-
-        Place place = conference.getPlace();
-        jPlaceNameTF.setText(place.getName());
-        jAddressTF.setText(place.getAddress());
-        jCapacityTF.setText(place.getCapacity().toString());
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        jDateTF.setText(dateFormat.format(conference.getStartTime()));
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-        jStartTF.setText(timeFormat.format(conference.getStartTime()));
-        jEndTF.setText(timeFormat.format(conference.getEndTime()));
+        setLocationRelativeTo((Frame) parent);
+        this.conference = ConferenceBus.getConferenceInformation(conferenceID);
+        resetData();
     }
 
     /**
@@ -288,17 +270,15 @@ public class Edit_DetailConferenceDialog extends java.awt.Dialog {
      * Closes the dialog
      */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
-        try { 
-            Thread.sleep(500);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Edit_DetailConferenceDialog.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        MainScreen.getInstance().resetConferenceUI();
+
         dispose();
     }//GEN-LAST:event_closeDialog
 
     private void jEditbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jEditbtnMouseReleased
         // TODO add your handling code here:
-         new NewConferenceDialog(MainScreen.getInstance(), true, conference).setVisible(true);
+        new NewConferenceDialog(MainScreen.getInstance(), true, conference, this).setVisible(true);
     }//GEN-LAST:event_jEditbtnMouseReleased
 
     private void jEditbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditbtnActionPerformed
@@ -325,15 +305,13 @@ public class Edit_DetailConferenceDialog extends java.awt.Dialog {
             }
 
         }
-        
-        MainScreen.getInstance().getConferenceUI().temp();
+
+        MainScreen.getInstance().resetConferenceUI();
     }//GEN-LAST:event_jDeletebtnMousePressed
 
     /**
      * @param args the command line arguments
      */
-
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jAddress;
@@ -363,4 +341,26 @@ public class Edit_DetailConferenceDialog extends java.awt.Dialog {
     private javax.swing.JLabel jStart;
     private javax.swing.JTextField jStartTF;
     // End of variables declaration//GEN-END:variables
+
+    public void resetData() {
+        this.conference = ConferenceBus.getConferenceInformation(conference.getId());
+
+        ImageIcon imageIcon = new ImageIcon(conference.getImage());
+        Image image = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        jImage.setIcon(new ImageIcon(image));
+        jNameConference.setText(conference.getName());
+        jBriefDescription.setText(conference.getBriefDescription());
+        jDetailDescription.setText(conference.getDetailDescription());
+
+        Place place = conference.getPlace();
+        jPlaceNameTF.setText(place.getName());
+        jAddressTF.setText(place.getAddress());
+        jCapacityTF.setText(String.valueOf(conference.getParticipants()));
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        jDateTF.setText(dateFormat.format(conference.getStartTime()));
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        jStartTF.setText(timeFormat.format(conference.getStartTime()));
+        jEndTF.setText(timeFormat.format(conference.getEndTime()));
+    }
 }

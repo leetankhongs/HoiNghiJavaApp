@@ -54,7 +54,7 @@ public class AdminButtonEditor extends DefaultCellEditor{
     @Override
     public Object getCellEditorValue() {
         if(clicked)
-            new Edit_DetailConferenceDialog(MainScreen.getInstance(), true, conference).setVisible(true);
+            new Edit_DetailConferenceDialog(MainScreen.getInstance(), true, conference.getId()).setVisible(true);
         
         clicked = false;
         return conference;

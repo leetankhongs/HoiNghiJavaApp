@@ -21,11 +21,12 @@ public class NewPlaceDialog extends java.awt.Dialog {
      * Creates new form NewPlaceDialog
      */
     private NewConferenceDialog newConference;
+
     public NewPlaceDialog(java.awt.Frame parent, boolean modal, NewConferenceDialog newConference) {
         super(parent, modal);
         initComponents();
         this.newConference = newConference;
-        this.setLocationRelativeTo((Frame)parent);
+        this.setLocationRelativeTo((Frame) parent);
     }
 
     /**
@@ -145,20 +146,56 @@ public class NewPlaceDialog extends java.awt.Dialog {
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
         // TODO add your handling code here:
+        if(!checkInfomation())
+            return;
+        
         Place newPlace = new Place(jNameText.getText(), jAddressText.getText(), Integer.valueOf(jCapacityText.getText()));
         String result = PlaceBus.insertNewPlace(newPlace);
-        if(result != null)
-        {
+        if (result != null) {
             JOptionPane.showMessageDialog(this, "Success");
             newConference.reset(result);
+        } else {
+            JOptionPane.showMessageDialog(this, "false");
         }
-        else
-        JOptionPane.showMessageDialog(this, "false");
 
         setVisible(false);
 
     }//GEN-LAST:event_jButton1MousePressed
 
+    private boolean checkInfomation() {
+        if(jNameText.getText().compareTo("") == 0)
+        {
+            JOptionPane.showMessageDialog(this, "Place name is empty");
+            return false;
+        }
+        
+        if(jAddressText.getText().compareTo("") == 0){
+            JOptionPane.showMessageDialog(this, "Address is empty");
+            return false;
+        }
+        
+        if(jCapacityText.getText().compareTo("") == 0){
+            JOptionPane.showMessageDialog(this, "Capacity is empty");
+            return false;
+        }
+        
+        int capacity = 0;
+        try{
+            capacity = Integer.valueOf(jCapacityText.getText());
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this, "Capacity must be number");
+            return false;
+        }
+        
+        if(capacity <= 0)
+        {
+            JOptionPane.showMessageDialog(this, "Capacity needs to be greater than zero");
+            return false;
+        }
+        
+        return true;
+    }
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -166,9 +203,6 @@ public class NewPlaceDialog extends java.awt.Dialog {
     /**
      * @param args the command line arguments
      */
-   
-    
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField jAddressText;

@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MainScreenUI;
+package ContentUI;
 
 import Business.UserConferenceBus;
+import MainScreenUI.MainScreen;
 import POJO.Conference;
 import POJO.Place;
 import POJO.UserConference;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -321,11 +323,18 @@ public class DetailConference extends javax.swing.JPanel {
             }
         } else {
             UserConference userConference = new UserConference(conference, mainScreen.getUser());
-
+            
+            if(conference.getStartTime().compareTo(new Date()) <= 0)
+            {
+                JOptionPane.showMessageDialog(this, "This conference has already been organized");
+                return;
+            }
+                
             if (UserConferenceBus.getUserConferenceInformation(userConference.getId()) != null) {
                 JOptionPane.showMessageDialog(this, "Bạn đã đăng kí rồi");
             } else {
                 int result = JOptionPane.showConfirmDialog(mainScreen, "Do you want to register this conference?");
+               
                 if (result == JOptionPane.YES_OPTION) {
                     if (UserConferenceBus.getTheNumberOfUserIsNotDeclined(conference) >= conference.getParticipants()) {
                         JOptionPane.showMessageDialog(mainScreen, "Number of subscribers exceeded limit");
@@ -336,7 +345,6 @@ public class DetailConference extends javax.swing.JPanel {
 
                 }
 
-                setVisible(false);
             }
 
         }

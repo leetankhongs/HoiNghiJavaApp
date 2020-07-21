@@ -162,16 +162,13 @@ public class UsersUI extends javax.swing.JPanel {
 
         jHeader = new javax.swing.JPanel();
         jOption = new javax.swing.JPanel();
-        jOption1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         jResetbtn = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jConferenceCB = new javax.swing.JComboBox<>();
-        jUserNameTF = new javax.swing.JTextField();
-        jOption2 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jCount = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jConferenceCB = new javax.swing.JComboBox<>();
+        jPanel5 = new javax.swing.JPanel();
+        jUserNameTF = new javax.swing.JTextField();
         jBrief = new javax.swing.JLabel();
         jData = new javax.swing.JPanel();
         jPagination = new javax.swing.JPanel();
@@ -195,11 +192,9 @@ public class UsersUI extends javax.swing.JPanel {
         jOption.setPreferredSize(new java.awt.Dimension(100, 50));
         jOption.setLayout(new java.awt.BorderLayout());
 
-        jOption1.setBackground(new java.awt.Color(224, 224, 250));
-        jOption1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 5, 1));
-        jOption1.setMinimumSize(new java.awt.Dimension(100, 50));
-        jOption1.setPreferredSize(new java.awt.Dimension(1000, 60));
-        jOption1.setLayout(new java.awt.BorderLayout());
+        jPanel3.setBackground(new java.awt.Color(224, 224, 250));
+        jPanel3.setPreferredSize(new java.awt.Dimension(100, 60));
+        jPanel3.setLayout(new java.awt.BorderLayout());
 
         jResetbtn.setBackground(new java.awt.Color(224, 224, 250));
         jResetbtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -219,14 +214,26 @@ public class UsersUI extends javax.swing.JPanel {
                 jResetbtnMouseReleased(evt);
             }
         });
-        jOption1.add(jResetbtn, java.awt.BorderLayout.WEST);
+        jPanel3.add(jResetbtn, java.awt.BorderLayout.NORTH);
 
-        jPanel2.setOpaque(false);
-        jPanel2.setPreferredSize(new java.awt.Dimension(600, 29));
-        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 10, 0));
+        jComboBox1.setEditable(true);
+        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
+        jComboBox1.setPreferredSize(new java.awt.Dimension(70, 50));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jComboBox1, java.awt.BorderLayout.CENTER);
+
+        jOption.add(jPanel3, java.awt.BorderLayout.WEST);
+
+        jPanel4.setBackground(new java.awt.Color(224, 224, 250));
 
         jConferenceCB.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jConferenceCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Conference Name" }));
+        jConferenceCB.setBorder(null);
         jConferenceCB.setPreferredSize(new java.awt.Dimension(300, 50));
         jConferenceCB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -238,7 +245,12 @@ public class UsersUI extends javax.swing.JPanel {
         for (int i = 0; i < conferenceList.size(); i++) {
             jConferenceCB.addItem(conferenceList.get(i).getName());
         }
-        jPanel2.add(jConferenceCB);
+        jPanel4.add(jConferenceCB);
+
+        jOption.add(jPanel4, java.awt.BorderLayout.CENTER);
+
+        jPanel5.setBackground(new java.awt.Color(224, 224, 250));
+        jPanel5.setPreferredSize(new java.awt.Dimension(300, 60));
 
         jUserNameTF.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jUserNameTF.setText("User Name");
@@ -256,52 +268,16 @@ public class UsersUI extends javax.swing.JPanel {
                 jUserNameTFKeyTyped(evt);
             }
         });
-        jPanel2.add(jUserNameTF);
+        jPanel5.add(jUserNameTF);
 
-        jOption1.add(jPanel2, java.awt.BorderLayout.EAST);
-
-        jOption.add(jOption1, java.awt.BorderLayout.NORTH);
-
-        jOption2.setBackground(new java.awt.Color(224, 224, 250));
-        jOption2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        jOption2.setLayout(new java.awt.BorderLayout());
-
-        jPanel1.setBackground(new java.awt.Color(224, 224, 250));
-        jPanel1.setPreferredSize(new java.awt.Dimension(600, 60));
-        jPanel1.setLayout(new java.awt.BorderLayout());
-
-        jCount.setPreferredSize(new java.awt.Dimension(220, 0));
-        jCount.setLayout(new java.awt.BorderLayout());
-
-        jComboBox1.setEditable(true);
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
-        jComboBox1.setPreferredSize(new java.awt.Dimension(70, 50));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-        jCount.add(jComboBox1, java.awt.BorderLayout.EAST);
-
-        jLabel1.setBackground(new java.awt.Color(224, 224, 250));
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel1.setText("Number of lines ");
-        jLabel1.setOpaque(true);
-        jCount.add(jLabel1, java.awt.BorderLayout.CENTER);
-
-        jPanel1.add(jCount, java.awt.BorderLayout.WEST);
-
-        jOption2.add(jPanel1, java.awt.BorderLayout.WEST);
-
-        jOption.add(jOption2, java.awt.BorderLayout.CENTER);
+        jOption.add(jPanel5, java.awt.BorderLayout.EAST);
 
         jHeader.add(jOption, java.awt.BorderLayout.CENTER);
 
         jBrief.setFont(new java.awt.Font("Times New Roman", 1, 28)); // NOI18N
         jBrief.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jBrief.setText("User manager ");
-        jBrief.setPreferredSize(new java.awt.Dimension(78, 55));
+        jBrief.setPreferredSize(new java.awt.Dimension(78, 60));
         jHeader.add(jBrief, java.awt.BorderLayout.NORTH);
 
         add(jHeader, java.awt.BorderLayout.NORTH);
@@ -565,21 +541,18 @@ public class UsersUI extends javax.swing.JPanel {
     private javax.swing.JLabel jBrief;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jConferenceCB;
-    private javax.swing.JPanel jCount;
     private javax.swing.JPanel jData;
     private javax.swing.JLabel jDescriptionPag;
     private javax.swing.JLabel jFirstbtn;
     private javax.swing.JPanel jHeader;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLastbtn;
     private javax.swing.JLabel jNextbtn;
     private javax.swing.JPanel jOption;
-    private javax.swing.JPanel jOption1;
-    private javax.swing.JPanel jOption2;
     private javax.swing.JPanel jPagination;
     private javax.swing.JPanel jPaginationButton;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JTextField jPosition;
     private javax.swing.JLabel jPrebtn;
     private javax.swing.JLabel jResetbtn;

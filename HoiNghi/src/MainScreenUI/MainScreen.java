@@ -5,6 +5,7 @@
  */
 package MainScreenUI;
 
+import ContentUI.DetailConference;
 import Business.AccountBus;
 import Business.UserBus;
 import ContentUI.ConferenceUI;

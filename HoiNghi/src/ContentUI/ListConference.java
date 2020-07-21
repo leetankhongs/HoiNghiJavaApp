@@ -8,8 +8,6 @@ package ContentUI;
 import Business.ConferenceBus;
 import ComponentUI.ConferenceRendererCard;
 import ComponentUI.ConferenceRendererList;
-import MainScreenUI.MainScreen;
-import MainScreenUI.NewConference;
 import POJO.Conference;
 import POJO.User;
 import java.awt.Color;
@@ -114,7 +112,6 @@ public class ListConference extends javax.swing.JPanel {
         try {
             getDate = formatter.parse(formatter.format(jDateChooser.getDate()));
         } catch (ParseException ex) {
-            Logger.getLogger(NewConference.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         for (int i = listConference.size() - 1; i >= 0; i--) {

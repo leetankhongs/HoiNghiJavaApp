@@ -25,14 +25,23 @@ public class ConferenceBus {
     public static String insertNewConference(Conference conference){
         List<Conference> list = ConferenceDao.getAllConference();
         String format = "%1$04d";
-        for(int i = 1 ; i < list.size() + 1; i++)
-            if(list.get(i - 1).getId().compareTo(String.format(format, i)) != 0)
-            {
+        boolean isExist = false;
+        for(int i = 1 ;; i++)
+        {
+            isExist = false;
+            for(int j = 0; j < list.size(); j++){
+                if (list.get(j).getId().compareTo(String.format(format, i)) == 0) {
+                    isExist = true;
+                    break;
+                }
+            }
+            
+            if(isExist == false){
                 conference.setId(String.format(format, i));
                 break;
             }
-                
-        
+        }
+
         return ConferenceDao.insertNewConference(conference);
     }
     
