@@ -88,8 +88,6 @@ public class BlockButtonEditor extends DefaultCellEditor {
                         List<UserConference> listUserConference = UserConferenceBus.getListUserConferenceByUser(user);
 
                         for (int i = 0; i < listUserConference.size(); i++) {
-                            System.out.println(String.valueOf(i) + " + " + new Date());
-                            System.out.println(String.valueOf(i) + " + " + listUserConference.get(i).getConference().getStartTime());
                             if (listUserConference.get(i).getConference().getStartTime().compareTo(new Date()) > 0) {
                                 UserConferenceBus.deleteRegistration(listUserConference.get(i));
                             }

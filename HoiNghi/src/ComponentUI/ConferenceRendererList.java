@@ -44,7 +44,7 @@ public class ConferenceRendererList extends javax.swing.JPanel {
         initComponents();
         this.conference = conference;
         this.mainScreen = mainScreen;
-        ImageIcon imageIcon = new ImageIcon(conference.getImage());
+        ImageIcon imageIcon = new ImageIcon(getClass().getResource(conference.getImage()));
         Image image = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         jIcon.setIcon(new ImageIcon(image));
         jName.setText(conference.getName());

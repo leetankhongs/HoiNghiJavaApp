@@ -44,6 +44,10 @@ public class UserConferenceBus {
     public static List<UserConference> getListUserConferenceIsAcceptedByUser(User user) {
         return UserConferenceDao.getListUserConferenceIsAcceptedByUser(user);
     }
+    
+    public static List<UserConference> getListUserConferenceIsAcceptedByConference(Conference conference) {
+        return UserConferenceDao.getListUserConferenceIsAcceptedByConference(conference);
+    }
 
     public static int deleteRegistration(Conference conference, User user) {
         return UserConferenceDao.deleteRegistration(UserConferenceDao.getUserConference(conference, user).getId());

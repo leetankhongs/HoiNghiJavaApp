@@ -13,8 +13,10 @@ import POJO.UserConference;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -50,6 +52,17 @@ public class DetailConference extends javax.swing.JPanel {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         jStartTF.setText(timeFormat.format(conference.getStartTime()));
         jEndTF.setText(timeFormat.format(conference.getEndTime()));
+        
+        List<UserConference> userConferenceList = UserConferenceBus.getListUserConferenceIsAcceptedByConference(conference);
+        
+        DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
+        for (int i = tm.getRowCount() - 1; i >= 0; i--) {
+            tm.removeRow(i);
+        }
+
+        for (int i = 0; i < userConferenceList.size(); i++) {
+            tm.addRow(new Object[]{i + 1, userConferenceList.get(i).getUser().getName(), userConferenceList.get(i).getUser().getAccount().getUserName(), userConferenceList.get(i).getUser().getEmail()});
+        }
     }
 
     /**
@@ -61,6 +74,18 @@ public class DetailConference extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jBackbtn = new javax.swing.JButton();
+        jRegisterbtn = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jImage = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jNameConference = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jBriefDescription = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPlaceNamePnl = new javax.swing.JPanel();
@@ -84,24 +109,95 @@ public class DetailConference extends javax.swing.JPanel {
         jDateTF = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jDetailDescription = new javax.swing.JTextArea();
-        jPanel5 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jBackbtn = new javax.swing.JButton();
-        jRegisterbtn = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jImage = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jNameConference = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jBriefDescription = new javax.swing.JTextArea();
+        jAttendList = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(224, 224, 250));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        setPreferredSize(new java.awt.Dimension(1200, 590));
         setLayout(new java.awt.BorderLayout());
+
+        jScrollPane3.setBackground(new java.awt.Color(224, 224, 250));
+        jScrollPane3.setBorder(null);
+
+        jPanel7.setBackground(new java.awt.Color(224, 224, 250));
+        jPanel7.setPreferredSize(new java.awt.Dimension(1000, 800));
+        jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jPanel5.setOpaque(false);
+        jPanel5.setPreferredSize(new java.awt.Dimension(600, 200));
+        jPanel5.setLayout(new java.awt.BorderLayout());
+
+        jPanel6.setOpaque(false);
+        jPanel6.setLayout(new java.awt.BorderLayout());
+
+        jBackbtn.setText("Back");
+        jBackbtn.setPreferredSize(new java.awt.Dimension(75, 21));
+        jBackbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jBackbtnMouseReleased(evt);
+            }
+        });
+        jPanel6.add(jBackbtn, java.awt.BorderLayout.WEST);
+
+        jRegisterbtn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jRegisterbtn.setText("Register");
+        jRegisterbtn.setPreferredSize(new java.awt.Dimension(79, 40));
+        jRegisterbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jRegisterbtnMouseReleased(evt);
+            }
+        });
+        jPanel6.add(jRegisterbtn, java.awt.BorderLayout.EAST);
+
+        jPanel5.add(jPanel6, java.awt.BorderLayout.NORTH);
+
+        jPanel2.setBackground(new java.awt.Color(224, 224, 250));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jPanel2.setPreferredSize(new java.awt.Dimension(200, 150));
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jImage.setText("Image");
+        jImage.setOpaque(true);
+        jImage.setPreferredSize(new java.awt.Dimension(200, 13));
+        jPanel2.add(jImage, java.awt.BorderLayout.WEST);
+
+        jPanel3.setBackground(new java.awt.Color(224, 224, 250));
+        jPanel3.setOpaque(false);
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jNameConference.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        jNameConference.setForeground(new java.awt.Color(255, 0, 51));
+        jNameConference.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jNameConference.setText("Name Conference");
+        jNameConference.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jNameConference.setPreferredSize(new java.awt.Dimension(50, 70));
+        jPanel3.add(jNameConference, java.awt.BorderLayout.NORTH);
+
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 0, 5));
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+        jBriefDescription.setEditable(false);
+        jBriefDescription.setColumns(20);
+        jBriefDescription.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jBriefDescription.setLineWrap(true);
+        jBriefDescription.setRows(5);
+        jBriefDescription.setText("Brief Description");
+        jBriefDescription.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(jBriefDescription);
+
+        jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel2.add(jPanel3, java.awt.BorderLayout.CENTER);
+
+        jPanel5.add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        jPanel7.add(jPanel5);
 
         jPanel1.setBackground(new java.awt.Color(224, 224, 250));
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        jPanel1.setPreferredSize(new java.awt.Dimension(240, 350));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 500));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jPanel4.setBackground(new java.awt.Color(224, 224, 250));
@@ -228,77 +324,51 @@ public class DetailConference extends javax.swing.JPanel {
 
         jPanel1.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        add(jPanel1, java.awt.BorderLayout.CENTER);
+        jPanel7.add(jPanel1);
 
-        jPanel5.setOpaque(false);
-        jPanel5.setPreferredSize(new java.awt.Dimension(600, 200));
-        jPanel5.setLayout(new java.awt.BorderLayout());
+        jAttendList.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
+        jAttendList.setText(" List of participants");
+        jAttendList.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
+        jPanel7.add(jAttendList);
 
-        jPanel6.setOpaque(false);
-        jPanel6.setLayout(new java.awt.BorderLayout());
+        jScrollPane4.setPreferredSize(new java.awt.Dimension(452, 200));
 
-        jBackbtn.setText("Back");
-        jBackbtn.setPreferredSize(new java.awt.Dimension(75, 21));
-        jBackbtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jBackbtnMouseReleased(evt);
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Name", "User Name", "Email"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        jPanel6.add(jBackbtn, java.awt.BorderLayout.WEST);
+        jScrollPane4.setViewportView(jTable);
+        if (jTable.getColumnModel().getColumnCount() > 0) {
+            jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+            jTable.getColumnModel().getColumn(1).setPreferredWidth(300);
+            jTable.getColumnModel().getColumn(2).setPreferredWidth(300);
+            jTable.getColumnModel().getColumn(3).setPreferredWidth(300);
+        }
 
-        jRegisterbtn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jRegisterbtn.setText("Register");
-        jRegisterbtn.setPreferredSize(new java.awt.Dimension(79, 40));
-        jRegisterbtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jRegisterbtnMouseReleased(evt);
-            }
-        });
-        jPanel6.add(jRegisterbtn, java.awt.BorderLayout.EAST);
+        jPanel7.add(jScrollPane4);
 
-        jPanel5.add(jPanel6, java.awt.BorderLayout.NORTH);
+        jScrollPane3.setViewportView(jPanel7);
 
-        jPanel2.setBackground(new java.awt.Color(224, 224, 250));
-        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        jPanel2.setPreferredSize(new java.awt.Dimension(200, 150));
-        jPanel2.setLayout(new java.awt.BorderLayout());
-
-        jImage.setText("Image");
-        jImage.setOpaque(true);
-        jImage.setPreferredSize(new java.awt.Dimension(200, 13));
-        jPanel2.add(jImage, java.awt.BorderLayout.WEST);
-
-        jPanel3.setBackground(new java.awt.Color(224, 224, 250));
-        jPanel3.setOpaque(false);
-        jPanel3.setLayout(new java.awt.BorderLayout());
-
-        jNameConference.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jNameConference.setForeground(new java.awt.Color(255, 0, 51));
-        jNameConference.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jNameConference.setText("Name Conference");
-        jNameConference.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        jNameConference.setPreferredSize(new java.awt.Dimension(50, 70));
-        jPanel3.add(jNameConference, java.awt.BorderLayout.NORTH);
-
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 0, 5));
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-        jBriefDescription.setEditable(false);
-        jBriefDescription.setColumns(20);
-        jBriefDescription.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jBriefDescription.setLineWrap(true);
-        jBriefDescription.setRows(5);
-        jBriefDescription.setText("Brief Description");
-        jBriefDescription.setWrapStyleWord(true);
-        jScrollPane1.setViewportView(jBriefDescription);
-
-        jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-        jPanel2.add(jPanel3, java.awt.BorderLayout.CENTER);
-
-        jPanel5.add(jPanel2, java.awt.BorderLayout.CENTER);
-
-        add(jPanel5, java.awt.BorderLayout.NORTH);
+        add(jScrollPane3, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jRegisterbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRegisterbtnMouseReleased
@@ -362,6 +432,7 @@ public class DetailConference extends javax.swing.JPanel {
     private javax.swing.JLabel jAddress;
     private javax.swing.JTextField jAddressTF;
     private javax.swing.JPanel jAdressPnl;
+    private javax.swing.JLabel jAttendList;
     private javax.swing.JButton jBackbtn;
     private javax.swing.JTextArea jBriefDescription;
     private javax.swing.JLabel jCapacity;
@@ -382,15 +453,19 @@ public class DetailConference extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JLabel jPlaceName;
     private javax.swing.JPanel jPlaceNamePnl;
     private javax.swing.JTextField jPlaceNameTF;
     private javax.swing.JButton jRegisterbtn;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel jStart;
     private javax.swing.JPanel jStartPnl;
     private javax.swing.JTextField jStartTF;
+    private javax.swing.JTable jTable;
     private javax.swing.JPanel jTimePnl;
     // End of variables declaration//GEN-END:variables
 }

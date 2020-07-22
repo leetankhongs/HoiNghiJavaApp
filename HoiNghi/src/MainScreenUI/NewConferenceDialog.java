@@ -13,6 +13,12 @@ import POJO.Conference;
 import POJO.Place;
 import com.toedter.calendar.JDateChooser;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,6 +48,7 @@ public class NewConferenceDialog extends java.awt.Dialog {
     Conference conference;
     MainScreen mainScreen;
     Edit_DetailConferenceDialog editDetail = null;
+    Path pathString;
 
     public NewConferenceDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -388,8 +395,11 @@ public class NewConferenceDialog extends java.awt.Dialog {
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File seleFile = file.getSelectedFile();
-            String path = seleFile.getPath();
+            pathString = seleFile.toPath();
+            String path = seleFile.getName();
             jImageText.setText(path);
+
+            System.out.println(getClass().getPackage().getName());
         }
     }//GEN-LAST:event_jAddImagebtnMousePressed
 
@@ -420,9 +430,18 @@ public class NewConferenceDialog extends java.awt.Dialog {
             }
 
             Place choicePlace = (Place) jPlaceChooser.getSelectedItem();
-            String result = ConferenceBus.insertNewConference(new Conference(choicePlace, jNameText.getText(), jBriefText.getText(), jDetailText.getText(), jImageText.getText(), convert(jDateChooser, jStartTime), convert(jDateChooser, jEndTime), Integer.valueOf(jCapacityTF.getText())));
+            String result = ConferenceBus.insertNewConference(new Conference(choicePlace, jNameText.getText(), jBriefText.getText(), jDetailText.getText(), "/ConferenceImage/" + jImageText.getText(), convert(jDateChooser, jStartTime), convert(jDateChooser, jEndTime), Integer.valueOf(jCapacityTF.getText())));
 
             if (result != null) {
+                String newPath = getClass().getResource("/ConferenceImage/") + jImageText.getText();
+                Path des;
+                 
+                des = Paths.get(URI.create(newPath));
+                try {
+                    Files.copy(pathString, des, StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException ex) {
+                    Logger.getLogger(NewConferenceDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 JOptionPane.showMessageDialog(MainScreen.getInstance(), "Success");
             } else {
                 JOptionPane.showMessageDialog(MainScreen.getInstance(), "Fail");
@@ -457,7 +476,7 @@ public class NewConferenceDialog extends java.awt.Dialog {
             } else {
                 JOptionPane.showMessageDialog(this, "Failed Update");
             }
-            
+
             editDetail.resetData();
             setVisible(false);
         }
@@ -548,11 +567,16 @@ public class NewConferenceDialog extends java.awt.Dialog {
             return false;
         }
 
-        if (startTime.compareTo(endTime) >= 0) {
+        if (startTime.compareTo(endTime) > 0) {
             JOptionPane.showMessageDialog(MainScreen.getInstance(), "Organization time is invalid");
             return false;
         }
 
+        if(startTime.compareTo(new Date()) < 0){
+            JOptionPane.showMessageDialog(MainScreen.getInstance(), "Organization time is invalid");
+            return false;
+        }
+   
         return true;
     }
 

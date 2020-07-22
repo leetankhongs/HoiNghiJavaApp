@@ -513,7 +513,7 @@ public class Statistic extends javax.swing.JPanel {
 
         jScrollPane1.setOpaque(false);
 
-        jTable.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jTable.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Conference Name", "Registered Date", "Organized Date", "Status", "Detail"}) {
             @Override
             public Class
@@ -542,7 +542,7 @@ public class Statistic extends javax.swing.JPanel {
         jTable.setFocusable(false);
         jTable.setGridColor(new java.awt.Color(153, 153, 255));
         jTable.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        jTable.setRowHeight(50);
+        jTable.setRowHeight(40);
         jTable.setSelectionBackground(new java.awt.Color(204, 204, 255));
         jTable.setShowGrid(true);
         jTable.setShowVerticalLines(false);

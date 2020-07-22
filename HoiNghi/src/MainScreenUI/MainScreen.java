@@ -133,7 +133,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         jUsersPnl.setVisible(false);
         jInformationPnl.setVisible(false);
-        jConferencesPnl.setVisible(false);
+//        jConferencesPnl.setVisible(false);
         jStatisticPnl.setVisible(false);
 
         setColorClicked(jHomePnl);

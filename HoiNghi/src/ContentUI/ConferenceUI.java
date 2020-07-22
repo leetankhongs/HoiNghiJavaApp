@@ -16,8 +16,10 @@ import MainScreenUI.NewConferenceDialog;
 import POJO.Conference;
 import POJO.UserConference;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,6 +30,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.jpa.criteria.expression.function.AggregationFunction;
@@ -194,7 +198,7 @@ public class ConferenceUI extends javax.swing.JPanel {
         jTable.getColumnModel().getColumn(4).setCellRenderer(new AdminButtonRenderer());
         jTable.getColumnModel().getColumn(4).setCellEditor(new AdminButtonEditor(new JTextField()));
         jTable.getColumnModel().getColumn(5).setCellRenderer(new RequestButtonRenderer());
-
+        jTable.getColumnModel().getColumn(5).setCellEditor(new RequestButtonEditor(new JTextField()));
     }
 
     private void calculatePag() {
@@ -220,7 +224,6 @@ public class ConferenceUI extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jHeader = new javax.swing.JPanel();
         jOption = new javax.swing.JPanel();
@@ -581,7 +584,7 @@ public class ConferenceUI extends javax.swing.JPanel {
         jScrollPane1.setBackground(new java.awt.Color(224, 224, 250));
         jScrollPane1.setOpaque(false);
 
-        jTable.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jTable.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Conference Name", "Organized Date", "Status", "Detail", "New Request"}) {
             @Override
             public Class<?> getColumnClass(int col) {
@@ -597,14 +600,14 @@ public class ConferenceUI extends javax.swing.JPanel {
 
         jTable.getTableHeader().setOpaque(true);
         jTable.getTableHeader().setBackground(Color.red);
-        jTable.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 20));
+        jTable.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 16));
 
         jTable.setAutoCreateRowSorter(true);
         jTable.setModel(tm);
         jTable.setFocusable(false);
         jTable.setGridColor(new java.awt.Color(153, 153, 255));
         jTable.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        jTable.setRowHeight(50);
+        jTable.setRowHeight(40);
         jTable.setSelectionBackground(new java.awt.Color(204, 204, 255));
         jTable.setShowGrid(true);
         jTable.setShowVerticalLines(false);
@@ -616,7 +619,6 @@ public class ConferenceUI extends javax.swing.JPanel {
 
         add(jData, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
 
     public void resetData() {
         listConference = ConferenceBus.getAllConference();
@@ -665,8 +667,10 @@ public class ConferenceUI extends javax.swing.JPanel {
         jResetbtn.setBackground(deufault);
     }//GEN-LAST:event_jResetbtnMouseExited
 
+
     private void jResetbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jResetbtnMouseReleased
         // TODO add your handling code here:
+
         jTakePlace.setSelectedIndex(0);
         jNewRequest.setSelectedIndex(0);
         jDateChooser.setDate(null);

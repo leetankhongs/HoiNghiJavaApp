@@ -40,19 +40,54 @@ public class UsersUI extends javax.swing.JPanel {
     private int maxPag;
 
     private void filter() {
-        UserNameFilter();
+        FullNameFilter();
+        userNameFilter();
         ConferenceNameFileter();
         paginationFilter();
         ConferenceNameFileter();
+        blockedFilter();
+    }
+
+    private void userNameFilter() {
+        if (jUserNameTF.getText().compareTo("User name") == 0) {
+            return;
+        }
+
+        for (int i = list.size() - 1; i >= 0; i--) {
+            if (list.get(i).getAccount().getUserName().toLowerCase().indexOf(jUserNameTF.getText().toLowerCase()) == -1) {
+                list.remove(i);
+            }
+
+        }
+    }
+
+    private void blockedFilter() {
+        int index = jBlockCB.getSelectedIndex();
+
+        if (index == 1) {
+            for (int i = list.size() - 1; i >= 0; i--) {
+                if (list.get(i).getIsDelete() != 1) {
+                    list.remove(i);
+                }
+
+            }
+        } else if (index == 2) {
+            for (int i = list.size() - 1; i >= 0; i--) {
+                if (list.get(i).getIsDelete() == 1) {
+                    list.remove(i);
+                }
+
+            }
+        }
     }
 
     private void ConferenceNameFileter() {
         int index = jConferenceCB.getSelectedIndex();
-        
+
         if (index == 0 || index == -1) {
             return;
         }
-        
+
         String conferenceName = jConferenceCB.getItemAt(index);
 
         for (int i = list.size() - 1; i >= 0; i--) {
@@ -65,9 +100,10 @@ public class UsersUI extends javax.swing.JPanel {
                     break;
                 }
             }
-            
-            if(!has)
+
+            if (!has) {
                 list.remove(i);
+            }
         }
     }
 
@@ -94,13 +130,13 @@ public class UsersUI extends javax.swing.JPanel {
 
     }
 
-    private void UserNameFilter() {
-        if (jUserNameTF.getText().compareTo("User Name") == 0) {
+    private void FullNameFilter() {
+        if (jFullNameTF.getText().compareTo("Full name") == 0) {
             return;
         }
 
         for (int i = list.size() - 1; i >= 0; i--) {
-            if (list.get(i).getName().toLowerCase().indexOf(jUserNameTF.getText().toLowerCase()) == -1) {
+            if (list.get(i).getName().toLowerCase().indexOf(jFullNameTF.getText().toLowerCase()) == -1) {
                 list.remove(i);
             }
 
@@ -137,17 +173,15 @@ public class UsersUI extends javax.swing.JPanel {
         }
 
         for (int i = 0; i < list.size(); i++) {
-            tm.addRow(new Object[]{i + 1, list.get(i).getName(), list.get(i).getEmail(), list.get(i), list.get(i)});
+            tm.addRow(new Object[]{i + 1, list.get(i).getName(), list.get(i).getAccount().getUserName(), list.get(i).getEmail(), list.get(i), list.get(i)});
         }
 
         jTable.setModel(tm);
-        jTable.getColumnModel().getColumn(4).setCellRenderer(new BlockButtonRenderer());
-        jTable.getColumnModel().getColumn(4).setCellEditor(new BlockButtonEditor(new JTextField()));
-        jTable.getColumnModel().getColumn(3).setCellRenderer(new ConferenceUserRenderer());
-        jTable.getColumnModel().getColumn(3).setCellEditor(new ConferenceUserButtonEditor(new JTextField()));
+        jTable.getColumnModel().getColumn(5).setCellRenderer(new BlockButtonRenderer());
+        jTable.getColumnModel().getColumn(5).setCellEditor(new BlockButtonEditor(new JTextField()));
+        jTable.getColumnModel().getColumn(4).setCellRenderer(new ConferenceUserRenderer());
+        jTable.getColumnModel().getColumn(4).setCellEditor(new ConferenceUserButtonEditor(new JTextField()));
         jTable.setAutoCreateRowSorter(true);
-
-
 
     }
 
@@ -166,8 +200,14 @@ public class UsersUI extends javax.swing.JPanel {
         jResetbtn = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jConferenceCB = new javax.swing.JComboBox<>();
+        jPanel2 = new javax.swing.JPanel();
+        jBlockCB = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
+        jFullNameTF = new javax.swing.JTextField();
         jUserNameTF = new javax.swing.JTextField();
         jBrief = new javax.swing.JLabel();
         jData = new javax.swing.JPanel();
@@ -216,9 +256,8 @@ public class UsersUI extends javax.swing.JPanel {
         });
         jPanel3.add(jResetbtn, java.awt.BorderLayout.NORTH);
 
-        jComboBox1.setEditable(true);
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(70, 50));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -230,10 +269,21 @@ public class UsersUI extends javax.swing.JPanel {
         jOption.add(jPanel3, java.awt.BorderLayout.WEST);
 
         jPanel4.setBackground(new java.awt.Color(224, 224, 250));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 100, 0, 100));
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 0, 5, 0));
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel1.setText("Conference");
+        jLabel1.setPreferredSize(new java.awt.Dimension(100, 13));
+        jPanel1.add(jLabel1, java.awt.BorderLayout.WEST);
 
         jConferenceCB.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jConferenceCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Conference Name" }));
-        jConferenceCB.setBorder(null);
+        jConferenceCB.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 0, 5, 0));
         jConferenceCB.setPreferredSize(new java.awt.Dimension(300, 50));
         jConferenceCB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,15 +295,57 @@ public class UsersUI extends javax.swing.JPanel {
         for (int i = 0; i < conferenceList.size(); i++) {
             jConferenceCB.addItem(conferenceList.get(i).getName());
         }
-        jPanel4.add(jConferenceCB);
+        jPanel1.add(jConferenceCB, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        jPanel2.setOpaque(false);
+        jPanel2.setPreferredSize(new java.awt.Dimension(300, 50));
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jBlockCB.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jBlockCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Is Blocked", "Is Not Blocked" }));
+        jBlockCB.setBorder(null);
+        jBlockCB.setPreferredSize(new java.awt.Dimension(300, 50));
+        jBlockCB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBlockCBActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jBlockCB, java.awt.BorderLayout.CENTER);
+
+        jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jLabel2.setText("Blocked");
+        jLabel2.setPreferredSize(new java.awt.Dimension(100, 13));
+        jPanel2.add(jLabel2, java.awt.BorderLayout.WEST);
+
+        jPanel4.add(jPanel2, java.awt.BorderLayout.NORTH);
 
         jOption.add(jPanel4, java.awt.BorderLayout.CENTER);
 
         jPanel5.setBackground(new java.awt.Color(224, 224, 250));
         jPanel5.setPreferredSize(new java.awt.Dimension(300, 60));
 
+        jFullNameTF.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jFullNameTF.setText("Full name");
+        jFullNameTF.setPreferredSize(new java.awt.Dimension(250, 50));
+        jFullNameTF.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jFullNameTFFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFullNameTFFocusLost(evt);
+            }
+        });
+        jFullNameTF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jFullNameTFKeyTyped(evt);
+            }
+        });
+        jPanel5.add(jFullNameTF);
+
         jUserNameTF.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jUserNameTF.setText("User Name");
+        jUserNameTF.setText("User name");
         jUserNameTF.setPreferredSize(new java.awt.Dimension(250, 50));
         jUserNameTF.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -261,6 +353,11 @@ public class UsersUI extends javax.swing.JPanel {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jUserNameTFFocusLost(evt);
+            }
+        });
+        jUserNameTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jUserNameTFActionPerformed(evt);
             }
         });
         jUserNameTF.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -387,30 +484,24 @@ public class UsersUI extends javax.swing.JPanel {
 
         jScrollPane1.setOpaque(false);
 
-        jTable.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Name", "Email", "Conferences", "Block"}) {
+        jTable.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Full Name", "User Name", "Email", "Conferences", "Blocked"}) {
             @Override
-            public Class
-
-            <?> getColumnClass(int col) {
+            public Class<?> getColumnClass(int col) {
                 //here it really returns the right column class (Integer.class)
-                Class retVal = Object.class
+                Class retVal = Object.class  ;
 
-                ;
-
-                if (getRowCount()
-                    > 0) {
+                if (getRowCount() > 0) {
                     retVal = getValueAt(0, col).getClass();
                 }
                 return retVal ;
             }
-
         };
         jTable.setModel(tm);
         jTable.setFocusable(false);
         jTable.setGridColor(new java.awt.Color(153, 153, 255));
         jTable.setIntercellSpacing(new java.awt.Dimension(0, 0));
-        jTable.setRowHeight(50);
+        jTable.setRowHeight(40);
         jTable.setSelectionBackground(new java.awt.Color(204, 204, 255));
         jTable.setShowGrid(true);
         jTable.setShowVerticalLines(false);
@@ -518,17 +609,46 @@ public class UsersUI extends javax.swing.JPanel {
         resetData();
     }//GEN-LAST:event_jConferenceCBActionPerformed
 
+    private void jFullNameTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFullNameTFFocusGained
+        // TODO add your handling code here:
+        if (jFullNameTF.getText().compareTo("Full name") == 0)
+            jFullNameTF.setText("");
+    }//GEN-LAST:event_jFullNameTFFocusGained
+
+    private void jFullNameTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFullNameTFFocusLost
+        // TODO add your handling code here:
+        if (jFullNameTF.getText().compareTo("") == 0)
+            jFullNameTF.setText("Full name");
+    }//GEN-LAST:event_jFullNameTFFocusLost
+
+    private void jFullNameTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFullNameTFKeyTyped
+        // TODO add your handling code here:
+        jPosition.setText("1");
+        resetData();
+    }//GEN-LAST:event_jFullNameTFKeyTyped
+
+    private void jBlockCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBlockCBActionPerformed
+        // TODO add your handling code here:
+        jPosition.setText("1");
+        resetData();
+    }//GEN-LAST:event_jBlockCBActionPerformed
+
     private void jUserNameTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jUserNameTFFocusGained
         // TODO add your handling code here:
-        if (jUserNameTF.getText().compareTo("User Name") == 0)
+        if (jUserNameTF.getText().compareTo("User name") == 0)
             jUserNameTF.setText("");
     }//GEN-LAST:event_jUserNameTFFocusGained
 
     private void jUserNameTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jUserNameTFFocusLost
         // TODO add your handling code here:
+        
         if (jUserNameTF.getText().compareTo("") == 0)
-            jUserNameTF.setText("User Name");
+            jUserNameTF.setText("User name");
     }//GEN-LAST:event_jUserNameTFFocusLost
+
+    private void jUserNameTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jUserNameTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jUserNameTFActionPerformed
 
     private void jUserNameTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jUserNameTFKeyTyped
         // TODO add your handling code here:
@@ -538,18 +658,24 @@ public class UsersUI extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> jBlockCB;
     private javax.swing.JLabel jBrief;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jConferenceCB;
     private javax.swing.JPanel jData;
     private javax.swing.JLabel jDescriptionPag;
     private javax.swing.JLabel jFirstbtn;
+    private javax.swing.JTextField jFullNameTF;
     private javax.swing.JPanel jHeader;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLastbtn;
     private javax.swing.JLabel jNextbtn;
     private javax.swing.JPanel jOption;
     private javax.swing.JPanel jPagination;
     private javax.swing.JPanel jPaginationButton;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;

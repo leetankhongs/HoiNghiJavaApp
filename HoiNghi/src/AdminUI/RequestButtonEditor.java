@@ -60,7 +60,6 @@ public class RequestButtonEditor extends DefaultCellEditor {
     public Object getCellEditorValue() {
         if (clicked) {
             new NewRequestDialog(MainScreen.getInstance(), true, conference).setVisible(true);
-            System.out.println(conferenceUI);
         }
 
         clicked = false;
