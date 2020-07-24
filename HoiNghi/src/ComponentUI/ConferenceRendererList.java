@@ -7,12 +7,11 @@ package ComponentUI;
 
 import Business.UserConferenceBus;
 import MainScreenUI.MainScreen;
-import UserUI.Register_DetailConference;
 import POJO.Conference;
 import POJO.User;
 import java.awt.Color;
 import java.awt.Image;
-import java.text.SimpleDateFormat;
+import java.io.File;
 import java.util.Calendar;
 import java.util.TimeZone;
 import javax.swing.ImageIcon;
@@ -44,7 +43,8 @@ public class ConferenceRendererList extends javax.swing.JPanel {
         initComponents();
         this.conference = conference;
         this.mainScreen = mainScreen;
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource(conference.getImage()));
+        String filePath = new File("").getAbsolutePath() + "\\Picture\\" + conference.getImage();
+        ImageIcon imageIcon = new ImageIcon(filePath);
         Image image = imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         jIcon.setIcon(new ImageIcon(image));
         jName.setText(conference.getName());
@@ -221,7 +221,7 @@ public class ConferenceRendererList extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        MainScreen.getInstance().changeDetailConference(conference);
+        MainScreen.getInstance().changeDetailConference(conference, 1);
     }//GEN-LAST:event_formMousePressed
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
@@ -250,7 +250,7 @@ public class ConferenceRendererList extends javax.swing.JPanel {
 
     private void jDescriptionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jDescriptionMouseReleased
         // TODO add your handling code here:
-        MainScreen.getInstance().changeDetailConference(conference);
+        MainScreen.getInstance().changeDetailConference(conference, 1);
     }//GEN-LAST:event_jDescriptionMouseReleased
 
 

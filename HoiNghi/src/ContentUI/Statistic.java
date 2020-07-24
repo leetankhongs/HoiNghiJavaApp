@@ -6,10 +6,11 @@
 package ContentUI;
 
 import Business.UserConferenceBus;
+import ButtonRenderer.ButtonRenderer;
+import ButtonEditor.DetailConferenceButtonEditor;
 import MainScreenUI.MainScreen;
-import UserUI.UserButtonEditor;
-import UserUI.UserButtonRenderer;
 import POJO.UserConference;
+import ButtonEditor.Cancel_RegisterUserButtonEditor;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.DateFormat;
@@ -156,20 +157,6 @@ public class Statistic extends javax.swing.JPanel {
     public Statistic() {
 
         initComponents();
-        jTable.getTableHeader().setOpaque(true);
-        jTable.getTableHeader().setBackground(Color.red);
-        jTable.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 20));
-
-        jTable.getColumnModel().getColumn(5).setCellRenderer(new UserButtonRenderer());
-        jTable.getColumnModel().getColumn(5).setCellEditor(new UserButtonEditor(new JTextField()));
-        jTable.setAutoCreateRowSorter(true);
-        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-        jTable.getColumnModel().getColumn(1).setPreferredWidth(400);
-        jTable.getColumnModel().getColumn(2).setPreferredWidth(150);
-        jTable.getColumnModel().getColumn(3).setPreferredWidth(150);
-        jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
-
     }
 
     public void resetData() {
@@ -202,7 +189,7 @@ public class Statistic extends javax.swing.JPanel {
                 status = "is Deleted";
             }
 
-            tm.addRow(new Object[]{i + 1, list.get(i).getConference().getName(), list.get(i).getRegistationTime(), list.get(i).getConference().getStartTime(), status, list.get(i)});
+            tm.addRow(new Object[]{i + 1, list.get(i).getConference().getName(), list.get(i).getRegistationTime(), list.get(i).getConference().getStartTime(), status, list.get(i).getConference(), list.get(i)});
 
         }
     }
@@ -514,7 +501,7 @@ public class Statistic extends javax.swing.JPanel {
         jScrollPane1.setOpaque(false);
 
         jTable.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Conference Name", "Registered Date", "Organized Date", "Status", "Detail"}) {
+        DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Conference Name", "Registered Date", "Organized Date", "Status", "Detail", "Cancel"}) {
             @Override
             public Class
 
@@ -534,11 +521,26 @@ public class Statistic extends javax.swing.JPanel {
             @Override
             public boolean isCellEditable(int row, int column) {
                 //all cells false
-                return column == 5;
+                return column == 5 || column == 6;
             }
 
         };
         jTable.setModel(tm);
+        jTable.getTableHeader().setOpaque(true);
+        jTable.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 16));
+
+        jTable.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer("Detail"));
+        jTable.getColumnModel().getColumn(5).setCellEditor(new DetailConferenceButtonEditor(new JTextField(), 2));
+        jTable.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer("Cancel"));
+        jTable.getColumnModel().getColumn(6).setCellEditor(new Cancel_RegisterUserButtonEditor(new JTextField()));
+        jTable.setAutoCreateRowSorter(true);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(6).setPreferredWidth(100);
         jTable.setFocusable(false);
         jTable.setGridColor(new java.awt.Color(153, 153, 255));
         jTable.setIntercellSpacing(new java.awt.Dimension(0, 0));

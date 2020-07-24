@@ -3,53 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/AdminUI/ConferenceUserRenderer.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/MainScreenUI/NewPlaceDialog.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/MainClass.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/AdminUI/NewRequestDialog.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ContentUI/DetailConference.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/UserUI/UserButtonEditor.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/AdminUI/AdminButtonEditor.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/UserUI/DetailConferenceUserDialog.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ContentUI/UserInformation.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/AdminUI/ConferenceUserList.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ComponentUI/ConferenceRendererCard.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/DAO/AccountDao.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ContentUI/Statistic.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/POJO/UserConferenceId.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/AdminUI/NewRequest.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/AdminUI/ImageTextRenderer.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ContentUI/ListConference.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/MainScreenUI/Login.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/Dialog/RegisterDialog.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/AdminUI/ListConferenceUserDialog.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/DAO/UserConferenceDao.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/Dialog/LoginDialog.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/Business/AccountBus.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/UserUI/UserButtonRenderer.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/AdminUI/AdminButtonRenderer.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ContentUI/DetailConferences.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/AdminUI/ConferenceUserButtonEditor.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/Business/PlaceBus.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/AdminUI/RequestButtonEditor.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ContentUI/Home.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/MainScreenUI/NewConferenceDialog.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/DAO/UserDao.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/UserUI/Register_DetailConference.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/AdminUI/RequestButtonRenderer.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ContentUI/ConferenceUI.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/POJO/UserConference.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/DAO/ConferenceDao.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/Business/UserConferenceBus.java</file>
+            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/hibernate.reveng.xml</file>
             <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ComponentUI/ConferenceRendererList.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/AdminUI/Edit_DetailConferenceDialog.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/MainScreenUI/Register.java</file>
+            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ContentUI/Statistic.java</file>
+            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/MainClass.java</file>
             <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ContentUI/UsersUI.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/Business/ConferenceBus.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/AdminUI/BlockButtonEditor.java</file>
+            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ContentUI/ListConference.java</file>
+            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ContentUI/DetailConference.java</file>
+            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ContentUI/UserInformation.java</file>
+            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ContentUI/ConferenceUI.java</file>
+            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/ComponentUI/ConferenceRendererCard.java</file>
             <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/MainScreenUI/MainScreen.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/AdminUI/BlockButtonRenderer.java</file>
-            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/Business/UserBus.java</file>
+            <file>file:/C:/Study/Nam3/HK2/github/HoiNghiJavaApp/HoiNghi/src/hibernate.cfg.xml</file>
         </group>
     </open-files>
 </project-private>

@@ -5,21 +5,20 @@
  */
 package ContentUI;
 
-import AdminUI.AdminButtonEditor;
-import AdminUI.AdminButtonRenderer;
-import AdminUI.RequestButtonEditor;
-import AdminUI.RequestButtonRenderer;
+import ButtonEditor.Edit_DeleteConferenceButtonEditor;
+import ButtonEditor.RequestButtonEditor;
+import ButtonRenderer.RequestButtonRenderer;
 import Business.ConferenceBus;
 import Business.UserConferenceBus;
+import ButtonRenderer.ButtonRenderer;
+import ButtonEditor.DetailConferenceButtonEditor;
 import MainScreenUI.MainScreen;
-import MainScreenUI.NewConferenceDialog;
+import Dialog.NewConferenceDialog;
 import POJO.Conference;
 import POJO.UserConference;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,12 +28,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import org.hibernate.jpa.criteria.expression.function.AggregationFunction;
 
 /**
  *
@@ -184,21 +179,8 @@ public class ConferenceUI extends javax.swing.JPanel {
     public ConferenceUI() {
 
         initComponents();
-
-        RequestButtonEditor requestButtonEditor = new RequestButtonEditor(new JTextField());
-        requestButtonEditor.setConferenceUI(this);
-        jTable.getColumnModel().getColumn(5).setCellEditor(requestButtonEditor);
-        jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(1).setPreferredWidth(500);
-        jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
         resetData();
-        jTable.getColumnModel().getColumn(4).setCellRenderer(new AdminButtonRenderer());
-        jTable.getColumnModel().getColumn(4).setCellEditor(new AdminButtonEditor(new JTextField()));
-        jTable.getColumnModel().getColumn(5).setCellRenderer(new RequestButtonRenderer());
-        jTable.getColumnModel().getColumn(5).setCellEditor(new RequestButtonEditor(new JTextField()));
+
     }
 
     private void calculatePag() {
@@ -585,7 +567,7 @@ public class ConferenceUI extends javax.swing.JPanel {
         jScrollPane1.setOpaque(false);
 
         jTable.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Conference Name", "Organized Date", "Status", "Detail", "New Request"}) {
+        DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Conference Name", "Organized Date", "Status", "Detail", "New Request", "Edit/Delete"}) {
             @Override
             public Class<?> getColumnClass(int col) {
                 //here it really returns the right column class (Integer.class)
@@ -599,11 +581,25 @@ public class ConferenceUI extends javax.swing.JPanel {
         };
 
         jTable.getTableHeader().setOpaque(true);
-        jTable.getTableHeader().setBackground(Color.red);
         jTable.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 16));
 
         jTable.setAutoCreateRowSorter(true);
         jTable.setModel(tm);
+        RequestButtonEditor requestButtonEditor = new RequestButtonEditor(new JTextField());
+        requestButtonEditor.setConferenceUI(this);
+        jTable.getColumnModel().getColumn(5).setCellEditor(requestButtonEditor);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(400);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(200);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer("Detail"));
+        jTable.getColumnModel().getColumn(4).setCellEditor(new DetailConferenceButtonEditor(new JTextField(),3));
+        jTable.getColumnModel().getColumn(5).setCellRenderer(new RequestButtonRenderer());
+        jTable.getColumnModel().getColumn(5).setCellEditor(new RequestButtonEditor(new JTextField()));
+        jTable.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer("Option"));
+        jTable.getColumnModel().getColumn(6).setCellEditor(new Edit_DeleteConferenceButtonEditor(new JTextField()));
         jTable.setFocusable(false);
         jTable.setGridColor(new java.awt.Color(153, 153, 255));
         jTable.setIntercellSpacing(new java.awt.Dimension(0, 0));
@@ -653,7 +649,7 @@ public class ConferenceUI extends javax.swing.JPanel {
             if (listConference.get(i).getIsDelete() == 1) {
                 status = "is Deleted";
             }
-            tm.addRow(new Object[]{i + 1, listConference.get(i).getName(), listConference.get(i).getStartTime(), status, listConference.get(i), listConference.get(i)});
+            tm.addRow(new Object[]{i + 1, listConference.get(i).getName(), listConference.get(i).getStartTime(), status, listConference.get(i), listConference.get(i), listConference.get(i)});
         }
 
     }
@@ -859,13 +855,14 @@ public class ConferenceUI extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jTakePlace;
     // End of variables declaration//GEN-END:variables
 
-    public void setFilter(int indexPlace, int indexRequest, int indexLine, int positionPag, Date organizeDate, String searchString) {
+    public void setFilter(int indexPlace, int indexRequest, int indexLine, int positionPag, Date organizeDate, String searchString, String position) {
         jTakePlace.setSelectedIndex(indexPlace);
         jNewRequest.setSelectedIndex(indexRequest);
         jComboBox1.setSelectedIndex(indexLine);
         jPosition.setText(String.valueOf(positionPag));
         jDateChooser.setDate(organizeDate);
         jSearchText.setText(searchString);
+        jPosition.setText(position);
     }
 
     public ConferenceUI cloneS() {
@@ -881,7 +878,7 @@ public class ConferenceUI extends javax.swing.JPanel {
             }
         }
 
-        conferenceUI.setFilter(jTakePlace.getSelectedIndex(), jNewRequest.getSelectedIndex(), jComboBox1.getSelectedIndex(), Integer.valueOf(jPosition.getText()), getDate, jSearchText.getText());
+        conferenceUI.setFilter(jTakePlace.getSelectedIndex(), jNewRequest.getSelectedIndex(), jComboBox1.getSelectedIndex(), Integer.valueOf(jPosition.getText()), getDate, jSearchText.getText(), jPosition.getText());
         return conferenceUI;
     }
 }

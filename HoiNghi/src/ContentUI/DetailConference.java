@@ -11,6 +11,7 @@ import POJO.Conference;
 import POJO.Place;
 import POJO.UserConference;
 import java.awt.Image;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -29,13 +30,15 @@ public class DetailConference extends javax.swing.JPanel {
      */
     MainScreen mainScreen;
     Conference conference;
+    int page;
 
-    public DetailConference(Conference conference, MainScreen mainScreen) {
+    public DetailConference(Conference conference, MainScreen mainScreen, int page) {
 
         initComponents();
         this.mainScreen = mainScreen;
         this.conference = conference;
-        ImageIcon imageIcon = new ImageIcon(conference.getImage());
+        this.page = page;
+        ImageIcon imageIcon = new ImageIcon(new File("").getAbsolutePath() + "\\Picture\\" + conference.getImage());
         Image image = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
         jImage.setIcon(new ImageIcon(image));
         jNameConference.setText(conference.getName());
@@ -45,7 +48,7 @@ public class DetailConference extends javax.swing.JPanel {
         Place place = conference.getPlace();
         jPlaceNameTF.setText(place.getName());
         jAddressTF.setText(place.getAddress());
-        jCapacityTF.setText(place.getCapacity().toString());
+        jCapacityTF.setText(String.valueOf(UserConferenceBus.getTheNumberOfUserIsNotDeclined(conference)) + "/" + String.valueOf(conference.getParticipants()));
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         jDateTF.setText(dateFormat.format(conference.getStartTime()));
@@ -53,7 +56,7 @@ public class DetailConference extends javax.swing.JPanel {
         jStartTF.setText(timeFormat.format(conference.getStartTime()));
         jEndTF.setText(timeFormat.format(conference.getEndTime()));
         
-        List<UserConference> userConferenceList = UserConferenceBus.getListUserConferenceIsAcceptedByConference(conference);
+        List<UserConference> userConferenceList = UserConferenceBus.getListUserConferenceIsNotDeclinedByConference(conference);
         
         DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
         for (int i = tm.getRowCount() - 1; i >= 0; i--) {
@@ -61,7 +64,7 @@ public class DetailConference extends javax.swing.JPanel {
         }
 
         for (int i = 0; i < userConferenceList.size(); i++) {
-            tm.addRow(new Object[]{i + 1, userConferenceList.get(i).getUser().getName(), userConferenceList.get(i).getUser().getAccount().getUserName(), userConferenceList.get(i).getUser().getEmail()});
+            tm.addRow(new Object[]{i + 1, userConferenceList.get(i).getUser().getName(), userConferenceList.get(i).getUser().getAccount().getUserName(), userConferenceList.get(i).getUser().getEmail(), userConferenceList.get(i).getIsAccepted() == 1? "is Accepted" : "is Watting"});
         }
     }
 
@@ -176,7 +179,7 @@ public class DetailConference extends javax.swing.JPanel {
         jPanel3.add(jNameConference, java.awt.BorderLayout.NORTH);
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 0, 5));
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jBriefDescription.setEditable(false);
         jBriefDescription.setColumns(20);
@@ -331,6 +334,7 @@ public class DetailConference extends javax.swing.JPanel {
         jAttendList.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
         jPanel7.add(jAttendList);
 
+        jScrollPane4.setBackground(new java.awt.Color(224, 224, 250));
         jScrollPane4.setPreferredSize(new java.awt.Dimension(452, 200));
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -338,14 +342,14 @@ public class DetailConference extends javax.swing.JPanel {
 
             },
             new String [] {
-                "STT", "Name", "User Name", "Email"
+                "STT", "Name", "User Name", "Email", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, true
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -356,6 +360,8 @@ public class DetailConference extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable.setGridColor(new java.awt.Color(224, 224, 250));
+        jTable.setOpaque(false);
         jScrollPane4.setViewportView(jTable);
         if (jTable.getColumnModel().getColumnCount() > 0) {
             jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
@@ -422,8 +428,19 @@ public class DetailConference extends javax.swing.JPanel {
 
     private void jBackbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBackbtnMouseReleased
         // TODO add your handling code here:
-        mainScreen.backToListConference();
-        mainScreen.getListConference().resetData();
+        switch(page){
+            case 1: 
+                mainScreen.backToListConference();
+                break;
+            case 2:
+                mainScreen.backToStatistic();
+                break;
+            case 3:
+                mainScreen.backToConferenceUI();
+                break;
+            case 4:
+                mainScreen.backToUserUI();
+        }
 
     }//GEN-LAST:event_jBackbtnMouseReleased
 

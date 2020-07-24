@@ -38,8 +38,18 @@ public class AccountBus {
         List<Account> list = AccountDao.getAllAccount();
         String format = "%1$010d";
         Account account = new Account(userName, cryptWithMD5(password));
-        for (int i = 1; i < list.size() + 1; i++) {
-            if (list.get(i - 1).getId().compareTo(String.format(format, i)) != 0) {
+
+        boolean isExist = false;
+        for (int i = 1;; i++) {
+            isExist = false;
+            for (int j = 0; j < list.size(); j++) {
+                if (list.get(j).getId().compareTo(String.format(format, i)) == 0) {
+                    isExist = true;
+                    break;
+                }
+            }
+
+            if (isExist == false) {
                 account.setId(String.format(format, i));
                 break;
             }

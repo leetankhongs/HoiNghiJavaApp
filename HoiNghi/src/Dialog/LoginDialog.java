@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 public class LoginDialog extends java.awt.Dialog {
 
     /**
-     * Creates new form LoginDialog
+     * Creates new form Login_Dialog
      */
     public LoginDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -332,49 +332,48 @@ public class LoginDialog extends java.awt.Dialog {
     private void jUsernameTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jUsernameTFFocusGained
         // TODO add your handling code here:
         if (jUsernameTF.getText().compareTo("") == 0 || jUsernameTF.getText().compareTo("Enter your username") == 0)
-            jUsernameTF.setText("");
+        jUsernameTF.setText("");
     }//GEN-LAST:event_jUsernameTFFocusGained
 
     private void jUsernameTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jUsernameTFFocusLost
         // TODO add your handling code here:
         if (jUsernameTF.getText().compareTo("") == 0)
-            jUsernameTF.setText("Enter your username");
+        jUsernameTF.setText("Enter your username");
     }//GEN-LAST:event_jUsernameTFFocusLost
 
     private void jPasswordTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordTFFocusGained
         // TODO add your handling code here:
         if (jPasswordTF.getText().compareTo("") == 0 || jPasswordTF.getText().compareTo("123456789") == 0)
-            jPasswordTF.setText("");
+        jPasswordTF.setText("");
     }//GEN-LAST:event_jPasswordTFFocusGained
 
     private void jPasswordTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordTFFocusLost
         // TODO add your handling code here:
         if (jPasswordTF.getText().compareTo("") == 0)
-            jPasswordTF.setText("123456789");
+        jPasswordTF.setText("123456789");
     }//GEN-LAST:event_jPasswordTFFocusLost
 
     private void jLoginbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLoginbtnMouseReleased
         // TODO add your handling code here:
         switch (AccountBus.checkAccount(jUsernameTF.getText(), jPasswordTF.getText())) {
             case -2:
-                JOptionPane.showMessageDialog(this, "Your account is blocked");
-                break;
+            JOptionPane.showMessageDialog(this, "Your account is blocked");
+            break;
             case -1:
-                JOptionPane.showMessageDialog(this, "User name does not already exits");
-                break;
+            JOptionPane.showMessageDialog(this, "User name does not already exits");
+            break;
             case 0:
-                JOptionPane.showMessageDialog(this, "Password is wrong");
-                break;
+            JOptionPane.showMessageDialog(this, "Password is wrong");
+            break;
             case 1:
-                JOptionPane.showMessageDialog(this, "Success");
-                Account account = AccountBus.getAccountByUserName(jUsernameTF.getText());
-                Object[] users = (account.getUsers().toArray());
-                User user = (User) users[0];
-                MainScreen.getInstance().setUser(user);
-                setVisible(false);
-                break;
+            JOptionPane.showMessageDialog(this, "Success");
+            Account account = AccountBus.getAccountByUserName(jUsernameTF.getText());
+            Object[] users = (account.getUsers().toArray());
+            User user = (User) users[0];
+            MainScreen.getInstance().setUser(user);
+            setVisible(false);
+            break;
         }
-
     }//GEN-LAST:event_jLoginbtnMouseReleased
 
     private void jLoginbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLoginbtnActionPerformed
@@ -402,23 +401,6 @@ public class LoginDialog extends java.awt.Dialog {
         // TODO add your handling code here:
         setVisible(false);
     }//GEN-LAST:event_jExitbtnMouseReleased
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                LoginDialog dialog = new LoginDialog(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

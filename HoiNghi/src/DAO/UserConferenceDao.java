@@ -139,6 +139,23 @@ public class UserConferenceDao {
 
         return list;
     }
+    
+    public static List<UserConference> getListUserConferenceIsNotDeclinedByConference(Conference conference) {
+        List<UserConference> list = null;
+        Session session = NewHibernateUtil.getSessionFactory().openSession();
+
+        try {
+            String hql = "select UC from UserConference UC where UC.conference = :conference and isAccepted != 2";
+            Query query = session.createQuery(hql);
+            query.setParameter("conference", conference);
+            list = query.list();
+
+        } finally {
+            session.close();
+        }
+
+        return list;
+    }
 
     public static int deleteRegistration(UserConferenceId userConferenceId) {
         Session session = NewHibernateUtil.getSessionFactory().openSession();

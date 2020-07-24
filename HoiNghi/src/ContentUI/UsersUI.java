@@ -5,20 +5,25 @@
  */
 package ContentUI;
 
-import AdminUI.BlockButtonEditor;
-import AdminUI.BlockButtonRenderer;
-import AdminUI.ConferenceUserButtonEditor;
-import AdminUI.ConferenceUserRenderer;
+import ButtonEditor.BlockButtonEditor;
+import ButtonRenderer.BlockButtonRenderer;
+import ButtonEditor.ConferenceUserButtonEditor;
 import Business.ConferenceBus;
 import Business.UserBus;
 import Business.UserConferenceBus;
+import ButtonRenderer.ButtonRenderer;
+import ButtonEditor.DetailConferenceButtonEditor;
 import POJO.Conference;
 import POJO.User;
 import POJO.UserConference;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
@@ -38,7 +43,39 @@ public class UsersUI extends javax.swing.JPanel {
 
     List<User> list;
     private int maxPag;
+    private User preUser = null;
+    
+    public User getPreUser(){
+        return preUser;
+    }
 
+    public void setPreUser(User preUser){
+        this.preUser = preUser;
+        
+        List<UserConference> conferenceList = UserConferenceBus.getListUserConferenceIsAcceptedByUser(preUser);
+        DefaultTableModel tm = (DefaultTableModel) jTable1.getModel();
+        for (int i = tm.getRowCount() - 1; i >= 0; i--) {
+            tm.removeRow(i);
+        }
+
+        for (int i = 0; i < conferenceList.size(); i++) {
+            tm.addRow(new Object[]{i + 1, conferenceList.get(i).getConference().getName(), conferenceList.get(i).getConference().getStartTime(), conferenceList.get(i).getConference()});
+        }
+
+        jTable1.setModel(tm);
+        
+        jTable1.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer("Detail"));
+        jTable1.getColumnModel().getColumn(3).setCellEditor(new DetailConferenceButtonEditor(new JTextField(),4));
+    }
+    
+    public JPanel getJPanel(){
+        return jConferenceListPnl;
+    }
+    
+    public JTable getJTable(){
+        return jTable;
+    }
+    
     private void filter() {
         FullNameFilter();
         userNameFilter();
@@ -60,6 +97,7 @@ public class UsersUI extends javax.swing.JPanel {
 
         }
     }
+    
 
     private void blockedFilter() {
         int index = jBlockCB.getSelectedIndex();
@@ -167,21 +205,17 @@ public class UsersUI extends javax.swing.JPanel {
         list = UserBus.getAllUser();
         Collections.reverse(list);
         filter();
+        jConferenceListPnl.setPreferredSize(new Dimension(0,0));
         DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
         for (int i = tm.getRowCount() - 1; i >= 0; i--) {
             tm.removeRow(i);
         }
 
         for (int i = 0; i < list.size(); i++) {
-            tm.addRow(new Object[]{i + 1, list.get(i).getName(), list.get(i).getAccount().getUserName(), list.get(i).getEmail(), list.get(i), list.get(i)});
+            tm.addRow(new Object[]{i + 1, list.get(i).getName(), list.get(i).getAccount().getUserName(), list.get(i).getEmail(), UserConferenceBus.getListUserConferenceIsAcceptedByUser(list.get(i)).size(), list.get(i), list.get(i)});
         }
 
         jTable.setModel(tm);
-        jTable.getColumnModel().getColumn(5).setCellRenderer(new BlockButtonRenderer());
-        jTable.getColumnModel().getColumn(5).setCellEditor(new BlockButtonEditor(new JTextField()));
-        jTable.getColumnModel().getColumn(4).setCellRenderer(new ConferenceUserRenderer());
-        jTable.getColumnModel().getColumn(4).setCellEditor(new ConferenceUserButtonEditor(new JTextField()));
-        jTable.setAutoCreateRowSorter(true);
 
     }
 
@@ -219,8 +253,13 @@ public class UsersUI extends javax.swing.JPanel {
         jPosition = new javax.swing.JTextField();
         jNextbtn = new javax.swing.JLabel();
         jLastbtn = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
+        jConferenceListPnl = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -482,10 +521,12 @@ public class UsersUI extends javax.swing.JPanel {
 
         jData.add(jPagination, java.awt.BorderLayout.SOUTH);
 
+        jPanel6.setLayout(new java.awt.BorderLayout());
+
         jScrollPane1.setOpaque(false);
 
         jTable.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Full Name", "User Name", "Email", "Conferences", "Blocked"}) {
+        DefaultTableModel tm = new DefaultTableModel(new Object[0][], new String[]{"STT", "Full Name", "User Name", "Email", "Number", "Conferences", "Blocked"}) {
             @Override
             public Class<?> getColumnClass(int col) {
                 //here it really returns the right column class (Integer.class)
@@ -497,7 +538,14 @@ public class UsersUI extends javax.swing.JPanel {
                 return retVal ;
             }
         };
+        jTable.getTableHeader().setOpaque(true);
+        jTable.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 16));
         jTable.setModel(tm);
+        jTable.getColumnModel().getColumn(6).setCellRenderer(new BlockButtonRenderer());
+        jTable.getColumnModel().getColumn(6).setCellEditor(new BlockButtonEditor(new JTextField()));
+        jTable.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer("Conference List"));
+        jTable.getColumnModel().getColumn(5).setCellEditor(new ConferenceUserButtonEditor(new JTextField()));
+        jTable.setAutoCreateRowSorter(true);
         jTable.setFocusable(false);
         jTable.setGridColor(new java.awt.Color(153, 153, 255));
         jTable.setIntercellSpacing(new java.awt.Dimension(0, 0));
@@ -509,7 +557,58 @@ public class UsersUI extends javax.swing.JPanel {
         jTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable);
 
-        jData.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanel6.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jConferenceListPnl.setPreferredSize(new java.awt.Dimension(10, 0));
+        jConferenceListPnl.setLayout(new java.awt.BorderLayout());
+
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Conference List");
+        jLabel3.setPreferredSize(new java.awt.Dimension(31, 25));
+        jConferenceListPnl.add(jLabel3, java.awt.BorderLayout.NORTH);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Conference Name", "Organized date", "Detail"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setRowHeight(30);
+        jScrollPane2.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(400);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(200);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
+        }
+
+        jConferenceListPnl.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        jPanel6.add(jConferenceListPnl, java.awt.BorderLayout.SOUTH);
+
+        jData.add(jPanel6, java.awt.BorderLayout.CENTER);
 
         add(jData, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -662,6 +761,7 @@ public class UsersUI extends javax.swing.JPanel {
     private javax.swing.JLabel jBrief;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jConferenceCB;
+    private javax.swing.JPanel jConferenceListPnl;
     private javax.swing.JPanel jData;
     private javax.swing.JLabel jDescriptionPag;
     private javax.swing.JLabel jFirstbtn;
@@ -669,6 +769,7 @@ public class UsersUI extends javax.swing.JPanel {
     private javax.swing.JPanel jHeader;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLastbtn;
     private javax.swing.JLabel jNextbtn;
     private javax.swing.JPanel jOption;
@@ -679,11 +780,14 @@ public class UsersUI extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JTextField jPosition;
     private javax.swing.JLabel jPrebtn;
     private javax.swing.JLabel jResetbtn;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jUserNameTF;
     // End of variables declaration//GEN-END:variables
 }

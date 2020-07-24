@@ -2,11 +2,11 @@ package ComponentUI;
 
 import Business.UserConferenceBus;
 import MainScreenUI.MainScreen;
-import UserUI.Register_DetailConference;
 import POJO.Conference;
 import POJO.User;
 import java.awt.Color;
 import java.awt.Image;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -241,17 +241,17 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
 
     private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
         // TODO add your handling code here:
-        MainScreen.getInstance().changeDetailConference(conference);
+        MainScreen.getInstance().changeDetailConference(conference, 1);
     }//GEN-LAST:event_formMouseReleased
 
     private void jPanel2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseReleased
         // TODO add your handling code here:
-        MainScreen.getInstance().changeDetailConference(conference);
+        MainScreen.getInstance().changeDetailConference(conference, 1);
     }//GEN-LAST:event_jPanel2MouseReleased
 
     private void jNameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jNameMousePressed
         // TODO add your handling code here:
-        MainScreen.getInstance().changeDetailConference(conference);
+        MainScreen.getInstance().changeDetailConference(conference, 1);
     }//GEN-LAST:event_jNameMousePressed
 
     private void jPanel2MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseMoved
@@ -296,11 +296,12 @@ public class ConferenceRendererCard extends javax.swing.JPanel {
 
     private void jPlaceMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPlaceMousePressed
         // TODO add your handling code here:
-        MainScreen.getInstance().changeDetailConference(conference);
+        MainScreen.getInstance().changeDetailConference(conference, 1);
     }//GEN-LAST:event_jPlaceMousePressed
 
     void initData() {
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource(conference.getImage()));
+        String filePath = new File("").getAbsolutePath() + "\\Picture\\" + conference.getImage();
+        ImageIcon imageIcon = new ImageIcon(filePath);
         Image image = imageIcon.getImage().getScaledInstance(350, 150, Image.SCALE_SMOOTH);
         jIcon.setIcon(new ImageIcon(image));
         jName.setText(conference.getName());

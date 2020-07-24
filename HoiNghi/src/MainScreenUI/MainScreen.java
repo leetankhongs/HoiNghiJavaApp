@@ -5,6 +5,8 @@
  */
 package MainScreenUI;
 
+import Dialog.LoginDialog;
+import Dialog.RegisterDialog;
 import ContentUI.DetailConference;
 import Business.AccountBus;
 import Business.UserBus;
@@ -15,8 +17,6 @@ import ContentUI.Statistic;
 import ContentUI.UserInformation;
 import ContentUI.UsersUI;
 import DAO.AccountDao;
-import Dialog.LoginDialog;
-import Dialog.RegisterDialog;
 import POJO.Account;
 import POJO.Conference;
 import POJO.User;
@@ -133,7 +133,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         jUsersPnl.setVisible(false);
         jInformationPnl.setVisible(false);
-//        jConferencesPnl.setVisible(false);
+        jConferencesPnl.setVisible(false);
         jStatisticPnl.setVisible(false);
 
         setColorClicked(jHomePnl);
@@ -916,16 +916,45 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jUsersPnl;
     // End of variables declaration//GEN-END:variables
 
-    public void changeDetailConference(Conference conference) {
+    public void changeDetailConference(Conference conference, int type) {
         jCardLayout.removeAll();
-        jCardLayout.add(new DetailConference(conference, this));
+        jCardLayout.add(new DetailConference(conference, this, type));
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }
 
     public void backToListConference() {
+        listConference.resetData();
+
         jCardLayout.removeAll();
         jCardLayout.add(listConference);
+        jCardLayout.repaint();
+        jCardLayout.revalidate();
+    }
+
+    public void backToStatistic() {
+        statistic.resetData();
+
+        jCardLayout.removeAll();
+        jCardLayout.add(statistic);
+        jCardLayout.repaint();
+        jCardLayout.revalidate();
+    }
+
+    public void backToConferenceUI() {
+        conferenceUI.resetData();
+
+        jCardLayout.removeAll();
+        jCardLayout.add(conferenceUI);
+        jCardLayout.repaint();
+        jCardLayout.revalidate();
+    }
+
+    public void backToUserUI() {
+        usersUI.resetData();
+
+        jCardLayout.removeAll();
+        jCardLayout.add(usersUI);
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }
@@ -955,4 +984,5 @@ public class MainScreen extends javax.swing.JFrame {
         jCardLayout.repaint();
         jCardLayout.revalidate();
     }
+
 }

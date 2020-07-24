@@ -23,7 +23,7 @@ public class UserDao {
         Session session = NewHibernateUtil.getSessionFactory().openSession();
        
         try{
-            String hql = "select user from User user";
+            String hql = "select user from User user where user.isAdmin = 0";
             Query query = session.createQuery(hql);
             list = query.list();
         }finally{
