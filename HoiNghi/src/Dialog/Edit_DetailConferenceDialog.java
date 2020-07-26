@@ -258,6 +258,11 @@ public class Edit_DetailConferenceDialog extends java.awt.Dialog {
 
         jCancelbtn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jCancelbtn.setText("Cancel");
+        jCancelbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jCancelbtnMousePressed(evt);
+            }
+        });
         jPanel5.add(jCancelbtn);
 
         add(jPanel5, java.awt.BorderLayout.PAGE_END);
@@ -275,7 +280,12 @@ public class Edit_DetailConferenceDialog extends java.awt.Dialog {
 
     private void jEditbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jEditbtnMouseReleased
         // TODO add your handling code here:
-        new NewConferenceDialog(MainScreen.getInstance(), true, conference, this).setVisible(true);
+        if (conference.getStartTime().compareTo(new Date()) <= 0) {
+            JOptionPane.showMessageDialog(this, "This conference has already been organized");
+        } else {
+            new NewConferenceDialog(MainScreen.getInstance(), true, conference, this).setVisible(true);
+        }
+
     }//GEN-LAST:event_jEditbtnMouseReleased
 
     private void jEditbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEditbtnActionPerformed
@@ -305,6 +315,11 @@ public class Edit_DetailConferenceDialog extends java.awt.Dialog {
 
         MainScreen.getInstance().resetConferenceUI();
     }//GEN-LAST:event_jDeletebtnMousePressed
+
+    private void jCancelbtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCancelbtnMousePressed
+            // TODO add your handling code here:
+            setVisible(false);
+    }//GEN-LAST:event_jCancelbtnMousePressed
 
     /**
      * @param args the command line arguments

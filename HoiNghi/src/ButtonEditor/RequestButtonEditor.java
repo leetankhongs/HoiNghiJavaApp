@@ -17,6 +17,9 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import MainScreenUI.MainScreen;
+import java.util.Date;
+import javassist.compiler.TokenId;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -60,7 +63,11 @@ public class RequestButtonEditor extends DefaultCellEditor {
     @Override
     public Object getCellEditorValue() {
         if (clicked) {
-            new NewRequestDialog(MainScreen.getInstance(), true, conference).setVisible(true);
+            if (conference.getStartTime().compareTo(new Date()) <= 0) {
+                JOptionPane.showMessageDialog(MainScreen.getInstance(), "This conference has already been organized");
+            } else {
+                new NewRequestDialog(MainScreen.getInstance(), true, conference).setVisible(true);
+            }
         }
 
         clicked = false;

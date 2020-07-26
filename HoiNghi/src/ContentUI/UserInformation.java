@@ -11,6 +11,7 @@ import POJO.Account;
 import POJO.User;
 import javax.swing.JOptionPane;
 import MainScreenUI.MainScreen;
+
 /**
  *
  * @author ADMIN
@@ -26,10 +27,10 @@ public class UserInformation extends javax.swing.JPanel {
 
     public UserInformation() {
         initComponents();
-        
+
     }
-    
-    public void resetData(){
+
+    public void resetData() {
         this.user = MainScreen.getInstance().getUser();
         jCancelbtn.setVisible(false);
         jNameTF.setText(user.getName());
@@ -121,6 +122,11 @@ public class UserInformation extends javax.swing.JPanel {
         jCancelbtn.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jCancelbtn.setText("Cancel");
         jCancelbtn.setPreferredSize(new java.awt.Dimension(100, 40));
+        jCancelbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jCancelbtnMouseReleased(evt);
+            }
+        });
         jPanel3.add(jCancelbtn);
 
         jEditbtn.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -176,6 +182,11 @@ public class UserInformation extends javax.swing.JPanel {
         jCancelbtn1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jCancelbtn1.setText("Cancel");
         jCancelbtn1.setPreferredSize(new java.awt.Dimension(100, 40));
+        jCancelbtn1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jCancelbtn1MouseReleased(evt);
+            }
+        });
         jPanel4.add(jCancelbtn1);
 
         jChangebtn.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -234,12 +245,30 @@ public class UserInformation extends javax.swing.JPanel {
             jNameTF.setEditable(true);
             jEmailTF.setEditable(true);
         } else {
-            editInformation = false;
-            user.setName(jNameTF.getText());
-            user.setEmail(jEmailTF.getText());
-            UserBus.updateUserInformation(user);
-            jEditbtn.setText("Edit");
-            jCancelbtn.setVisible(false);
+            
+            String[] options = {"OK", "Cancel"};
+            int result = JOptionPane.showOptionDialog(
+                    this,
+                    "Would you like to make changes?",
+                    "OPtion",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null, //no custom icon
+                    options, //button titles
+                    options[0] //default button
+            );
+
+            if (result == JOptionPane.YES_OPTION) {
+                editInformation = false;
+                user.setName(jNameTF.getText());
+                user.setEmail(jEmailTF.getText());
+                UserBus.updateUserInformation(user);
+                jEditbtn.setText("Edit");
+                jCancelbtn.setVisible(false);
+                jNameTF.setEditable(false);
+                jEmailTF.setEditable(false);
+            }
+
         }
 
     }//GEN-LAST:event_jEditbtnMousePressed
@@ -255,35 +284,76 @@ public class UserInformation extends javax.swing.JPanel {
             jConfirmPasswordTF.setEditable(true);
         } else {
 
-            if (AccountBus.checkAccount(user.getAccount().getUserName(), jOldPasswordTF.getText()) != 1) {
-                JOptionPane.showMessageDialog(this, "Old password is not correct");
-                return;
-            }
+            String[] options = {"OK", "Cancel"};
+            int choose = JOptionPane.showOptionDialog(
+                    this,
+                    "Would you like to make changes?",
+                    "OPtion",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null, //no custom icon
+                    options, //button titles
+                    options[0] //default button
+            );
 
-            if (jNewPasswordTF.getText().compareTo(jConfirmPasswordTF.getText()) != 0) {
-                JOptionPane.showMessageDialog(this, "New passwords are not match");
-                return;
-            }
-            
-            boolean result = AccountBus.changePassword(user.getAccount().getUserName(), jNewPasswordTF.getText());
-            
-            if(result)
-                JOptionPane.showMessageDialog(this, "Success");
-            else
-                JOptionPane.showMessageDialog(this, "fail");
-            
-            jChangebtn.setText("Change");
-            jCancelbtn1.setVisible(false);
-            jOldPasswordTF.setEditable(true);
-            jNewPasswordTF.setEditable(true);
-            jConfirmPasswordTF.setEditable(true);
-            jOldPasswordTF.setText("");
-            jNewPasswordTF.setText("");
-            jConfirmPasswordTF.setText("");
-            editInformation = false;
+            if (choose == JOptionPane.YES_OPTION) {
+                if (AccountBus.checkAccount(user.getAccount().getUserName(), jOldPasswordTF.getText()) != 1) {
+                    JOptionPane.showMessageDialog(this, "Old password is not correct");
+                    return;
+                }
 
+                if (jNewPasswordTF.getText().compareTo(jConfirmPasswordTF.getText()) != 0) {
+                    JOptionPane.showMessageDialog(this, "New passwords are not match");
+                    return;
+                }
+
+                if (jNewPasswordTF.getText().length() < 6) {
+                    JOptionPane.showMessageDialog(this, "Password must be at least 6 characters");
+                    return;
+                }
+
+                boolean result = AccountBus.changePassword(user.getAccount().getUserName(), jNewPasswordTF.getText());
+
+                if (result) {
+                    JOptionPane.showMessageDialog(this, "Success");
+                } else {
+                    JOptionPane.showMessageDialog(this, "fail");
+                }
+
+                jChangebtn.setText("Change");
+                jCancelbtn1.setVisible(false);
+                jOldPasswordTF.setEditable(false);
+                jNewPasswordTF.setEditable(false);
+                jConfirmPasswordTF.setEditable(false);
+                jOldPasswordTF.setText("");
+                jNewPasswordTF.setText("");
+                jConfirmPasswordTF.setText("");
+                changePassword = false;
+            }
         }
     }//GEN-LAST:event_jChangebtnMouseReleased
+
+    private void jCancelbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCancelbtnMouseReleased
+        // TODO add your handling code here:
+        editInformation = false;
+        jEditbtn.setText("Edit");
+        jCancelbtn.setVisible(false);
+        jNameTF.setEditable(false);
+        jEmailTF.setEditable(false);
+    }//GEN-LAST:event_jCancelbtnMouseReleased
+
+    private void jCancelbtn1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCancelbtn1MouseReleased
+        // TODO add your handling code here:
+        jChangebtn.setText("Change");
+        jCancelbtn1.setVisible(false);
+        jOldPasswordTF.setEditable(false);
+        jNewPasswordTF.setEditable(false);
+        jConfirmPasswordTF.setEditable(false);
+        jOldPasswordTF.setText("");
+        jNewPasswordTF.setText("");
+        jConfirmPasswordTF.setText("");
+        changePassword = false;
+    }//GEN-LAST:event_jCancelbtn1MouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -46,7 +46,7 @@ public class DetailConferenceUserDialog extends java.awt.Dialog {
         Place place = conference.getPlace();
         jPlaceNameTF.setText(place.getName());
         jAddressTF.setText(place.getAddress());
-        jCapacityTF.setText(place.getCapacity().toString());
+        jCapacityTF.setText(String.valueOf(conference.getParticipants()));
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         jDateTF.setText(dateFormat.format(conference.getStartTime()));
@@ -262,6 +262,11 @@ public class DetailConferenceUserDialog extends java.awt.Dialog {
 
         jCancelbtn.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jCancelbtn.setText("Cancel");
+        jCancelbtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jCancelbtnMouseReleased(evt);
+            }
+        });
         jPanel5.add(jCancelbtn);
 
         add(jPanel5, java.awt.BorderLayout.PAGE_END);
@@ -301,6 +306,11 @@ public class DetailConferenceUserDialog extends java.awt.Dialog {
         setVisible(false);
         MainScreen.getInstance().resetStatistic();
     }//GEN-LAST:event_jCancelRegistrationbtnMouseReleased
+
+    private void jCancelbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCancelbtnMouseReleased
+        // TODO add your handling code here:
+        setVisible(false);
+    }//GEN-LAST:event_jCancelbtnMouseReleased
 
     /**
      * @param args the command line arguments

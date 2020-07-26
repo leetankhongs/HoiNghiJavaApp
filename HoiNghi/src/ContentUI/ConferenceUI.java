@@ -278,7 +278,7 @@ public class ConferenceUI extends javax.swing.JPanel {
         jComboBox1.setBackground(new java.awt.Color(224, 224, 250));
         jComboBox1.setEditable(true);
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
         jComboBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 0, 0, 5));
         jComboBox1.setPreferredSize(new java.awt.Dimension(70, 50));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -589,11 +589,11 @@ public class ConferenceUI extends javax.swing.JPanel {
         requestButtonEditor.setConferenceUI(this);
         jTable.getColumnModel().getColumn(5).setCellEditor(requestButtonEditor);
         jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(1).setPreferredWidth(400);
-        jTable.getColumnModel().getColumn(2).setPreferredWidth(200);
-        jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(500);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(175);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(75);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(75);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(75);
         jTable.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer("Detail"));
         jTable.getColumnModel().getColumn(4).setCellEditor(new DetailConferenceButtonEditor(new JTextField(),3));
         jTable.getColumnModel().getColumn(5).setCellRenderer(new RequestButtonRenderer());

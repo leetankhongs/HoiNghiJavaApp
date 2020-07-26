@@ -38,6 +38,11 @@ public class DetailConference extends javax.swing.JPanel {
         this.mainScreen = mainScreen;
         this.conference = conference;
         this.page = page;
+        resetData();
+    }
+
+    void resetData() {
+
         ImageIcon imageIcon = new ImageIcon(new File("").getAbsolutePath() + "\\Picture\\" + conference.getImage());
         Image image = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
         jImage.setIcon(new ImageIcon(image));
@@ -55,16 +60,16 @@ public class DetailConference extends javax.swing.JPanel {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         jStartTF.setText(timeFormat.format(conference.getStartTime()));
         jEndTF.setText(timeFormat.format(conference.getEndTime()));
-        
+
         List<UserConference> userConferenceList = UserConferenceBus.getListUserConferenceIsNotDeclinedByConference(conference);
-        
+
         DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
         for (int i = tm.getRowCount() - 1; i >= 0; i--) {
             tm.removeRow(i);
         }
 
         for (int i = 0; i < userConferenceList.size(); i++) {
-            tm.addRow(new Object[]{i + 1, userConferenceList.get(i).getUser().getName(), userConferenceList.get(i).getUser().getAccount().getUserName(), userConferenceList.get(i).getUser().getEmail(), userConferenceList.get(i).getIsAccepted() == 1? "is Accepted" : "is Watting"});
+            tm.addRow(new Object[]{i + 1, userConferenceList.get(i).getUser().getName(), userConferenceList.get(i).getUser().getAccount().getUserName(), userConferenceList.get(i).getUser().getEmail(), userConferenceList.get(i).getIsAccepted() == 1 ? "is Accepted" : "is Watting"});
         }
     }
 
@@ -330,7 +335,7 @@ public class DetailConference extends javax.swing.JPanel {
         jPanel7.add(jPanel1);
 
         jAttendList.setFont(new java.awt.Font("Times New Roman", 0, 24)); // NOI18N
-        jAttendList.setText(" List of participants");
+        jAttendList.setText("Attendee List ");
         jAttendList.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
         jPanel7.add(jAttendList);
 
@@ -399,24 +404,25 @@ public class DetailConference extends javax.swing.JPanel {
             }
         } else {
             UserConference userConference = new UserConference(conference, mainScreen.getUser());
-            
-            if(conference.getStartTime().compareTo(new Date()) <= 0)
-            {
+
+            if (conference.getStartTime().compareTo(new Date()) <= 0) {
                 JOptionPane.showMessageDialog(this, "This conference has already been organized");
                 return;
             }
-                
+
             if (UserConferenceBus.getUserConferenceInformation(userConference.getId()) != null) {
-                JOptionPane.showMessageDialog(this, "Bạn đã đăng kí rồi");
+                JOptionPane.showMessageDialog(this, "You have already subscribed to this conference");
             } else {
                 int result = JOptionPane.showConfirmDialog(mainScreen, "Do you want to register this conference?");
-               
+
                 if (result == JOptionPane.YES_OPTION) {
                     if (UserConferenceBus.getTheNumberOfUserIsNotDeclined(conference) >= conference.getParticipants()) {
                         JOptionPane.showMessageDialog(mainScreen, "Number of subscribers exceeded limit");
                     } else {
                         UserConferenceBus.insertNewUserConference(new UserConference(conference, mainScreen.getUser()));
                         JOptionPane.showMessageDialog(mainScreen, "Success");
+                        resetData();
+
                     }
 
                 }
@@ -428,8 +434,8 @@ public class DetailConference extends javax.swing.JPanel {
 
     private void jBackbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBackbtnMouseReleased
         // TODO add your handling code here:
-        switch(page){
-            case 1: 
+        switch (page) {
+            case 1:
                 mainScreen.backToListConference();
                 break;
             case 2:

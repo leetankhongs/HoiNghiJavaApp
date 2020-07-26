@@ -301,9 +301,8 @@ public class Statistic extends javax.swing.JPanel {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jComboBox1.setEditable(true);
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(70, 50));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -389,7 +388,7 @@ public class Statistic extends javax.swing.JPanel {
 
         jBrief.setFont(new java.awt.Font("Times New Roman", 1, 28)); // NOI18N
         jBrief.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jBrief.setText("List of registered conferences");
+        jBrief.setText("Registered Conference List ");
         jBrief.setPreferredSize(new java.awt.Dimension(78, 60));
         jHeader.add(jBrief, java.awt.BorderLayout.NORTH);
 
@@ -535,12 +534,12 @@ public class Statistic extends javax.swing.JPanel {
         jTable.getColumnModel().getColumn(6).setCellEditor(new Cancel_RegisterUserButtonEditor(new JTextField()));
         jTable.setAutoCreateRowSorter(true);
         jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-        jTable.getColumnModel().getColumn(1).setPreferredWidth(200);
-        jTable.getColumnModel().getColumn(2).setPreferredWidth(150);
-        jTable.getColumnModel().getColumn(3).setPreferredWidth(150);
-        jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(6).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(350);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(125);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(75);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(75);
+        jTable.getColumnModel().getColumn(6).setPreferredWidth(75);
         jTable.setFocusable(false);
         jTable.setGridColor(new java.awt.Color(153, 153, 255));
         jTable.setIntercellSpacing(new java.awt.Dimension(0, 0));

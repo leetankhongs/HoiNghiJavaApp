@@ -205,6 +205,7 @@ public class UsersUI extends javax.swing.JPanel {
         list = UserBus.getAllUser();
         Collections.reverse(list);
         filter();
+        System.out.println("Vo");
         jConferenceListPnl.setPreferredSize(new Dimension(0,0));
         DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
         for (int i = tm.getRowCount() - 1; i >= 0; i--) {
@@ -296,7 +297,7 @@ public class UsersUI extends javax.swing.JPanel {
         jPanel3.add(jResetbtn, java.awt.BorderLayout.NORTH);
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
         jComboBox1.setPreferredSize(new java.awt.Dimension(70, 50));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

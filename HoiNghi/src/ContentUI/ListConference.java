@@ -47,10 +47,20 @@ public class ListConference extends javax.swing.JPanel {
     private int minPag = 0;
 
     private void filter() {
+        isDeletedFilter();
         organizedDateFilter();
         ConferenceNameFilter();
 
         paginationFilter();
+    }
+    
+    private void isDeletedFilter(){
+        for (int i = listConference.size() - 1; i >= 0; i--) {
+            if (listConference.get(i).getIsDelete() == 1) {
+                listConference.remove(i);
+            }
+
+        }
     }
 
     private void ConferenceNameFilter() {

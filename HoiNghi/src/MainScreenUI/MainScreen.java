@@ -191,8 +191,6 @@ public class MainScreen extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLog = new javax.swing.JPanel();
         jExitPnl = new javax.swing.JPanel();
-        jButtonExitPnl = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jName = new javax.swing.JLabel();
         jLoginbtn = new javax.swing.JPanel();
@@ -316,7 +314,7 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("List Conference");
+        jLabel12.setText("Conference List");
         jListConferencePnl.add(jLabel12, java.awt.BorderLayout.CENTER);
 
         jOptionMenu.add(jListConferencePnl);
@@ -366,7 +364,7 @@ public class MainScreen extends javax.swing.JFrame {
         jInformationPnl.setLayout(new java.awt.BorderLayout());
 
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Call-Statistics-icon.png"))); // NOI18N
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Male-User-icon-2.png"))); // NOI18N
         jLabel14.setPreferredSize(new java.awt.Dimension(50, 24));
         jInformationPnl.add(jLabel14, java.awt.BorderLayout.WEST);
 
@@ -493,33 +491,6 @@ public class MainScreen extends javax.swing.JFrame {
         jExitPnl.setBackground(new java.awt.Color(58, 1, 108));
         jExitPnl.setPreferredSize(new java.awt.Dimension(40, 30));
         jExitPnl.setLayout(new java.awt.BorderLayout());
-
-        jButtonExitPnl.setBackground(new java.awt.Color(58, 1, 108));
-        jButtonExitPnl.setPreferredSize(new java.awt.Dimension(30, 30));
-        jButtonExitPnl.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jButtonExitPnlMouseMoved(evt);
-            }
-        });
-        jButtonExitPnl.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButtonExitPnlMouseExited(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jButtonExitPnlMouseReleased(evt);
-            }
-        });
-        jButtonExitPnl.setLayout(new java.awt.BorderLayout());
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("X");
-        jLabel2.setPreferredSize(new java.awt.Dimension(30, 29));
-        jButtonExitPnl.add(jLabel2, java.awt.BorderLayout.EAST);
-
-        jExitPnl.add(jButtonExitPnl, java.awt.BorderLayout.EAST);
-
         jLog.add(jExitPnl, java.awt.BorderLayout.NORTH);
 
         jPanel4.setBackground(new java.awt.Color(58, 1, 108));
@@ -529,7 +500,7 @@ public class MainScreen extends javax.swing.JFrame {
         jName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jName.setForeground(new java.awt.Color(255, 255, 255));
         jName.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jName.setPreferredSize(new java.awt.Dimension(250, 40));
+        jName.setPreferredSize(new java.awt.Dimension(600, 40));
         jPanel4.add(jName);
 
         jLoginbtn.setBackground(new java.awt.Color(58, 1, 108));
@@ -695,26 +666,6 @@ public class MainScreen extends javax.swing.JFrame {
             setColorMoved(jUsersPnl);
     }//GEN-LAST:event_jUsersPnlMouseMoved
 
-    private void jButtonExitPnlMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonExitPnlMouseExited
-        // TODO add your handling code here:
-        resetColorUnClicked(jButtonExitPnl);
-    }//GEN-LAST:event_jButtonExitPnlMouseExited
-
-    private void jButtonExitPnlMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonExitPnlMouseMoved
-        // TODO add your handling code here:
-        setColorClicked(jButtonExitPnl);
-    }//GEN-LAST:event_jButtonExitPnlMouseMoved
-
-    private void jButtonExitPnlMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonExitPnlMouseReleased
-        // TODO add your handling code here:
-        ImageIcon imageIcon = new ImageIcon(getClass().getResource("/Picture/Delete.png"));
-
-        int respone = JOptionPane.showConfirmDialog(this, "Do you want to continue action?", "Exit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, imageIcon);
-
-        if (respone == JOptionPane.YES_OPTION)
-            System.exit(0);
-    }//GEN-LAST:event_jButtonExitPnlMouseReleased
-
     private void jButtonMenuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonMenuMouseExited
         // TODO add your handling code here:
         resetColorUnClicked(jButtonMenu);
@@ -874,7 +825,6 @@ public class MainScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jAuthor;
-    private javax.swing.JPanel jButtonExitPnl;
     private javax.swing.JPanel jButtonMenu;
     private javax.swing.JPanel jCardLayout;
     private javax.swing.JPanel jConferencesPnl;
@@ -891,7 +841,6 @@ public class MainScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -951,7 +900,6 @@ public class MainScreen extends javax.swing.JFrame {
     }
 
     public void backToUserUI() {
-        usersUI.resetData();
 
         jCardLayout.removeAll();
         jCardLayout.add(usersUI);

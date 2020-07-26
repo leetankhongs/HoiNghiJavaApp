@@ -28,21 +28,23 @@ public class UserBus {
         String format = "%1$010d";
 
         boolean isExist = false;
-        for (int i = 1;; i++) {
+        for(int i = 1 ;; i++)
+        {
             isExist = false;
-            for (int j = 0; j < list.size(); j++) {
+            for(int j = 0; j < list.size(); j++){
                 if (list.get(j).getId().compareTo(String.format(format, i)) == 0) {
                     isExist = true;
                     break;
                 }
             }
-
-            if (isExist == false) {
+            
+            if(isExist == false){
                 user.setId(String.format(format, i));
                 break;
             }
         }
 
+        
         return UserDao.insertNewUser(user);
     }
 

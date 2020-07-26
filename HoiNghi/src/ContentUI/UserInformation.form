@@ -148,6 +148,9 @@
                   <Dimension value="[100, 40]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jCancelbtnMouseReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jEditbtn">
               <Properties>
@@ -262,6 +265,9 @@
                   <Dimension value="[100, 40]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jCancelbtn1MouseReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jChangebtn">
               <Properties>
