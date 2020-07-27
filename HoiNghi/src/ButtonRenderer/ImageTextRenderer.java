@@ -26,7 +26,7 @@ public class ImageTextRenderer extends JLabel implements ListCellRenderer {
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         if (value != null) {
             Place place = (Place) (value);
-            setText(place.getName() + " | " + place.getAddress());
+            setText(place.getCapacity().toString() + " | " +place.getName() + " | " + place.getAddress());
             return this;
         }
         else

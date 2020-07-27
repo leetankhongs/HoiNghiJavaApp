@@ -267,6 +267,7 @@ public class UserInformation extends javax.swing.JPanel {
                 jCancelbtn.setVisible(false);
                 jNameTF.setEditable(false);
                 jEmailTF.setEditable(false);
+                MainScreen.getInstance().resetFullName(user);
             }
 
         }

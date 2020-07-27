@@ -276,7 +276,6 @@ public class ConferenceUI extends javax.swing.JPanel {
         jPanel1.add(jResetbtn, java.awt.BorderLayout.NORTH);
 
         jComboBox1.setBackground(new java.awt.Color(224, 224, 250));
-        jComboBox1.setEditable(true);
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }));
         jComboBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 0, 0, 5));
@@ -355,7 +354,8 @@ public class ConferenceUI extends javax.swing.JPanel {
 
         jSearchbtn.setBackground(new java.awt.Color(224, 224, 250));
         jSearchbtn.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jSearchbtn.setText("Name");
+        jSearchbtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jSearchbtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Search-icon.png"))); // NOI18N
         jSearchbtn.setOpaque(true);
         jSearchbtn.setPreferredSize(new java.awt.Dimension(100, 13));
         jSearchbtn.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -390,11 +390,6 @@ public class ConferenceUI extends javax.swing.JPanel {
         jSearchText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jSearchTextActionPerformed(evt);
-            }
-        });
-        jSearchText.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jSearchTextKeyTyped(evt);
             }
         });
         jSearchPnl.add(jSearchText, java.awt.BorderLayout.CENTER);
@@ -589,11 +584,11 @@ public class ConferenceUI extends javax.swing.JPanel {
         requestButtonEditor.setConferenceUI(this);
         jTable.getColumnModel().getColumn(5).setCellEditor(requestButtonEditor);
         jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(1).setPreferredWidth(500);
-        jTable.getColumnModel().getColumn(2).setPreferredWidth(175);
-        jTable.getColumnModel().getColumn(3).setPreferredWidth(75);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(400);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
         jTable.getColumnModel().getColumn(4).setPreferredWidth(75);
-        jTable.getColumnModel().getColumn(5).setPreferredWidth(75);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(125);
         jTable.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer("Detail"));
         jTable.getColumnModel().getColumn(4).setCellEditor(new DetailConferenceButtonEditor(new JTextField(),3));
         jTable.getColumnModel().getColumn(5).setCellRenderer(new RequestButtonRenderer());
@@ -625,16 +620,6 @@ public class ConferenceUI extends javax.swing.JPanel {
         for (int i = tm.getRowCount() - 1; i >= 0; i--) {
             tm.removeRow(i);
         }
-
-        RequestButtonEditor requestButtonEditor = new RequestButtonEditor(new JTextField());
-        requestButtonEditor.setConferenceUI(this);
-        jTable.getColumnModel().getColumn(5).setCellEditor(requestButtonEditor);
-        jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(1).setPreferredWidth(500);
-        jTable.getColumnModel().getColumn(2).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(3).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(4).setPreferredWidth(100);
-        jTable.getColumnModel().getColumn(5).setPreferredWidth(100);
 
         for (int i = 0; i < listConference.size(); i++) {
             String status = "";
@@ -687,6 +672,8 @@ public class ConferenceUI extends javax.swing.JPanel {
 
     private void jSearchbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchbtnMouseReleased
         // TODO add your handling code here:
+        jPosition.setText("1");
+        resetData();
     }//GEN-LAST:event_jSearchbtnMouseReleased
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -799,12 +786,6 @@ public class ConferenceUI extends javax.swing.JPanel {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_jSearchTextActionPerformed
-
-    private void jSearchTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSearchTextKeyTyped
-        // TODO add your handling code here:
-        jPosition.setText("1");
-        resetData();
-    }//GEN-LAST:event_jSearchTextKeyTyped
 
     private void jSearchTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchTextFocusGained
         // TODO add your handling code here:

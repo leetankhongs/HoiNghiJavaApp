@@ -8,6 +8,7 @@ package Dialog;
 import ButtonRenderer.ImageTextRenderer;
 import Business.ConferenceBus;
 import Business.PlaceBus;
+import Business.UserBus;
 import MainScreenUI.MainScreen;
 import POJO.Conference;
 import POJO.Place;
@@ -419,67 +420,83 @@ public class NewConferenceDialog extends java.awt.Dialog {
 
     private void jOKBtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jOKBtnMouseReleased
         // TODO add your handling code here:
-        if (edit == false) {
-            if (!fullInformation()) {
-                return;
-            }
+        String[] options = {"OK", "Cancel"};
+        int choose = JOptionPane.showOptionDialog(
+                this,
+                "Would you like to continue?",
+                "OPtion",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, //no custom icon
+                options, //button titles
+                options[0] //default button
+        );
 
-            if (!checkValid(edit)) {
-                return;
-            }
-
-            Place choicePlace = (Place) jPlaceChooser.getSelectedItem();
-            String result = ConferenceBus.insertNewConference(new Conference(choicePlace, jNameText.getText(), jBriefText.getText(), jDetailText.getText(), jImageText.getText(), convert(jDateChooser, jStartTime), convert(jDateChooser, jEndTime), Integer.valueOf(jCapacityTF.getText())));
-
-            if (result != null) {
-                String filePath = new File("").getAbsolutePath() + "\\Picture\\" + jImageText.getText();
-                Path des;
-
-                des = Paths.get(filePath);
-                
-                try {
-                    Files.copy(pathString, des, StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException ex) {
-                    Logger.getLogger(NewConferenceDialog.class.getName()).log(Level.SEVERE, null, ex);
+        if (choose == JOptionPane.YES_OPTION) {
+            if (edit == false) {
+                if (!fullInformation()) {
+                    return;
                 }
-                JOptionPane.showMessageDialog(MainScreen.getInstance(), "Success");
+
+                if (!checkValid(edit)) {
+                    return;
+                }
+
+                Place choicePlace = (Place) jPlaceChooser.getSelectedItem();
+                String result = ConferenceBus.insertNewConference(new Conference(choicePlace, jNameText.getText(), jBriefText.getText(), jDetailText.getText(), jImageText.getText(), convert(jDateChooser, jStartTime), convert(jDateChooser, jEndTime), Integer.valueOf(jCapacityTF.getText())));
+
+                if (result != null) {
+                    String filePath = new File("").getAbsolutePath() + "\\Picture\\" + jImageText.getText();
+                    Path des;
+
+                    des = Paths.get(filePath);
+
+                    try {
+                        Files.copy(pathString, des, StandardCopyOption.REPLACE_EXISTING);
+                    } catch (IOException ex) {
+                        Logger.getLogger(NewConferenceDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    JOptionPane.showMessageDialog(MainScreen.getInstance(), "Success");
+                } else {
+                    JOptionPane.showMessageDialog(MainScreen.getInstance(), "Fail");
+                }
+                MainScreen.getInstance().getConferenceUI().resetData();
+                setVisible(false);
             } else {
-                JOptionPane.showMessageDialog(MainScreen.getInstance(), "Fail");
+                if (!fullInformation()) {
+                    return;
+                }
+
+                if (!checkValid(edit)) {
+                    return;
+                }
+
+                Place choicePlace = (Place) jPlaceChooser.getSelectedItem();
+
+                Conference editConference = ConferenceBus.getConferenceInformation(conference.getId());
+                editConference.setPlace(choicePlace);
+                editConference.setName(jNameText.getText());
+                editConference.setBriefDescription(jBriefText.getText());
+                editConference.setDetailDescription(jDetailText.getText());
+                editConference.setImage(jImageText.getText());
+                editConference.setStartTime(convert(jDateChooser, jStartTime));
+                editConference.setEndTime(convert(jDateChooser, jEndTime));
+                editConference.setParticipants(Integer.valueOf(jCapacityTF.getText()));
+
+                boolean result = ConferenceBus.updateConfereneInformation(editConference);
+
+                if (result) {
+                    JOptionPane.showMessageDialog(this, "Successful Update");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed Update");
+                }
+
+                editDetail.resetData();
+                setVisible(false);
             }
-            MainScreen.getInstance().getConferenceUI().resetData();
-            setVisible(false);
-        } else {
-            if (!fullInformation()) {
-                return;
-            }
-
-            if (!checkValid(edit)) {
-                return;
-            }
-
-            Place choicePlace = (Place) jPlaceChooser.getSelectedItem();
-
-            Conference editConference = ConferenceBus.getConferenceInformation(conference.getId());
-            editConference.setPlace(choicePlace);
-            editConference.setName(jNameText.getText());
-            editConference.setBriefDescription(jBriefText.getText());
-            editConference.setDetailDescription(jDetailText.getText());
-            editConference.setImage(jImageText.getText());
-            editConference.setStartTime(convert(jDateChooser, jStartTime));
-            editConference.setEndTime(convert(jDateChooser, jEndTime));
-            editConference.setParticipants(Integer.valueOf(jCapacityTF.getText()));
-
-            boolean result = ConferenceBus.updateConfereneInformation(editConference);
-
-            if (result) {
-                JOptionPane.showMessageDialog(this, "Successful Update");
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed Update");
-            }
-
-            editDetail.resetData();
-            setVisible(false);
         }
+
+
     }//GEN-LAST:event_jOKBtnMouseReleased
 
     private boolean fullInformation() {

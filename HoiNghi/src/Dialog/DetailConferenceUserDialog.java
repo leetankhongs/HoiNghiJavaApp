@@ -15,6 +15,7 @@ import POJO.UserConferenceId;
 import java.awt.Image;
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -296,11 +297,16 @@ public class DetailConferenceUserDialog extends java.awt.Dialog {
         );
 
         if (result == JOptionPane.YES_OPTION) {
+            if (conference.getStartTime().compareTo(new Date()) <= 0) {
+                JOptionPane.showMessageDialog(this, "This conference has already been organized");
+                return;
+            }
+
             int res = UserConferenceBus.deleteRegistration(conference, mainScreen.getUser());
 
-//            if (res == 1) {
-//                JOptionPane.showConfirmDialog(this, "Cancel Registration Success");
-//            }
+            if (res == 1) {
+                JOptionPane.showMessageDialog(this, "Cancel Registration Success");
+            }
         }
 
         setVisible(false);

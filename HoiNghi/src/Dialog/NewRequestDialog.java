@@ -38,7 +38,7 @@ public class NewRequestDialog extends java.awt.Dialog {
         this.conferenceUI = MainScreen.getInstance().getConferenceUI();
 
         jNameTF.setText(conference.getName());
-        jCapacityTF.setText(conference.getParticipants().toString());
+        jCapacityTF.setText(String.valueOf(UserConferenceBus.getTheNumberOfUserIsNotDeclined(conference)) + "/" + String.valueOf(conference.getParticipants()));
 
         list = UserConferenceBus.getNewRequests(conference);
 
@@ -194,8 +194,9 @@ public class NewRequestDialog extends java.awt.Dialog {
      * Closes the dialog
      */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
-        if(edit == true)
+        if (edit == true) {
             MainScreen.getInstance().resetConferenceUI();
+        }
         setVisible(false);
         dispose();
     }//GEN-LAST:event_closeDialog
@@ -223,17 +224,20 @@ public class NewRequestDialog extends java.awt.Dialog {
             if (checkedPositions.size() == 0) {
                 return;
             }
-            
+
             int count = 0;
             for (int i = 0; i < checkedPositions.size(); i++) {
-                if(UserConferenceBus.acceptRequest(list.get(checkedPositions.get(i) - 1).getId()) == true)
+                if (UserConferenceBus.acceptRequest(list.get(checkedPositions.get(i) - 1).getId()) == true) {
                     count++;
+                }
             }
 
-            if(count == checkedPositions.size())
+            if (count == checkedPositions.size()) {
                 JOptionPane.showMessageDialog(this, "Success");
-            else
+            } else {
                 JOptionPane.showMessageDialog(this, "false");
+            }
+
             edit = true;
             resetNewRequests();
         }
@@ -255,17 +259,20 @@ public class NewRequestDialog extends java.awt.Dialog {
         if (checkedPositions.size() == 0) {
             return;
         }
-        
-        int count = 0;
-            for (int i = 0; i < checkedPositions.size(); i++) {
-                if(UserConferenceBus.declineRequest(list.get(checkedPositions.get(i) -1).getId()) == true)
-                    count++;
-            }
 
-            if(count == checkedPositions.size())
-                JOptionPane.showMessageDialog(this, "Success");
-            else
-                JOptionPane.showMessageDialog(this, "false");
+        int count = 0;
+        for (int i = 0; i < checkedPositions.size(); i++) {
+            if (UserConferenceBus.declineRequest(list.get(checkedPositions.get(i) - 1).getId()) == true) {
+                count++;
+            }
+        }
+
+        if (count == checkedPositions.size()) {
+            JOptionPane.showMessageDialog(this, "Success");
+        } else {
+            JOptionPane.showMessageDialog(this, "false");
+        }
+
         edit = true;
         resetNewRequests();
     }//GEN-LAST:event_jDeclineMousePressed
@@ -274,17 +281,13 @@ public class NewRequestDialog extends java.awt.Dialog {
         list = UserConferenceBus.getNewRequests(conference);
         DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
 
-        for (int i = tm.getRowCount() - 1; i >= 0; i--) {
-            tm.removeRow(i);
-        }
+        tm.setRowCount(0);
 
         for (int i = 0; i < list.size(); i++) {
             tm.addRow(new Object[]{i + 1, list.get(i).getUser().getName(), list.get(i).getUser().getEmail(), false});
         }
 
         jTable.setModel(tm);
-        repaint();
-        revalidate();
     }
 
     /**

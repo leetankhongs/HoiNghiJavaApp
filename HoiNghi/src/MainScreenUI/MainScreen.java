@@ -933,4 +933,8 @@ public class MainScreen extends javax.swing.JFrame {
         jCardLayout.revalidate();
     }
 
+    public void resetFullName(User temp) {
+        jName.setText("Hello " + temp.getName());
+    }
+
 }

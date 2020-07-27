@@ -44,14 +44,14 @@ public class UsersUI extends javax.swing.JPanel {
     List<User> list;
     private int maxPag;
     private User preUser = null;
-    
-    public User getPreUser(){
+
+    public User getPreUser() {
         return preUser;
     }
 
-    public void setPreUser(User preUser){
+    public void setPreUser(User preUser) {
         this.preUser = preUser;
-        
+
         List<UserConference> conferenceList = UserConferenceBus.getListUserConferenceIsAcceptedByUser(preUser);
         DefaultTableModel tm = (DefaultTableModel) jTable1.getModel();
         for (int i = tm.getRowCount() - 1; i >= 0; i--) {
@@ -63,19 +63,19 @@ public class UsersUI extends javax.swing.JPanel {
         }
 
         jTable1.setModel(tm);
-        
+
         jTable1.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer("Detail"));
-        jTable1.getColumnModel().getColumn(3).setCellEditor(new DetailConferenceButtonEditor(new JTextField(),4));
+        jTable1.getColumnModel().getColumn(3).setCellEditor(new DetailConferenceButtonEditor(new JTextField(), 4));
     }
-    
-    public JPanel getJPanel(){
+
+    public JPanel getJPanel() {
         return jConferenceListPnl;
     }
-    
-    public JTable getJTable(){
+
+    public JTable getJTable() {
         return jTable;
     }
-    
+
     private void filter() {
         FullNameFilter();
         userNameFilter();
@@ -97,7 +97,6 @@ public class UsersUI extends javax.swing.JPanel {
 
         }
     }
-    
 
     private void blockedFilter() {
         int index = jBlockCB.getSelectedIndex();
@@ -201,12 +200,21 @@ public class UsersUI extends javax.swing.JPanel {
         resetData();
     }
 
+    public void resetRow(User user) {
+        DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
+        for (int i = tm.getRowCount() - 1; i >= 0; i--) {
+            if (tm.getValueAt(i, 6) == user) {
+                tm.setValueAt(UserConferenceBus.getListUserConferenceIsAcceptedByUser(list.get(i)).size(), i, 4);
+                break;
+            }
+        }
+    }
+
     public void resetData() {
         list = UserBus.getAllUser();
         Collections.reverse(list);
         filter();
-        System.out.println("Vo");
-        jConferenceListPnl.setPreferredSize(new Dimension(0,0));
+        jConferenceListPnl.setPreferredSize(new Dimension(0, 0));
         DefaultTableModel tm = (DefaultTableModel) jTable.getModel();
         for (int i = tm.getRowCount() - 1; i >= 0; i--) {
             tm.removeRow(i);
@@ -242,8 +250,12 @@ public class UsersUI extends javax.swing.JPanel {
         jBlockCB = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
+        FullName = new javax.swing.JPanel();
+        jSearchFullName = new javax.swing.JLabel();
         jFullNameTF = new javax.swing.JTextField();
+        UserName = new javax.swing.JPanel();
         jUserNameTF = new javax.swing.JTextField();
+        jSearchUserName = new javax.swing.JLabel();
         jBrief = new javax.swing.JLabel();
         jData = new javax.swing.JPanel();
         jPagination = new javax.swing.JPanel();
@@ -364,7 +376,29 @@ public class UsersUI extends javax.swing.JPanel {
         jOption.add(jPanel4, java.awt.BorderLayout.CENTER);
 
         jPanel5.setBackground(new java.awt.Color(224, 224, 250));
-        jPanel5.setPreferredSize(new java.awt.Dimension(300, 60));
+        jPanel5.setPreferredSize(new java.awt.Dimension(350, 60));
+
+        FullName.setPreferredSize(new java.awt.Dimension(300, 50));
+        FullName.setLayout(new java.awt.BorderLayout());
+
+        jSearchFullName.setBackground(new java.awt.Color(224, 224, 250));
+        jSearchFullName.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Search-icon.png"))); // NOI18N
+        jSearchFullName.setOpaque(true);
+        jSearchFullName.setPreferredSize(new java.awt.Dimension(50, 13));
+        jSearchFullName.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jSearchFullNameMouseMoved(evt);
+            }
+        });
+        jSearchFullName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jSearchFullNameMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jSearchFullNameMouseReleased(evt);
+            }
+        });
+        FullName.add(jSearchFullName, java.awt.BorderLayout.WEST);
 
         jFullNameTF.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jFullNameTF.setText("Full name");
@@ -377,12 +411,11 @@ public class UsersUI extends javax.swing.JPanel {
                 jFullNameTFFocusLost(evt);
             }
         });
-        jFullNameTF.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jFullNameTFKeyTyped(evt);
-            }
-        });
-        jPanel5.add(jFullNameTF);
+        FullName.add(jFullNameTF, java.awt.BorderLayout.CENTER);
+
+        jPanel5.add(FullName);
+
+        UserName.setLayout(new java.awt.BorderLayout());
 
         jUserNameTF.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         jUserNameTF.setText("User name");
@@ -400,12 +433,28 @@ public class UsersUI extends javax.swing.JPanel {
                 jUserNameTFActionPerformed(evt);
             }
         });
-        jUserNameTF.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jUserNameTFKeyTyped(evt);
+        UserName.add(jUserNameTF, java.awt.BorderLayout.CENTER);
+
+        jSearchUserName.setBackground(new java.awt.Color(224, 224, 250));
+        jSearchUserName.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Picture/Search-icon.png"))); // NOI18N
+        jSearchUserName.setOpaque(true);
+        jSearchUserName.setPreferredSize(new java.awt.Dimension(50, 13));
+        jSearchUserName.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jSearchUserNameMouseMoved(evt);
             }
         });
-        jPanel5.add(jUserNameTF);
+        jSearchUserName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jSearchUserNameMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jSearchUserNameMouseReleased(evt);
+            }
+        });
+        UserName.add(jSearchUserName, java.awt.BorderLayout.WEST);
+
+        jPanel5.add(UserName);
 
         jOption.add(jPanel5, java.awt.BorderLayout.EAST);
 
@@ -542,6 +591,14 @@ public class UsersUI extends javax.swing.JPanel {
         jTable.getTableHeader().setOpaque(true);
         jTable.getTableHeader().setFont(new Font("Times New Roman", Font.BOLD, 16));
         jTable.setModel(tm);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(200);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(200);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(75);
+        jTable.getColumnModel().getColumn(5).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(6).setPreferredWidth(75);
+
         jTable.getColumnModel().getColumn(6).setCellRenderer(new BlockButtonRenderer());
         jTable.getColumnModel().getColumn(6).setCellEditor(new BlockButtonEditor(new JTextField()));
         jTable.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer("Conference List"));
@@ -626,6 +683,12 @@ public class UsersUI extends javax.swing.JPanel {
 
     private void jResetbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jResetbtnMouseReleased
         // TODO add your handling code here:
+        jBlockCB.setSelectedIndex(0);
+        jConferenceCB.setSelectedIndex(0);
+        jUserNameTF.setText("User name");
+        jFullNameTF.setText("Full name");
+        jPosition.setText("1");
+        resetData();
     }//GEN-LAST:event_jResetbtnMouseReleased
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -721,12 +784,6 @@ public class UsersUI extends javax.swing.JPanel {
             jFullNameTF.setText("Full name");
     }//GEN-LAST:event_jFullNameTFFocusLost
 
-    private void jFullNameTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFullNameTFKeyTyped
-        // TODO add your handling code here:
-        jPosition.setText("1");
-        resetData();
-    }//GEN-LAST:event_jFullNameTFKeyTyped
-
     private void jBlockCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBlockCBActionPerformed
         // TODO add your handling code here:
         jPosition.setText("1");
@@ -741,7 +798,7 @@ public class UsersUI extends javax.swing.JPanel {
 
     private void jUserNameTFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jUserNameTFFocusLost
         // TODO add your handling code here:
-        
+
         if (jUserNameTF.getText().compareTo("") == 0)
             jUserNameTF.setText("User name");
     }//GEN-LAST:event_jUserNameTFFocusLost
@@ -750,14 +807,42 @@ public class UsersUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jUserNameTFActionPerformed
 
-    private void jUserNameTFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jUserNameTFKeyTyped
+    private void jSearchFullNameMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchFullNameMouseExited
+        // TODO add your handling code here:
+        jSearchFullName.setBackground(deufault);
+    }//GEN-LAST:event_jSearchFullNameMouseExited
+
+    private void jSearchFullNameMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchFullNameMouseMoved
+        // TODO add your handling code here:
+        jSearchFullName.setBackground(colorMoved);
+    }//GEN-LAST:event_jSearchFullNameMouseMoved
+
+    private void jSearchUserNameMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchUserNameMouseMoved
+        // TODO add your handling code here:
+        jSearchUserName.setBackground(colorMoved);
+    }//GEN-LAST:event_jSearchUserNameMouseMoved
+
+    private void jSearchUserNameMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchUserNameMouseExited
+        // TODO add your handling code here:
+        jSearchUserName.setBackground(deufault);
+    }//GEN-LAST:event_jSearchUserNameMouseExited
+
+    private void jSearchFullNameMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchFullNameMouseReleased
         // TODO add your handling code here:
         jPosition.setText("1");
         resetData();
-    }//GEN-LAST:event_jUserNameTFKeyTyped
+    }//GEN-LAST:event_jSearchFullNameMouseReleased
+
+    private void jSearchUserNameMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchUserNameMouseReleased
+        // TODO add your handling code here:
+        jPosition.setText("1");
+        resetData();
+    }//GEN-LAST:event_jSearchUserNameMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel FullName;
+    private javax.swing.JPanel UserName;
     private javax.swing.JComboBox<String> jBlockCB;
     private javax.swing.JLabel jBrief;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -787,6 +872,8 @@ public class UsersUI extends javax.swing.JPanel {
     private javax.swing.JLabel jResetbtn;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel jSearchFullName;
+    private javax.swing.JLabel jSearchUserName;
     private javax.swing.JTable jTable;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jUserNameTF;

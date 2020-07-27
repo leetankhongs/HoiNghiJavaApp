@@ -295,18 +295,18 @@ public class Edit_DetailConferenceDialog extends java.awt.Dialog {
     private void jDeletebtnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jDeletebtnMousePressed
         // TODO add your handling code here:
         Date nowDate = new Date();
-        int reply = JOptionPane.showConfirmDialog(null, "Bạn có muốn thực hiện thao tác không?", "", JOptionPane.YES_NO_OPTION);
+        int reply = JOptionPane.showConfirmDialog(null, "Do you want to continue?", "", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
 
             if (conference.getStartTime().compareTo(nowDate) <= 0) {
-                JOptionPane.showMessageDialog(this, "Hội nghị này đã diễn ra rồi");
+                JOptionPane.showMessageDialog(this, "This conference has already been organized");
             } else {
                 boolean result = ConferenceBus.deleteConference(conference);
 
                 if (result == true) {
-                    JOptionPane.showMessageDialog(null, "Thành công");
+                    JOptionPane.showMessageDialog(null, "Success");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Thất bại");
+                    JOptionPane.showMessageDialog(null, "Fail");
                 }
 
             }

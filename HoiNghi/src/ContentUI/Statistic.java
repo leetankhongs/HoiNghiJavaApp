@@ -369,13 +369,11 @@ public class Statistic extends javax.swing.JPanel {
         jSearchText.setMargin(new java.awt.Insets(5, 5, 5, 5));
         jSearchText.setPreferredSize(new java.awt.Dimension(200, 27));
         jSearchText.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jSearchTextFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jSearchTextFocusLost(evt);
-            }
-        });
-        jSearchText.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jSearchTextKeyTyped(evt);
             }
         });
         jSearchPnl.add(jSearchText, java.awt.BorderLayout.CENTER);
@@ -594,6 +592,8 @@ public class Statistic extends javax.swing.JPanel {
 
     private void jSearchbtnMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSearchbtnMouseReleased
         // TODO add your handling code here:
+        jPosition.setText("1");
+        resetData();
     }//GEN-LAST:event_jSearchbtnMouseReleased
 
     private void jSearchTextFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchTextFocusLost
@@ -686,11 +686,11 @@ public class Statistic extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jDateChooser1PropertyChange
 
-    private void jSearchTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSearchTextKeyTyped
+    private void jSearchTextFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSearchTextFocusGained
         // TODO add your handling code here:
-        jPosition.setText("1");
-        resetData();
-    }//GEN-LAST:event_jSearchTextKeyTyped
+        if (jSearchText.getText().compareTo("Search conference name") == 0)
+            jSearchText.setText("");
+    }//GEN-LAST:event_jSearchTextFocusGained
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

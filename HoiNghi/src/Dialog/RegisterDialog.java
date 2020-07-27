@@ -480,6 +480,7 @@ public class RegisterDialog extends java.awt.Dialog {
         }
         
         setVisible(false);
+        new LoginDialog(MainScreen.getInstance(), true).setVisible(true);
     }//GEN-LAST:event_jRegisterbtnMouseReleased
 
     private void jUsernameTFFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jUsernameTFFocusGained

@@ -8,6 +8,7 @@ package ButtonEditor;
 import Business.UserBus;
 import Business.UserConferenceBus;
 import ContentUI.ConferenceUI;
+import MainScreenUI.MainScreen;
 import POJO.User;
 import POJO.UserConference;
 import java.awt.Color;
@@ -70,20 +71,21 @@ public class BlockButtonEditor extends DefaultCellEditor {
     public Object getCellEditorValue() {
 
         if (clicked) {
-            int reply = JOptionPane.showConfirmDialog(null, "Bạn có muốn thực hiện thao tác không?", "", JOptionPane.YES_NO_OPTION);
+            int reply = JOptionPane.showConfirmDialog(null, "Do you want to continue??", "", JOptionPane.YES_NO_OPTION);
             boolean result = false;
             if (reply == JOptionPane.YES_OPTION) {
+                
                 if (user.getIsDelete() == 1) {
                     result = UserBus.unlockUser(user);
                     if (result == true) {
-                        JOptionPane.showMessageDialog(null, "Thành công");
+                        JOptionPane.showMessageDialog(null, "Success");
                     } else {
-                        JOptionPane.showMessageDialog(null, "Thất bại");
+                        JOptionPane.showMessageDialog(null, "Fail");
                     }
                 } else {
                     result = UserBus.blockUser(user);
                     if (result == true) {
-                        JOptionPane.showMessageDialog(null, "Thành công");
+                        JOptionPane.showMessageDialog(null, "Success");
                         List<UserConference> listUserConference = UserConferenceBus.getListUserConferenceByUser(user);
 
                         for (int i = 0; i < listUserConference.size(); i++) {
@@ -95,7 +97,7 @@ public class BlockButtonEditor extends DefaultCellEditor {
                         JOptionPane.showMessageDialog(null, "Thất bại");
                     }
                 }
-
+                MainScreen.getInstance().getUsersUI().resetRow(user);
             }
         }
 
